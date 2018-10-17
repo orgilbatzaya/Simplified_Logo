@@ -16,17 +16,20 @@ public class GUISetup implements FrontInternal{
     private Scene myScene;
     private GridPane myPane;
     private Group root;
+    private Console myConsole;
 
     public GUISetup() {
-        myScene = createGUI(200,200, Color.AZURE);
+        myScene = createGUI(800,800, Color.AZURE);
     }
 
     @Override
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        GridPane gp = createPane("Hi");
-        root.getChildren().add(gp);
+        //GridPane gp = createPane("Hi");
+        //root.getChildren().add(gp);
+        myConsole = new Console();
+        root.getChildren().add(myConsole.getConsoleBox());
         return scene;
     }
 
