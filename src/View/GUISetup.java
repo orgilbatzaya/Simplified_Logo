@@ -17,9 +17,10 @@ public class GUISetup implements FrontInternal{
     private GridPane myPane;
     private TurtleDisplay turtleDisplay;
     private Group root;
+    private Console myConsole;
 
     public GUISetup() {
-        myScene = createGUI(200,200, Color.AZURE);
+        myScene = createGUI(800,800, Color.AZURE);
     }
 
     @Override
