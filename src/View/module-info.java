@@ -1,4 +1,4 @@
-module slogo {
+module slogoview {
     requires javafx.base;
     requires javafx.controls;
     requires javafx.graphics;

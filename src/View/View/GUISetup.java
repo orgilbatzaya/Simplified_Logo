@@ -42,19 +42,21 @@ public class GUISetup implements FrontInternal{
         myConsole.getConsoleBox().setPadding(new Insets(400,400,100,100));
         root.getChildren().add(turtleDisplay.getPane());
         root.getChildren().add(myConsole.getConsoleBox());
+        VBox userOptions = new VBox();
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
-        VBox languageChoiceBox = createChoiceBox("Languages:", languages, 450, 100);
-        root.getChildren().add(languageChoiceBox);
+        VBox languageChoiceBox = createChoiceBox("Languages:", languages);
         ArrayList<String> colors = new ArrayList<>();
         colors.add("Black");
-        VBox colorChoiceBox = createChoiceBox("Colors:", colors, 450, 200);
-        root.getChildren().add(colorChoiceBox);
-        Button startButton = createButton("Start", 600, 200);
-        Button stopButton = createButton("Stop", 600, 300);
-        Button resetButton = createButton("Reset", 600, 400);
-
-        root.getChildren().addAll(startButton, stopButton, resetButton);
+        VBox colorChoiceBox = createChoiceBox("Colors:", colors);
+        Button startButton = createButton("Start");
+        Button stopButton = createButton("Stop");
+        Button resetButton = createButton("Reset");
+        userOptions.getChildren().addAll(languageChoiceBox,colorChoiceBox,startButton,stopButton,resetButton);
+        userOptions.setSpacing(10);
+        userOptions.setLayoutX(500);
+        userOptions.setLayoutY(100);
+        root.getChildren().add(userOptions);
         scene.setOnKeyPressed(event -> myConsole.processCommand());
         return scene;
     }
@@ -72,21 +74,17 @@ public class GUISetup implements FrontInternal{
         return gp;
     }
 
-    public VBox createChoiceBox(String title, ArrayList<String> items, double xPos, double yPos) {
+    public VBox createChoiceBox(String title, ArrayList<String> items) {
         VBox choiceVBox = new VBox();
         Text vboxTitle = new Text(title);
         ChoiceBox<String> createdBox = new ChoiceBox<>();
         createdBox.setItems(FXCollections.observableArrayList(items));
         choiceVBox.getChildren().addAll(vboxTitle, createdBox);
-        choiceVBox.setLayoutX(xPos);
-        choiceVBox.setLayoutY(yPos);
         return choiceVBox;
     }
 
-    public Button createButton(String title, double xPos, double yPos) {
+    public Button createButton(String title) {
         Button createdButton = new Button(title);
-        createdButton.setLayoutX(xPos);
-        createdButton.setLayoutY(yPos);
         return createdButton;
     }
 }
