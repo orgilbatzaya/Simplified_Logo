@@ -2,12 +2,14 @@ package View;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -40,7 +42,7 @@ public class GUISetup implements FrontInternal{
         turtleDisplay = new TurtleDisplay();
         myConsole = new Console();
         myConsole.getConsoleBox().setPadding(new Insets(400,400,100,100));
-        root.getChildren().add(turtleDisplay.getPane());
+        root.getChildren().add(turtleDisplay.getCanvas());
         root.getChildren().add(myConsole.getConsoleBox());
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
@@ -56,6 +58,8 @@ public class GUISetup implements FrontInternal{
 
         root.getChildren().addAll(startButton, stopButton, resetButton);
         scene.setOnKeyPressed(event -> myConsole.processCommand());
+
+
         return scene;
     }
 
