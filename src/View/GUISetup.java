@@ -1,12 +1,19 @@
 package View;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -34,6 +41,11 @@ public class GUISetup implements FrontInternal{
         myConsole.getConsoleBox().setPadding(new Insets(400,400,100,100));
         root.getChildren().add(turtleDisplay.getPane());
         root.getChildren().add(myConsole.getConsoleBox());
+        ArrayList<String> languages = new ArrayList<>();
+        languages.add("English");
+        VBox languageChoiceBox = makeChoiceBox("Languages:", languages);
+        languageChoiceBox.setPadding(new Insets(100, 100, 100, 450));
+        root.getChildren().add(languageChoiceBox);
         scene.setOnKeyPressed(event -> myConsole.processCommand());
         return scene;
     }
@@ -49,5 +61,14 @@ public class GUISetup implements FrontInternal{
         gpLabel.setText(text);
         gp.add(gpLabel, 0 , 0);
         return gp;
+    }
+
+    public VBox makeChoiceBox(String title, ArrayList<String> items) {
+        VBox choiceVBox = new VBox();
+        Text vboxTitle = new Text(title);
+        ChoiceBox<String> createdBox = new ChoiceBox<>();
+        createdBox.setItems(FXCollections.observableArrayList(items));
+        choiceVBox.getChildren().addAll(vboxTitle, createdBox);
+        return choiceVBox;
     }
 }

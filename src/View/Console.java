@@ -5,12 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import java.util.ArrayList;
 
 public class Console implements FrontExternal {
     private TextField userInput;
@@ -42,7 +38,7 @@ public class Console implements FrontExternal {
 
     public void processCommand () {
         currentCommand = userInput.getText();
-        pastCommands.add(currentCommand);
+        pastCommands.add(0,currentCommand);
         pastCommandList.setItems(pastCommands);
         userInput.clear();
     }
@@ -56,7 +52,7 @@ public class Console implements FrontExternal {
     }
 
     public String getLanguage() {
-        return "";
+        return currentLang;
     }
 
 }
