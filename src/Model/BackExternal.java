@@ -1,4 +1,4 @@
-package Interpreter;
+package Model;
 
 public interface BackExternal {
 }

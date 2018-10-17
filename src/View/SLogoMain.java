@@ -1,5 +1,6 @@
 package View;
 
+import Model.ProgramParser;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -20,7 +21,6 @@ public class SLogoMain extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(String[] args) { launch(args);
     }
 }

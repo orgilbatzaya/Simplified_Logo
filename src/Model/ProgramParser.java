@@ -1,11 +1,8 @@
-package Interpreter;
+package Model;
 
+import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 
@@ -62,5 +59,9 @@ public class ProgramParser {
         // THIS IS THE IMPORTANT LINE
         return regex.matcher(text).matches();
     }
+
+
 }
+
+
 
