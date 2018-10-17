@@ -15,6 +15,7 @@ import javafx.scene.paint.Paint;
 public class GUISetup implements FrontInternal{
     private Scene myScene;
     private GridPane myPane;
+    private TurtleDisplay turtleDisplay;
     private Group root;
 
     public GUISetup() {
@@ -26,7 +27,9 @@ public class GUISetup implements FrontInternal{
         root = new Group();
         var scene = new Scene(root, width, height, background);
         GridPane gp = createPane("Hi");
+        turtleDisplay = new TurtleDisplay();
         root.getChildren().add(gp);
+        root.getChildren().add(turtleDisplay.getPane());
         return scene;
     }
 
