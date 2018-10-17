@@ -34,6 +34,7 @@ public class GUISetup implements FrontInternal{
         myConsole.getConsoleBox().setPadding(new Insets(400,400,100,100));
         root.getChildren().add(turtleDisplay.getPane());
         root.getChildren().add(myConsole.getConsoleBox());
+        scene.setOnKeyPressed(event -> myConsole.processCommand());
         return scene;
     }
 

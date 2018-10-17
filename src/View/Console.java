@@ -29,7 +29,7 @@ public class Console {
         return consoleBox;
     }
 
-    private void processCommand () {
+    public void processCommand () {
         currentCommand = userInput.getText();
         System.out.println(currentCommand);
     }
