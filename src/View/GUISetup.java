@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -43,9 +44,17 @@ public class GUISetup implements FrontInternal{
         root.getChildren().add(myConsole.getConsoleBox());
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
-        VBox languageChoiceBox = makeChoiceBox("Languages:", languages);
-        languageChoiceBox.setPadding(new Insets(100, 100, 100, 450));
+        VBox languageChoiceBox = createChoiceBox("Languages:", languages, 450, 100);
         root.getChildren().add(languageChoiceBox);
+        ArrayList<String> colors = new ArrayList<>();
+        colors.add("Black");
+        VBox colorChoiceBox = createChoiceBox("Colors:", colors, 450, 200);
+        root.getChildren().add(colorChoiceBox);
+        Button startButton = createButton("Start", 600, 200);
+        Button stopButton = createButton("Stop", 600, 300);
+        Button resetButton = createButton("Reset", 600, 400);
+
+        root.getChildren().addAll(startButton, stopButton, resetButton);
         scene.setOnKeyPressed(event -> myConsole.processCommand());
         return scene;
     }
@@ -63,12 +72,21 @@ public class GUISetup implements FrontInternal{
         return gp;
     }
 
-    public VBox makeChoiceBox(String title, ArrayList<String> items) {
+    public VBox createChoiceBox(String title, ArrayList<String> items, double xPos, double yPos) {
         VBox choiceVBox = new VBox();
         Text vboxTitle = new Text(title);
         ChoiceBox<String> createdBox = new ChoiceBox<>();
         createdBox.setItems(FXCollections.observableArrayList(items));
         choiceVBox.getChildren().addAll(vboxTitle, createdBox);
+        choiceVBox.setLayoutX(xPos);
+        choiceVBox.setLayoutY(yPos);
         return choiceVBox;
+    }
+
+    public Button createButton(String title, double xPos, double yPos) {
+        Button createdButton = new Button(title);
+        createdButton.setLayoutX(xPos);
+        createdButton.setLayoutY(yPos);
+        return createdButton;
     }
 }
