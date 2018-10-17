@@ -1,7 +1,6 @@
 package View;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,6 +14,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -22,11 +22,14 @@ import java.util.ArrayList;
  * @author Austin Kao
  */
 public class GUISetup implements FrontInternal{
+    private static final String DEFAULT_LANGUAGE_PACKAGE = "resources/languages/";
+
     private Scene myScene;
     private GridPane myPane;
     private TurtleDisplay turtleDisplay;
     private Group root;
     private Console myConsole;
+    private ResourceBundle myLanguage;
 
     public GUISetup() {
         myScene = createGUI(800,800, Color.AZURE);
@@ -45,6 +48,7 @@ public class GUISetup implements FrontInternal{
         VBox userOptions = new VBox();
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
+        languages.add("Spanish");
         VBox languageChoiceBox = createChoiceBox("Languages:", languages);
         ArrayList<String> colors = new ArrayList<>();
         colors.add("Black");
@@ -79,6 +83,10 @@ public class GUISetup implements FrontInternal{
         Text vboxTitle = new Text(title);
         ChoiceBox<String> createdBox = new ChoiceBox<>();
         createdBox.setItems(FXCollections.observableArrayList(items));
+        if(items.size() > 0) {
+            createdBox.setValue(items.get(0));
+        }
+        createdBox.setOnAction(e -> setLanguage(createdBox.getValue()));
         choiceVBox.getChildren().addAll(vboxTitle, createdBox);
         return choiceVBox;
     }
@@ -86,5 +94,10 @@ public class GUISetup implements FrontInternal{
     public Button createButton(String title) {
         Button createdButton = new Button(title);
         return createdButton;
+    }
+
+    private void setLanguage(String language) {
+        myLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+language);
+        System.out.println(myLanguage.getString("Forward"));
     }
 }
