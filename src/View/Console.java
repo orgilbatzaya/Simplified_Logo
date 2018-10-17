@@ -1,9 +1,10 @@
 package View;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -12,13 +13,18 @@ public class Console implements FrontExternal {
     private String currentCommand;
     private VBox consoleBox;
     private String currentLang;
+    private ListView<String> pastCommandList;
+    private ObservableList<String> pastCommands;
 
     public Console() {
         userInput = createUserCommandLine();
         Text consoleTitle = new Text("Enter your command here:");
         Button submitButton = new Button("Go!");
+        pastCommandList = new ListView<>();
+        pastCommands = FXCollections.observableArrayList();
+        pastCommandList.setMaxHeight(200);
         submitButton.setOnAction(event -> processCommand());
-        consoleBox = new VBox(consoleTitle, userInput, submitButton);
+        consoleBox = new VBox(consoleTitle, userInput, submitButton, pastCommandList);
     }
 
     public TextField createUserCommandLine() {
@@ -30,9 +36,11 @@ public class Console implements FrontExternal {
         return consoleBox;
     }
 
-    private void processCommand () {
+    public void processCommand () {
         currentCommand = userInput.getText();
-        System.out.println(currentCommand);
+        pastCommands.add(0,currentCommand);
+        pastCommandList.setItems(pastCommands);
+        userInput.clear();
     }
 
     public String getNextCommand(){
@@ -44,7 +52,7 @@ public class Console implements FrontExternal {
     }
 
     public String getLanguage() {
-        return "";
+        return currentLang;
     }
 
 }
