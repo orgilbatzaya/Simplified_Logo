@@ -7,10 +7,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class Console {
+public class Console implements FrontExternal {
     private TextField userInput;
     private String currentCommand;
     private VBox consoleBox;
+    private String currentLang;
 
     public Console() {
         userInput = createUserCommandLine();
@@ -33,4 +34,17 @@ public class Console {
         currentCommand = userInput.getText();
         System.out.println(currentCommand);
     }
+
+    public String getNextCommand(){
+        return currentCommand;
+    }
+
+    private void setLanguage(String lang){
+        currentLang = lang;
+    }
+
+    public String getLanguage() {
+        return "";
+    }
+
 }
