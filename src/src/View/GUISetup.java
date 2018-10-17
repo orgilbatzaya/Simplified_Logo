@@ -8,12 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -49,15 +53,20 @@ public class GUISetup implements FrontInternal{
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
         languages.add("Spanish");
-        VBox languageChoiceBox = createChoiceBox("Languages:", languages);
+        HBox languageTitle = createLabel("Languages:");
+        ChoiceBox languageChoiceBox = createChoiceBox(languages);
+        languageChoiceBox.setOnAction(e -> changeLanguage(languageChoiceBox.getValue().toString()));
         ArrayList<String> colors = new ArrayList<>();
         colors.add("Black");
-        VBox colorChoiceBox = createChoiceBox("Colors:", colors);
+        colors.add("Red");
+        HBox colorTitle = createLabel("Colors:");
+        ChoiceBox colorChoiceBox = createChoiceBox(colors);
+        colorChoiceBox.setOnAction(e -> changeColor(colorChoiceBox.getValue().toString()));
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
         Button resetButton = createButton("Reset");
-        userOptions.getChildren().addAll(languageChoiceBox,colorChoiceBox,startButton,stopButton,resetButton);
-        userOptions.setSpacing(10);
+        userOptions.getChildren().addAll(languageTitle, languageChoiceBox, colorTitle, colorChoiceBox,startButton,stopButton,resetButton);
+        userOptions.setSpacing(5);
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
         root.getChildren().add(userOptions);
@@ -70,25 +79,19 @@ public class GUISetup implements FrontInternal{
         return myScene;
     }
 
-    public GridPane createPane(String text) {
-        GridPane gp = new GridPane();
-        Label gpLabel = new Label();
-        gpLabel.setText(text);
-        gp.add(gpLabel, 0 , 0);
-        return gp;
+    public HBox createLabel(String text) {
+        Label createdLabel = new Label(text);
+        HBox labelHBox = new HBox(createdLabel);
+        return labelHBox;
     }
 
-    public VBox createChoiceBox(String title, ArrayList<String> items) {
-        VBox choiceVBox = new VBox();
-        Text vboxTitle = new Text(title);
+    public ChoiceBox createChoiceBox(ArrayList<String> items) {
         ChoiceBox<String> createdBox = new ChoiceBox<>();
         createdBox.setItems(FXCollections.observableArrayList(items));
         if(items.size() > 0) {
             createdBox.setValue(items.get(0));
         }
-        createdBox.setOnAction(e -> setLanguage(createdBox.getValue()));
-        choiceVBox.getChildren().addAll(vboxTitle, createdBox);
-        return choiceVBox;
+        return createdBox;
     }
 
     public Button createButton(String title) {
@@ -96,8 +99,16 @@ public class GUISetup implements FrontInternal{
         return createdButton;
     }
 
-    private void setLanguage(String language) {
+    private void changeLanguage(String language) {
         myLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+language);
         System.out.println(myLanguage.getString("Forward"));
+    }
+
+    private void createLanguageList() {
+
+    }
+
+    private void changeColor(String color) {
+        myScene.setFill(Paint.valueOf(color.toUpperCase()));
     }
 }
