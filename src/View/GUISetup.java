@@ -1,5 +1,6 @@
 package View;
 
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -23,14 +24,16 @@ public class GUISetup implements FrontInternal{
         myScene = createGUI(800,800, Color.AZURE);
     }
 
-    @Override
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        GridPane gp = createPane("Hi");
+        //GridPane gp = createPane("Hi");
+        //root.getChildren().add(gp);
         turtleDisplay = new TurtleDisplay();
-        root.getChildren().add(gp);
+        myConsole = new Console();
+        myConsole.getConsoleBox().setPadding(new Insets(400,400,100,100));
         root.getChildren().add(turtleDisplay.getPane());
+        root.getChildren().add(myConsole.getConsoleBox());
         return scene;
     }
 
