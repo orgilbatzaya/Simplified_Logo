@@ -29,8 +29,10 @@ public class GUISetup implements FrontInternal{
         var scene = new Scene(root, width, height, background);
         GridPane gp = createPane("Hi");
         turtleDisplay = new TurtleDisplay();
+        myConsole = new Console();
         root.getChildren().add(gp);
         root.getChildren().add(turtleDisplay.getPane());
+        root.getChildren().add(myConsole.getConsoleBox());
         return scene;
     }
 
