@@ -14,19 +14,24 @@ import javafx.scene.paint.Paint;
 
 public class TurtleDisplay {
     private Canvas myCanvas;
+    private GraphicsContext myGC;
     private Label myLabel;
     private int[] myDim = {40,40};
 
 
     public TurtleDisplay(){
         myCanvas = new Canvas(400,400);
-        GraphicsContext gc = myCanvas.getGraphicsContext2D();
-        initDraw(gc);
+        myGC = myCanvas.getGraphicsContext2D();
+        initDraw(myGC);
 
     }
 
     public Canvas getCanvas(){
         return myCanvas;
+    }
+
+    public GraphicsContext getGraphicsContext(){
+        return myGC;
     }
 
 

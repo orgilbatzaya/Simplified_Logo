@@ -2,19 +2,23 @@ package View;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.effect.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -46,11 +50,34 @@ public class GUISetup implements FrontInternal{
         //GridPane gp = createPane("Hi");
         //root.getChildren().add(gp);
         turtleDisplay = new TurtleDisplay();
+        turtleDisplay.getCanvas().setVisible(true);
+
+        turtleDisplay.getCanvas().setOnMouseDragged(e -> {
+            double size = 10.0;
+            double x = e.getX() - size/2;
+            double y = e.getY() - size/2;
+            turtleDisplay.getGraphicsContext().setFill(Color.BLUE);
+            turtleDisplay.getGraphicsContext().setEffect(new DropShadow());
+            turtleDisplay.getGraphicsContext().fillRect(x,y,size,size);
+
+        });
+        ColorPicker colorPicker = new ColorPicker(Color.BLUE);
+        final Text text = new Text("Try the color picker!");
+        text.setFont(Font.font ("Serif", 20));
+        text.setFill(colorPicker.getValue());
+
+        colorPicker.setOnAction(new EventHandler() {
+            public void handle(Event t) {
+                text.setFill(colorPicker.getValue());
+            }
+        });
+
         myConsole = new Console();
         myConsole.getConsoleBox().setLayoutX(200);
         myConsole.getConsoleBox().setLayoutY(400);
         root.getChildren().add(turtleDisplay.getCanvas());
         root.getChildren().add(myConsole.getConsoleBox());
+
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
         languages.add("Spanish");
@@ -63,7 +90,7 @@ public class GUISetup implements FrontInternal{
         LanguageMenu colorMenu = new LanguageMenu(colors);
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
-        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),startButton,stopButton);
+        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),startButton,stopButton, text,colorPicker);
         userOptions.setSpacing(5);
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
