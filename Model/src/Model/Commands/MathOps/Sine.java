@@ -1,4 +1,18 @@
 package Model.Commands.MathOps;
 
-public class Sine {
+import Model.Command;
+
+import java.util.List;
+
+public class Sine extends Command {
+    public Sine(String commandName, List<String> args){
+        super(commandName,args);
+    }
+
+    @Override
+    public double execute() {
+        double inputVal = getArgsDouble(0);
+        return Math.sin(Math.toRadians(inputVal));
+    }
 }
+

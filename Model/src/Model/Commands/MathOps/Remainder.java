@@ -1,4 +1,18 @@
 package Model.Commands.MathOps;
 
-public class Remainder {
+import Model.Command;
+
+import java.util.List;
+
+public class Remainder extends Command {
+    public Remainder(String commandName, List<String> args){
+        super(commandName,args);
+    }
+
+    @Override
+    public double execute() {
+        double firstVal = getArgsDouble(0);
+        double secondVal = getArgsDouble(1);
+        return firstVal%secondVal;
+    }
 }
