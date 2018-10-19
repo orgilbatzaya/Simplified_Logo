@@ -29,7 +29,7 @@ public class TurtleDisplay {
         return myCanvas;
     }
 
-    
+
 
     private void initDraw(GraphicsContext gc){
         double canvasWidth = gc.getCanvas().getWidth();
