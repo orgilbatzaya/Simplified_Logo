@@ -1,4 +1,4 @@
 package Model.Commands.TurtleCommands;
 
-public class Towards {
+public class SetTowards {
 }

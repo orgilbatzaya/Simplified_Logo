@@ -1,4 +1,4 @@
 package Model.Commands.TurtleQueries;
 
-public class Ycor {
+public class IsShowing {
 }

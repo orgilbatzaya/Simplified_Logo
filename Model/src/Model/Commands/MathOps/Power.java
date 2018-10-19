@@ -1,4 +1,4 @@
 package Model.Commands.MathOps;
 
-public class Cos {
+public class Power {
 }

@@ -1,4 +1,4 @@
 package Model.Commands.BooleanOps;
 
-public class IfElse {
+public class Equal {
 }

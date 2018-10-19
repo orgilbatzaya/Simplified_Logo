@@ -1,4 +1,4 @@
 package Model.Commands.MathOps;
 
-public class Pow {
+public class Tangent {
 }

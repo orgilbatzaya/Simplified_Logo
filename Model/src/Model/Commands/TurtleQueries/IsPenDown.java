@@ -1,4 +1,4 @@
 package Model.Commands.TurtleQueries;
 
-public class ShowingBool {
+public class IsPenDown {
 }

@@ -1,4 +1,4 @@
 package Model.Commands.TurtleQueries;
 
-public class Xcor {
+public class XCoordinate {
 }

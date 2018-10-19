@@ -1,4 +1,4 @@
 package Model.Commands.BooleanOps;
 
-public class DoTimes {
+public class LessThan {
 }
