@@ -26,14 +26,12 @@ import java.util.ResourceBundle;
  * @author Austin Kao
  */
 public class GUISetup implements FrontInternal{
-    private static final String DEFAULT_LANGUAGE_PACKAGE = "resources/languages/";
 
     private Scene myScene;
     private GridPane myPane;
     private TurtleDisplay turtleDisplay;
     private Group root;
     private Console myConsole;
-    private ResourceBundle myLanguage;
 
     public GUISetup() {
         myScene = createGUI(800,800, Color.AZURE);
@@ -46,26 +44,23 @@ public class GUISetup implements FrontInternal{
         //root.getChildren().add(gp);
         turtleDisplay = new TurtleDisplay();
         myConsole = new Console();
-        myConsole.getConsoleBox().setPadding(new Insets(400,400,100,100));
+        myConsole.getConsoleBox().setLayoutX(200);
+        myConsole.getConsoleBox().setLayoutY(400);
         root.getChildren().add(turtleDisplay.getPane());
         root.getChildren().add(myConsole.getConsoleBox());
-        VBox userOptions = new VBox();
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
         languages.add("Spanish");
         HBox languageTitle = createLabel("Languages:");
-        ChoiceBox languageChoiceBox = createChoiceBox(languages);
-        languageChoiceBox.setOnAction(e -> changeLanguage(languageChoiceBox.getValue().toString()));
+        LanguageMenu langMenu = new LanguageMenu(languages);
         ArrayList<String> colors = new ArrayList<>();
         colors.add("Black");
         colors.add("Red");
         HBox colorTitle = createLabel("Colors:");
-        ChoiceBox colorChoiceBox = createChoiceBox(colors);
-        colorChoiceBox.setOnAction(e -> changeColor(colorChoiceBox.getValue().toString()));
+        LanguageMenu colorMenu = new LanguageMenu(colors);
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
-        Button resetButton = createButton("Reset");
-        userOptions.getChildren().addAll(languageTitle, languageChoiceBox, colorTitle, colorChoiceBox,startButton,stopButton,resetButton);
+        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),startButton,stopButton);
         userOptions.setSpacing(5);
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
@@ -85,23 +80,11 @@ public class GUISetup implements FrontInternal{
         return labelHBox;
     }
 
-    public ChoiceBox createChoiceBox(ArrayList<String> items) {
-        ChoiceBox<String> createdBox = new ChoiceBox<>();
-        createdBox.setItems(FXCollections.observableArrayList(items));
-        if(items.size() > 0) {
-            createdBox.setValue(items.get(0));
-        }
-        return createdBox;
-    }
+
 
     public Button createButton(String title) {
         Button createdButton = new Button(title);
         return createdButton;
-    }
-
-    private void changeLanguage(String language) {
-        myLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+language);
-        System.out.println(myLanguage.getString("Forward"));
     }
 
     private void createLanguageList() {
