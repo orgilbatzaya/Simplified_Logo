@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Quotient extends Command {
-    public Quotient(String commandName, List<String> args){
-        super(commandName,args);
+    public Quotient(List<String> args){
+        super(args);
     }
 
     @Override

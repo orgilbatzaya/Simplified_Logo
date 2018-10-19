@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Product extends Command {
-    public Product(String commandName, List<String> args){
-        super(commandName,args);
+    public Product(List<String> args){
+        super(args);
     }
 
     @Override

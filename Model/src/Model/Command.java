@@ -5,8 +5,7 @@ import java.util.List;
 public abstract class Command {
     private String myCommand;
     private List<String> myArgs;
-    public Command(String commandName, List<String> args) {
-        myCommand = commandName;
+    public Command(List<String> args) {
         myArgs = args;
 
     }

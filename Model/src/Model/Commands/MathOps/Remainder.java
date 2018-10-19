@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Remainder extends Command {
-    public Remainder(String commandName, List<String> args){
-        super(commandName,args);
+    public Remainder(List<String> args){
+        super(args);
     }
 
     @Override

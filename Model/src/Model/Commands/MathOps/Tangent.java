@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Tangent extends Command {
-    public Tangent(String commandName, List<String> args){
-        super(commandName,args);
+    public Tangent(List<String> args){
+        super(args);
     }
 
     @Override

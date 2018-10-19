@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class ArcTangent extends Command {
-    public ArcTangent(String commandName, List<String> args){
-        super(commandName,args);
+    public ArcTangent(List<String> args){
+        super(args);
     }
 
     @Override

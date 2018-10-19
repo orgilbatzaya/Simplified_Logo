@@ -4,8 +4,8 @@ import Model.Command;
 import java.util.List;
 
 public class Minus extends Command {
-    public Minus(String commandName, List<String> args){
-        super(commandName,args);
+    public Minus(List<String> args){
+        super(args);
     }
 
     @Override

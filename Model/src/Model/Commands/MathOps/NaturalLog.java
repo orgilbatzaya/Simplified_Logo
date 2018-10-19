@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class NaturalLog extends Command {
-    public NaturalLog(String commandName, List<String> args){
-        super(commandName,args);
+    public NaturalLog(List<String> args){
+        super(args);
     }
 
     @Override

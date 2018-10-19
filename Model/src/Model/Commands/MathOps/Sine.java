@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Sine extends Command {
-    public Sine(String commandName, List<String> args){
-        super(commandName,args);
+    public Sine(List<String> args){
+        super(args);
     }
 
     @Override

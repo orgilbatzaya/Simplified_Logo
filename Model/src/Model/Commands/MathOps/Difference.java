@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Difference extends Command {
-    public Difference(String commandName, List<String> args){
-        super(commandName,args);
+    public Difference(List<String> args){
+        super(args);
     }
 
     @Override

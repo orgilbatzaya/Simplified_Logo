@@ -6,8 +6,8 @@ import java.util.List;
 
 public abstract class TurtleCommand extends Command {
 
-    public TurtleCommand(String commandName, List<String> args){
-        super(commandName,args);
+    public TurtleCommand(List<String> args){
+        super(args);
     }
 
 

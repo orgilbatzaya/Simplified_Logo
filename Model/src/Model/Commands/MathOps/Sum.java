@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Sum extends Command {
-    public Sum(String commandName, List<String> args){
-        super(commandName,args);
+    public Sum(List<String> args){
+        super(args);
     }
 
     @Override

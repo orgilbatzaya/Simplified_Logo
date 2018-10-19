@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Random extends Command {
-    public Random(String commandName, List<String> args){
-        super(commandName,args);
+    public Random(List<String> args){
+        super(args);
     }
 
     @Override

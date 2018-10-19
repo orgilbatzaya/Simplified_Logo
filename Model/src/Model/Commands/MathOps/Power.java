@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Power extends Command {
-    public Power(String commandName, List<String> args){
-        super(commandName,args);
+    public Power(List<String> args){
+        super(args);
     }
 
     @Override

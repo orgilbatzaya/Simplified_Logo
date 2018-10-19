@@ -5,8 +5,8 @@ import Model.Command;
 import java.util.List;
 
 public class Cosine extends Command {
-    public Cosine(String commandName, List<String> args){
-        super(commandName,args);
+    public Cosine(List<String> args){
+        super(args);
     }
 
     @Override
