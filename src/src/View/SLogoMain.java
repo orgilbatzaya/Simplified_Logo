@@ -1,13 +1,8 @@
 package View;
 
-import Model.ProgramParser;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
-import static javafx.application.Application.launch;
+import Model.ProgramParser;
 
 public class SLogoMain extends Application {
     private static final String TITLE = "SLogo Title";
