@@ -49,8 +49,6 @@ public class GUISetup implements FrontInternal{
         myConsole = new Console();
         myConsole.getConsoleBox().setLayoutX(200);
         myConsole.getConsoleBox().setLayoutY(400);
-        root.getChildren().add(turtleDisplay.getCanvas());
-        root.getChildren().add(myConsole.getConsoleBox());
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
         languages.add("Spanish");
@@ -60,14 +58,14 @@ public class GUISetup implements FrontInternal{
         colors.add("Black");
         colors.add("Red");
         HBox colorTitle = createLabel("Colors:");
-        LanguageMenu colorMenu = new LanguageMenu(colors);
+        ColorMenu colorMenu = new ColorMenu(colors);
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
         VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),startButton,stopButton);
         userOptions.setSpacing(5);
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
-        root.getChildren().add(userOptions);
+        root.getChildren().addAll(turtleDisplay.getCanvas(), myConsole.getConsoleBox(), userOptions);
         scene.setOnKeyPressed(event -> myConsole.processCommand());
 
 
