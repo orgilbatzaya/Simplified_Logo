@@ -9,7 +9,7 @@
 </properties>
 
 <build>
-    <sourceDirectory>src</sourceDirectory>
+    <sourceDirectory>View</sourceDirectory>
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
