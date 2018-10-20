@@ -52,24 +52,16 @@ public class GUISetup implements FrontInternal{
         turtleDisplay = new TurtleDisplay();
         turtleDisplay.getCanvas().setVisible(true);
 
-        turtleDisplay.getCanvas().setOnMouseDragged(e -> {
-            double size = 10.0;
-            double x = e.getX() - size/2;
-            double y = e.getY() - size/2;
-            turtleDisplay.getGraphicsContext().setFill(Color.BLUE);
-            turtleDisplay.getGraphicsContext().setEffect(new DropShadow());
-            turtleDisplay.getGraphicsContext().fillRect(x,y,size,size);
 
+        ColorPicker colorPicker1 = new ColorPicker(Color.RED);
+        HBox penTitle = createLabel("Pen Color:");
+        colorPicker1.setOnAction(event ->  {
+                turtleDisplay.setPenColor(colorPicker1.getValue());
         });
-        ColorPicker colorPicker = new ColorPicker(Color.BLUE);
-        final Text text = new Text("Try the color picker!");
-        text.setFont(Font.font ("Serif", 20));
-        text.setFill(colorPicker.getValue());
-
-        colorPicker.setOnAction(new EventHandler() {
-            public void handle(Event t) {
-                text.setFill(colorPicker.getValue());
-            }
+        ColorPicker colorPicker2 = new ColorPicker(Color.WHITE);
+        HBox bgTitle = createLabel("Background Color:");
+        colorPicker2.setOnAction(event ->  {
+            turtleDisplay.setBgColor(colorPicker2.getValue());
         });
 
         myConsole = new Console();
@@ -90,7 +82,8 @@ public class GUISetup implements FrontInternal{
         LanguageMenu colorMenu = new LanguageMenu(colors);
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
-        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),startButton,stopButton, text,colorPicker);
+        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),
+                startButton, stopButton, penTitle, colorPicker1, bgTitle, colorPicker2);
         userOptions.setSpacing(5);
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
