@@ -13,7 +13,7 @@ At a high level, the internal API for the front end contains methods to help cre
 
 Our front-end internal API will have an update() method that will be used by the GUI to update its visual turtle display after each command, a createGUI() method which will initialize the components required for the GUI to take in UI, and a move() method that will be used by the Object (turtle) class to change its position.
 
-The front-end external API will have getCurrentHeading(), getNextCommand(), and getLanguage() methods that will be called by an Model class to retrieve information from the UI (console, buttons, etc). The Model class will tell the Object to update to its new states (pen, distance, heading)
+The front-end external API will have getCurrentHeading(), getNextCommand(), and getLanguage() methods that will be called by an model class to retrieve information from the UI (console, buttons, etc). The model class will tell the Object to update to its new states (pen, distance, heading)
 
 The back-end internal API will have an interpret() method (a complex method that will likely have several helpers) that will do the actual parsing of commands into a series of movements the Object can execute and the GUI can display. 
 
@@ -34,7 +34,7 @@ If the command is invalid, the program will display an alert saying that the com
 
 Our front-end internal API will support different GUI and turtle object elements. The update() method will be used by the GUI to update how the turtle is displayed on screen as a command executes, the createGUI() method will initialize the GUI and set up its individual components, and the move() method will be used by the turtle to change its position. This API can be extended to accomodate different ways the turtle will move or different ways to configure the GUI. There may be errors thrown when moving the turtle off the screen or to impossible positions. This API is needed to process the different commands given by the user.
 
-Our front-end external API will support the different options that users have in customizing the GUI as well as communicate user input to the back-end. For example, the getCurrentHeading(), getNextCommand(), and getLanguage() methods will be called by an Model class to retrieve information from the UI (console, buttons, etc). The Model class will relay the information to either the GUI class to change what is displayed (background color, language, etc.) or the Object class to update its status (pen, distance, heading). This API may make use of ResourceBundles for the text displayed in the GUI. It can also be extended to support even more customizations for the GUI. Potential errors thrown include not finding the right data files to retrieve information from. This API is needed to communicate information from the front-end to the back-end so that the back-end can work properly.
+Our front-end external API will support the different options that users have in customizing the GUI as well as communicate user input to the back-end. For example, the getCurrentHeading(), getNextCommand(), and getLanguage() methods will be called by an model class to retrieve information from the UI (console, buttons, etc). The model class will relay the information to either the GUI class to change what is displayed (background color, language, etc.) or the Object class to update its status (pen, distance, heading). This API may make use of ResourceBundles for the text displayed in the GUI. It can also be extended to support even more customizations for the GUI. Potential errors thrown include not finding the right data files to retrieve information from. This API is needed to communicate information from the front-end to the back-end so that the back-end can work properly.
 
 Our back-end internal API will support how the program processes user commands. The interpret() method will parse user input into a series of instructions that the Object class can execute and that the GUI can display. This API can potentially be extended to support different instruction formats or resources.languages. Most of the error handling will come with this API since it will need to watch for incorrect or impossible commands. This API is needed to parse and interpret the commands typed by the user properly so that the program can execute.
 
@@ -45,7 +45,7 @@ Our back-end external API will support the different commands the GUI will displ
 When the user enters 'fd 50' in the command window:
 ```java
 MainController Class - createGUI() from InternalFrontEnd
-Model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
+model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
                     - returns the commmand, what language it is written in, and what the current direction is
                   - interpret() from InternalBackEnd
                     - returns the command parsed into forward movement and 50 steps
@@ -67,7 +67,7 @@ GUI Class - displayAll()
 ```
 When an invalid command is passed:
 ```java
-Model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
+model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
                     - returns the commmand, what language it is written in, and what the current direction is
                   - interpret() from InternalBackEnd
                     - throws error upon parsing incorrect syntax and displays error to the user
@@ -75,7 +75,7 @@ Model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from Ext
 ```
 When a command is entered:
 ```java
-Model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
+model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
                     - returns the commmand, what language it is written in, and what the current direction is
                   - interpret() from InternalBackEnd
                     - returns the command parsed
@@ -117,7 +117,7 @@ MainController Class - createGui() from InternalFrontEnd
 
 When the user queries the turtle's heading:
 ```java
-Model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
+model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
                     - returns the commmand, what language it is written in, and what the current direction is
                   - interpret() from InternalBackEnd
                     - returns the command parsed
@@ -125,7 +125,7 @@ MainController Class - The heading is printed in the console
 ```
 When the user queries the language:
 ```java
-Model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
+model Class - getNextCommand(),  getLanguage(), and getCurrentHeading() from ExternalFrontEnd 
                     - returns the commmand, what language it is written in, and what the current direction is
                   - interpret() from InternalBackEnd
                     - returns the command parsed
