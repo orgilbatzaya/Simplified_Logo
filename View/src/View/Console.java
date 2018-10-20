@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -21,7 +18,6 @@ public class Console implements FrontExternal {
     private String currentLang;
     private ListView<String> pastCommandList;
     private ObservableList<String> pastCommands;
-    private KeyCodeCombination newLine;
 
     public Console() {
         userInput = createUserCommandLine();

@@ -5,13 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -31,9 +27,8 @@ public class GUISetup implements FrontInternal{
     private ResourceBundle myConstants;
 
     public GUISetup() {
-        myScene = createGUI(800,800, Color.AZURE);
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
-        //listLanguages();
+        myScene = createGUI(800,800, Color.AZURE);
     }
 
     public Scene createGUI(int width, int height, Paint background) {
@@ -54,20 +49,16 @@ public class GUISetup implements FrontInternal{
         myConsole = new Console();
         myConsole.getConsoleBox().setLayoutX(200);
         myConsole.getConsoleBox().setLayoutY(400);
-        ArrayList<String> languages = new ArrayList<>();
-        languages.add("English");
-        languages.add("Spanish");
         Label languageTitle = createLabel("Languages:");
-        LanguageMenu langMenu = new LanguageMenu(languages);
+        LanguageMenu langMenu = new LanguageMenu();
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
         VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
                 startButton, stopButton, penTitle, colorPicker1, bgTitle, colorPicker2);
-        //userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
+        userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
         root.getChildren().addAll(turtleDisplay.getCanvas(), myConsole.getConsoleBox(), userOptions);
-        scene.setOnKeyPressed(event -> myConsole.processCommand());
         return scene;
     }
 
@@ -88,16 +79,5 @@ public class GUISetup implements FrontInternal{
 
     private void changeColor(String color) {
         myScene.setFill(Paint.valueOf(color.toUpperCase()));
-    }
-
-    public ArrayList<String> listLanguages() {
-        ArrayList<String> languages = new ArrayList<>();
-        for(int i = 0; i < LANGUAGE_ARRAY.length; i++) {
-            languages.add(LANGUAGE_ARRAY[i]);
-            ResourceBundle myLanguage = ResourceBundle.getBundle("resources/languages/"+LANGUAGE_ARRAY[i]);
-            System.out.println(myLanguage.getString("Forward"));
-            System.out.println(myLanguage.getBaseBundleName());
-        }
-        return languages;
     }
 }
