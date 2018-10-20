@@ -1,30 +1,16 @@
 package View;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
-
-import java.io.File;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -48,6 +34,17 @@ public class GUISetup implements FrontInternal{
         root = new Group();
         var scene = new Scene(root, width, height, background);
         turtleDisplay = new TurtleDisplay();
+        turtleDisplay.getCanvas().setVisible(true);
+        ColorPicker colorPicker1 = new ColorPicker(Color.RED);
+        Label penTitle = createLabel("Pen Color:");
+        colorPicker1.setOnAction(event ->  {
+                turtleDisplay.setPenColor(colorPicker1.getValue());
+        });
+        ColorPicker colorPicker2 = new ColorPicker(Color.WHITE);
+        Label bgTitle = createLabel("Background Color:");
+        colorPicker2.setOnAction(event ->  {
+            turtleDisplay.setBgColor(colorPicker2.getValue());
+        });
         myConsole = new Console();
         myConsole.getConsoleBox().setLayoutX(200);
         myConsole.getConsoleBox().setLayoutY(400);
@@ -56,14 +53,10 @@ public class GUISetup implements FrontInternal{
         languages.add("Spanish");
         Label languageTitle = createLabel("Languages:");
         LanguageMenu langMenu = new LanguageMenu(languages);
-        ArrayList<String> colors = new ArrayList<>();
-        colors.add("Black");
-        colors.add("Red");
-        Label colorTitle = createLabel("Colors:");
-        ColorMenu colorMenu = new ColorMenu(colors);
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
-        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),startButton,stopButton);
+        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
+                startButton, stopButton, penTitle, colorPicker1, bgTitle, colorPicker2);
         userOptions.setSpacing(5);
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
@@ -81,8 +74,6 @@ public class GUISetup implements FrontInternal{
         Label createdLabel = new Label(text);
         return createdLabel;
     }
-
-
 
     public Button createButton(String title) {
         Button createdButton = new Button(title);
