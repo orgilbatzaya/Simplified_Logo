@@ -12,14 +12,6 @@ public class BackMain {
         myCommands = commands;
         myLanguage = language;
     }
-    private String readFileToString (String filename) {
-        final var END_OF_FILE = "\\z";
-        var input = new Scanner(getClass().getResourceAsStream(filename));
-        input.useDelimiter(END_OF_FILE);
-        var result = input.next();
-        input.close();
-        return result;
-    }
 
     // given some text, prints results of parsing it using the given language
     private void parseText (ProgramParser lang, String[] text) {
@@ -30,5 +22,7 @@ public class BackMain {
         }
         System.out.println();
     }
+
+
 
 }
