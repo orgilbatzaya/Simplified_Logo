@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -20,11 +22,13 @@ public class Console implements FrontExternal {
         userInput = createUserCommandLine();
         Text consoleTitle = new Text("Enter your command here:");
         Button submitButton = new Button("Go!");
+        HBox commandBox = new HBox(userInput, submitButton);
+        commandBox.setSpacing(10);
         pastCommandList = new ListView<>();
         pastCommands = FXCollections.observableArrayList();
         pastCommandList.setMaxHeight(200);
-        submitButton.setOnAction(event -> processCommand());
-        consoleBox = new VBox(consoleTitle, userInput, submitButton, pastCommandList);
+        submitButton.setOnAction(event -> processCommand(KeyCode.ENTER));
+        consoleBox = new VBox(consoleTitle, commandBox, pastCommandList);
     }
 
     public TextField createUserCommandLine() {
@@ -36,7 +40,10 @@ public class Console implements FrontExternal {
         return consoleBox;
     }
 
-    public void processCommand () {
+    public void processCommand (KeyCode code) {
+        if(code == KeyCode.TAB) {
+            userInput.setText(userInput.getText()+"\n");
+        }
         currentCommand = userInput.getText();
         pastCommands.add(0,currentCommand);
         pastCommandList.setItems(pastCommands);
