@@ -1,10 +1,12 @@
 package View;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.geometry.Pos;
@@ -14,19 +16,53 @@ import javafx.scene.paint.Paint;
 
 public class TurtleDisplay {
     private Canvas myCanvas;
-    private Label myLabel;
-    private int[] myDim = {40,40};
+    private GraphicsContext myGC;
+    private Color penColor;
+    private Color bgColor;
 
 
     public TurtleDisplay(){
         myCanvas = new Canvas(400,400);
-        GraphicsContext gc = myCanvas.getGraphicsContext2D();
-        initDraw(gc);
+        myGC = myCanvas.getGraphicsContext2D();
+        initDraw(myGC);
+        myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
+        penColor = Color.RED;
+        bgColor = Color.WHITE;
+
 
     }
 
     public Canvas getCanvas(){
         return myCanvas;
+    }
+
+
+
+    EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+
+        public void handle(MouseEvent e) {
+            double size = 10.0;
+            double x = e.getX() - size/2;
+            double y = e.getY() - size/2;
+            myGC.setFill(penColor);
+            myGC.setEffect(new DropShadow());
+            myGC.fillRect(x,y,size,size);
+        }
+
+    };
+
+
+    public GraphicsContext getGraphicsContext(){
+        return myGC;
+    }
+
+    public void setPenColor(Color c){
+        penColor = c;
+    }
+    public void setBgColor(Color c){
+        bgColor = c;
+        myGC.setFill(bgColor);
+        myGC.fillRect(50,50,myCanvas.getWidth(),myCanvas.getHeight());
     }
 
 
@@ -39,7 +75,7 @@ public class TurtleDisplay {
 
         gc.fillRect(50, 50, canvasWidth, canvasHeight);
 
-        gc.setStroke(Color.BLACK);
+        //gc.setStroke(Color.BLACK);
         gc.setLineWidth(10);
 
     }

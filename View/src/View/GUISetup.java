@@ -2,19 +2,23 @@ package View;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.effect.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -46,11 +50,26 @@ public class GUISetup implements FrontInternal{
         //GridPane gp = createPane("Hi");
         //root.getChildren().add(gp);
         turtleDisplay = new TurtleDisplay();
+        turtleDisplay.getCanvas().setVisible(true);
+
+
+        ColorPicker colorPicker1 = new ColorPicker(Color.RED);
+        HBox penTitle = createLabel("Pen Color:");
+        colorPicker1.setOnAction(event ->  {
+                turtleDisplay.setPenColor(colorPicker1.getValue());
+        });
+        ColorPicker colorPicker2 = new ColorPicker(Color.WHITE);
+        HBox bgTitle = createLabel("Background Color:");
+        colorPicker2.setOnAction(event ->  {
+            turtleDisplay.setBgColor(colorPicker2.getValue());
+        });
+
         myConsole = new Console();
         myConsole.getConsoleBox().setLayoutX(200);
         myConsole.getConsoleBox().setLayoutY(400);
         root.getChildren().add(turtleDisplay.getCanvas());
         root.getChildren().add(myConsole.getConsoleBox());
+
         ArrayList<String> languages = new ArrayList<>();
         languages.add("English");
         languages.add("Spanish");
@@ -63,7 +82,8 @@ public class GUISetup implements FrontInternal{
         LanguageMenu colorMenu = new LanguageMenu(colors);
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
-        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),startButton,stopButton);
+        VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(), colorTitle, colorMenu.getChoiceBox(),
+                startButton, stopButton, penTitle, colorPicker1, bgTitle, colorPicker2);
         userOptions.setSpacing(5);
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
