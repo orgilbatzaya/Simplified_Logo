@@ -46,7 +46,7 @@ public class GUISetup implements FrontInternal{
             turtleDisplay.setBgColor(colorPicker2.getValue());
         });
         myConsole = new Console();
-        myConsole.getConsoleBox().setLayoutX(200);
+        myConsole.getConsoleBox().setLayoutX(50);
         myConsole.getConsoleBox().setLayoutY(400);
         Label languageTitle = createLabel("Languages:");
         LanguageMenu langMenu = new LanguageMenu();
