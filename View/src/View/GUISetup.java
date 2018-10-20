@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
  */
 public class GUISetup implements FrontInternal{
     private static final String DEFAULT_RESOURCE = "resources/ViewDefaults";
-    private static final String[] LANGUAGE_ARRAY = {"Chinese","English", "French", "German", "Italian", "Portuguese", "Russian", "Spanish"};
 
     private Scene myScene;
     private TurtleDisplay turtleDisplay;
@@ -41,7 +40,7 @@ public class GUISetup implements FrontInternal{
         colorPicker1.setOnAction(event ->  {
                 turtleDisplay.setPenColor(colorPicker1.getValue());
         });
-        ColorPicker colorPicker2 = new ColorPicker(Color.WHITE);
+        ColorPicker colorPicker2 = new ColorPicker();
         Label bgTitle = createLabel("Background Color:");
         colorPicker2.setOnAction(event ->  {
             turtleDisplay.setBgColor(colorPicker2.getValue());
@@ -75,9 +74,5 @@ public class GUISetup implements FrontInternal{
     public Button createButton(String title) {
         Button createdButton = new Button(title);
         return createdButton;
-    }
-
-    private void changeColor(String color) {
-        myScene.setFill(Paint.valueOf(color.toUpperCase()));
     }
 }
