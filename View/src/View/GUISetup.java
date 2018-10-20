@@ -67,7 +67,7 @@ public class GUISetup implements FrontInternal{
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
         root.getChildren().addAll(turtleDisplay.getCanvas(), myConsole.getConsoleBox(), userOptions);
-        scene.setOnKeyPressed(event -> myConsole.processCommand(event.getCode()));
+        scene.setOnKeyPressed(event -> myConsole.processCommand());
         return scene;
     }
 
