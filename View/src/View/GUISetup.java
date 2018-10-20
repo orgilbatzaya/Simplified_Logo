@@ -1,31 +1,17 @@
 package View;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.effect.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
-import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ResourceBundle;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -47,8 +33,7 @@ public class GUISetup implements FrontInternal{
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        //GridPane gp = createPane("Hi");
-        //root.getChildren().add(gp);
+
         turtleDisplay = new TurtleDisplay();
         turtleDisplay.getCanvas().setVisible(true);
 
@@ -67,7 +52,7 @@ public class GUISetup implements FrontInternal{
         myConsole = new Console();
         myConsole.getConsoleBox().setLayoutX(200);
         myConsole.getConsoleBox().setLayoutY(400);
-        root.getChildren().add(turtleDisplay.getCanvas());
+        root.getChildren().add(turtleDisplay);
         root.getChildren().add(myConsole.getConsoleBox());
 
         ArrayList<String> languages = new ArrayList<>();
@@ -119,4 +104,6 @@ public class GUISetup implements FrontInternal{
     private void changeColor(String color) {
         myScene.setFill(Paint.valueOf(color.toUpperCase()));
     }
+
+
 }
