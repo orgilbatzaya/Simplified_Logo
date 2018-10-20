@@ -2,10 +2,11 @@ package View;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-public class TurtleView{
+import java.util.Observer;
+
+public class TurtleView implements Observer {
     private static final String DEFAULT_STARTING_TURTLE = "/resources/images/turtle-basic.png";
     private static final int DEFAULT_STARTING_POS = 0;
 
@@ -48,9 +49,17 @@ public class TurtleView{
     public void setX(int x){
         xPos = x;
     }
-    
+
     public void setY(int y){
         xPos = y;
+    }
+
+    public void move(int x, int y){
+
+    }
+
+    public void update(){
+
     }
 
 
