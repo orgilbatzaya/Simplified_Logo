@@ -14,11 +14,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 
-public class TurtleDisplay {
+public class TurtleDisplay extends StackPane{
     private Canvas myCanvas;
     private GraphicsContext myGC;
     private Color penColor;
     private Color bgColor;
+    private TurtleView myTurtle;
 
 
     public TurtleDisplay(){
@@ -28,6 +29,12 @@ public class TurtleDisplay {
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
         penColor = Color.RED;
         bgColor = Color.WHITE;
+        myTurtle = new TurtleView();
+        myTurtle.getView().setVisible(true);
+        this.getChildren().add(myCanvas);
+        this.getChildren().add(myTurtle.getView());
+        this.setAlignment(myTurtle.getView(), Pos.CENTER);
+
 
 
     }
@@ -62,7 +69,7 @@ public class TurtleDisplay {
     public void setBgColor(Color c){
         bgColor = c;
         myGC.setFill(bgColor);
-        myGC.fillRect(50,50,myCanvas.getWidth(),myCanvas.getHeight());
+        myGC.fillRect(0,0,myCanvas.getWidth(),myCanvas.getHeight());
     }
 
 
@@ -73,7 +80,7 @@ public class TurtleDisplay {
 
         gc.setFill(Color.WHITE);
 
-        gc.fillRect(50, 50, canvasWidth, canvasHeight);
+        gc.fillRect(0, 0, canvasWidth, canvasHeight);
 
         //gc.setStroke(Color.BLACK);
         gc.setLineWidth(10);
