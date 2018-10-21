@@ -1,17 +1,17 @@
 package view;
 
+import javafx.beans.Observable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class TurtleView{
-    private static final String DEFAULT_STARTING_TURTLE = "/resources/images/turtle-basic.png";
+public class TurtleView {
+    private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
     private static final int DEFAULT_STARTING_POS = 0;
     private static final int DEFAULT_TURTLE_WIDTH = 30;
     private static final int DEFAULT_TURTLE_HEIGHT = 30;
 
     private double mySpeed;
-
     private Color penColor;
     private boolean penDown;
     private double penWidth;
@@ -26,8 +26,7 @@ public class TurtleView{
 
     public TurtleView(){
         myView = new ImageView();
-        Image turtleImage = new Image(this.getClass().getResourceAsStream(DEFAULT_STARTING_TURTLE));
-        myView.setImage(turtleImage);
+        setView(DEFAULT_STARTING_TURTLE);
         xPos = DEFAULT_STARTING_POS;
         yPos = DEFAULT_STARTING_POS;
         myView.setX(xPos);

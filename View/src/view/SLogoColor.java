@@ -7,11 +7,11 @@ import javafx.scene.paint.Color;
  * Class to potentially replace color pickers. Will need to think about implementation more.
  */
 
-public class slogoColor {
+public class SLogoColor {
     private ColorPicker myColorPicker;
     private Color myColor;
 
-    public slogoColor(Color defaultColor) {
+    public SLogoColor(Color defaultColor) {
         myColorPicker = new ColorPicker(defaultColor);
         myColor = myColorPicker.getValue();
         myColorPicker.setOnAction(e -> processChoice());
