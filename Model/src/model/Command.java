@@ -13,6 +13,8 @@ public abstract class Command {
         return Double.parseDouble(myArgs.get(index));
     }
 
+    public void setArgs(List<String> args) { myArgs = args; }
+
     public abstract double execute(TurtleDisplay display);
 
 }

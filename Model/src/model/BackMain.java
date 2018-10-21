@@ -2,6 +2,7 @@ package model;
 
 //Receives an input block of text and performs the corresponding commands
 
+import model.commands.MathOps.Argument;
 import view.TurtleDisplay;
 
 import java.util.*;
@@ -132,29 +133,38 @@ public class BackMain {
         }
         */
 
-        Stack<String> toDo = new Stack<>();
-        Stack<String> tempDone = new Stack<>();
-        Stack<String> tempArgs = new Stack<>();
-        Stack<Integer> loopTimes = new Stack<>();
+        Stack<Command> toDo = new Stack<>();
+        Stack<Command> tempDone = new Stack<>();
+        Stack<Command> tempArgs = new Stack<>();
+
+        Factory fac = new Factory();
         for(String s : text) {
-            toDo.push(s);
+            if(!(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || CONTROL_OPS.contains(s) || TURTLE_COMMANDS.contains(s))) {
+                toDo.push(fac.makeCommand(s, new ArrayList<String>()));
+            }
+            else {
+                ArrayList<String> tempArgument = new ArrayList<>();
+                tempArgument.add(s);
+                toDo.push(new Argument(tempArgument));
+            }
         }
         while(!toDo.isEmpty()){
-            String temp = toDo.pop();
+            Command temp = toDo.pop();
             tempDone.push(temp);
-            if(!(BOOLEAN_OPS.contains(temp) || MATH_OPS.contains(temp) || CONTROL_OPS.contains(temp) || TURTLE_COMMANDS.contains(temp))) {
+            String s = temp.getClass().getName();
+            if(!(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || CONTROL_OPS.contains(s) || TURTLE_COMMANDS.contains(s))) {
                 tempArgs.add(temp);
             }
-            else if(BOOLEAN_OPS.contains(temp) || MATH_OPS.contains(temp)) {
+            else if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
                 var interpreter = new Interpret();
-                int numArgs = myNumArgsMap.get(temp);
+                int numArgs = myNumArgsMap.get(s);
                 ArrayList<String> curArgs = new ArrayList<>();
                 for (int i = 0; i < numArgs; i++) {
                     curArgs.add(tempArgs.pop());
                 }
-                tempArgs.push(interpreter.interpretCommand(temp, curArgs, myTurtleDisplay) + "");
+                tempArgs.push(interpreter.interpretCommand(s, curArgs, myTurtleDisplay) + "");
             }
-            else if(CONTROL_OPS.contains(temp)) {
+            else if(CONTROL_OPS.contains(s)) {
                 var interpreter = new Interpret();
                 int tempTimes = loopTimes.pop();
                 if(tempTimes >= 0) {
@@ -167,7 +177,9 @@ public class BackMain {
                     toDo.pop();
                 }
             }
+            else {
 
+            }
         }
 
     }
