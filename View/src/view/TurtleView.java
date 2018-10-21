@@ -58,18 +58,17 @@ public class TurtleView{
     }
 
     public void setXTurtle(double x){
-        xPos = x;
+        setX(x);
         myView.setX(x);
     }
     public void setYTurtle(double y){
-        yPos = y;
+        setY(y);
         myView.setX(y);
     }
 
-    public void move(double distance, double angle){
-        double angleFinal = myHeading-angle;// is this necessary?
-        double changeX = distance*Math.cos(Math.toRadians(angleFinal));
-        double changeY = distance*Math.sin(Math.toRadians(angleFinal));
+    public void move(double distance){
+        double changeX = distance*Math.cos(Math.toRadians(myHeading));
+        double changeY = distance*Math.sin(Math.toRadians(myHeading));
         setXTurtle(myView.getX()+changeX);
         setYTurtle(myView.getY()+changeY);
         myDistanceTraveled = distance+myDistanceTraveled;

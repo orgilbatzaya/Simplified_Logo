@@ -1,5 +1,6 @@
 package model;
 
+import java.security.InvalidKeyException;
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
@@ -48,7 +49,6 @@ public class ProgramParser {
                 return e.getKey();
             }
         }
-        // FIXME: perhaps throw an exception instead
         return ERROR;
     }
 
