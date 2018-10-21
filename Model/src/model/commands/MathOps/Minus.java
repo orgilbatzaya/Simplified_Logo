@@ -1,6 +1,8 @@
 package model.commands.MathOps;
 
 import model.Command;
+import view.TurtleDisplay;
+
 import java.util.List;
 
 public class Minus extends Command {
@@ -9,7 +11,7 @@ public class Minus extends Command {
     }
 
     @Override
-    public double execute() {
+    public double execute(TurtleDisplay display) {
         double firstVal = getArgsDouble(0);
         return firstVal*(-1);
     }
