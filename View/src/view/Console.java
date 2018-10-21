@@ -1,9 +1,6 @@
 package view;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
@@ -12,6 +9,7 @@ import javafx.scene.text.Text;
 
 /**
  * This class represents the console of SLogo.
+ * It has a command line, a button to submit the command, and three currentEnvironmentDisplays that show past commands, current variables, and current user-defined functions
  * @author Austin Kao
  */
 
@@ -21,9 +19,9 @@ public class Console implements FrontExternal {
     private String currentCommand;
     private HBox consoleBox;
     private String currentLang;
-    private currentEnvironmentDisplay pastCommands;
-    private currentEnvironmentDisplay currentVariables;
-    private currentEnvironmentDisplay currentFunctions;
+    private CurrentEnvironmentDisplay pastCommands;
+    private CurrentEnvironmentDisplay currentVariables;
+    private CurrentEnvironmentDisplay currentFunctions;
 
     public Console() {
         userInput = createUserCommandLine();
@@ -31,11 +29,11 @@ public class Console implements FrontExternal {
         Button submitButton = new Button("Go!");
         HBox commandBox = new HBox(userInput, submitButton);
         commandBox.setSpacing(10);
-        pastCommands = new currentEnvironmentDisplay(200);
+        pastCommands = new CurrentEnvironmentDisplay(200);
         Text variableTitle = new Text("Current variables in environment:");
-        currentVariables = new currentEnvironmentDisplay(100);
+        currentVariables = new CurrentEnvironmentDisplay(100);
         Text functionTitle = new Text("Current user-defined commands in environment:");
-        currentFunctions = new currentEnvironmentDisplay(100);
+        currentFunctions = new CurrentEnvironmentDisplay(100);
         VBox rightColumn = new VBox(variableTitle, currentVariables.getDisplay(), functionTitle, currentFunctions.getDisplay());
         rightColumn.setSpacing(10);
         submitButton.setOnAction(event -> processCommand());

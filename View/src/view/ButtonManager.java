@@ -1,68 +1,70 @@
 package view;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.util.ResourceBundle;
-import javafx.scene.web.WebView;
 
-/**
- * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
- * The default constructor calls createGUI() automatically, so myScene is automatically initialized to some scene.
- * @author Austin Kao
- */
-public class GUISetup implements FrontInternal{
+public class ButtonManager {
+    TurtleDisplay turtleDisplay;
+    VBox userOptions;
+    private ResourceBundle myConstants;
     private static final String DEFAULT_RESOURCE = "resources/ViewDefaults";
+    private Button playPauseButton;
     private static final String RESOURCE_PATH = "data/images/";
     private static final String IMAGE_PATH = "/images/";
 
-    private Scene myScene;
-    private TurtleDisplay turtleDisplay;
-    private Group root;
-    private Console myConsole;
-    private ResourceBundle myConstants;
-    private ButtonManager buttonManager;
-    private Button playPauseButton;
 
 
-    public GUISetup() {
+    public ButtonManager(TurtleDisplay turtleDisplay){
+        this.turtleDisplay = turtleDisplay;
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
-        buttonManager = new ButtonManager(turtleDisplay);
+        createUserOptions();
 
-        myScene = createGUI(800,800, Color.AZURE);
     }
 
-    public Scene createGUI(int width, int height, Paint background) {
-        root = new Group();
-        var scene = new Scene(root, width, height, background);
-        turtleDisplay = new TurtleDisplay();
+    private void createUserOptions(){
+        ColorPicker colorPicker1 = new ColorPicker(Color.RED);
+        Label penTitle = createLabel("Pen Color:");
+        colorPicker1.setOnAction(event ->  {
+            turtleDisplay.setPenColor(colorPicker1.getValue());
+        });
+        ColorPicker colorPicker2 = new ColorPicker();
+        Label bgTitle = createLabel("Background Color:");
+        colorPicker2.setOnAction(event ->  {
+            turtleDisplay.setBgColor(colorPicker2.getValue());
+        });
+        Label languageTitle = createLabel("Languages:");
+        LanguageMenu langMenu = new LanguageMenu();
 
-        turtleDisplay.getCanvas().setVisible(true);
-        myConsole = new Console();
-        myConsole.getConsoleBox().setLayoutX(50);
-        myConsole.getConsoleBox().setLayoutY(400);
-
-        root.getChildren().addAll(turtleDisplay, myConsole.getConsoleBox(), buttonManager.getUserOptions());
-
-        return scene;
+        playPauseButton = createButton("Pause");
+        playPauseButton.setOnAction(e -> playPauseAnimation());
+        Button stopButton = createButton("Stop");
+        stopButton.setOnAction(e -> stopAnimation());
+        Button changeButton = createButton("Change the turtle");
+        changeButton.setOnAction(e -> chooseNewTurtle());
+        Button helpButton = createButton("Help");
+        helpButton.setOnAction(e -> openHelpPage());
+        userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
+                playPauseButton, stopButton, changeButton,helpButton, penTitle, colorPicker1, bgTitle, colorPicker2);
+        userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
+        userOptions.setLayoutX(500);
+        userOptions.setLayoutY(100);
     }
 
-
-    //External API maybe
-    public Scene getScene() {
-        return myScene;
+    public VBox getUserOptions(){
+        return userOptions;
     }
 
-    public Label createLabel(String text) {
+    private Label createLabel(String text) {
         Label createdLabel = new Label(text);
         return createdLabel;
     }
@@ -70,10 +72,6 @@ public class GUISetup implements FrontInternal{
     public Button createButton(String title) {
         Button createdButton = new Button(title);
         return createdButton;
-    }
-
-    public ResourceBundle getDefaultValues() {
-        return myConstants;
     }
 
     private void chooseNewTurtle() {
@@ -111,4 +109,7 @@ public class GUISetup implements FrontInternal{
         WebEngine webEngine = web.getEngine();
         webEngine.load("https://www2.cs.duke.edu/courses/fall18/compsci308/assign/03_slogo/part2_PZ1.php#gsc.tab=0");
     }
+
+
+
 }

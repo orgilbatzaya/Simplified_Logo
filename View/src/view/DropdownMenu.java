@@ -5,6 +5,12 @@ import javafx.scene.control.ChoiceBox;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents a dropdown menu in the GUI.
+ * In the basic implementation of SLogo, there is only one class that extends this class: LanguageMenu
+ * If there is any need for other dropdown menus, this class can be extended.
+ * @author Austin Kao
+ */
 public abstract class DropdownMenu {
     private ChoiceBox myChoiceBox;
 
