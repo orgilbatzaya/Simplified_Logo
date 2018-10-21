@@ -3,9 +3,6 @@ package view;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.util.ResourceBundle;
-//import model.ProgramParser;
-
 /**
  * This class is mainly intended to launch the SLogo application.
  * @author Austin Kao

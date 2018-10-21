@@ -1,10 +1,13 @@
 package view;
 
 import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,11 +24,16 @@ import javafx.util.Duration;
 
 
 public class TurtleDisplay extends StackPane{
+    public static final int FRAMES_PER_SECOND = 60;
+    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+
     private Canvas myCanvas;
     private GraphicsContext myGC;
     private Color penColor;
     private Color bgColor;
     private TurtleView myTurtle;
+    private Point2D myPos;
 
     public TurtleDisplay(){
         myCanvas = new Canvas(400,400);
@@ -40,9 +48,12 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myTurtle.getView());
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
         Circle pen = new Circle(0, 0, 3);
-        Location next = new Location();
-        next.x = 50;
-        next.y = 340;
+        myPos = new Point2D(50, 340);
+        //var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+        //var myAnimation = new Timeline();
+        //myAnimation.setCycleCount(Timeline.INDEFINITE);
+        //myAnimation.getKeyFrames().add(frame);
+        //myAnimation.play();
         Animation animation1 = move(myTurtle.getView(), Duration.seconds(10));
         //Animation animation2 = move(, Duration.millis((3000)));
         //ParallelTransition parallelTransition = new ParallelTransition(animation1, animation2);
@@ -56,7 +67,7 @@ public class TurtleDisplay extends StackPane{
         return myCanvas;
     }
 
-    public EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+    public EventHandler<MouseEvent> handler = new EventHandler<>() {
 
         public void handle(MouseEvent e) {
             double size = 10.0;
@@ -64,7 +75,7 @@ public class TurtleDisplay extends StackPane{
             double y = e.getY() - size/2;
             myGC.setFill(penColor);
             myGC.setEffect(new DropShadow());
-            myGC.fillRect(x,y,size,size);
+            myGC.fillOval(x,y,size,size);
         }
     };
 
@@ -114,7 +125,7 @@ public class TurtleDisplay extends StackPane{
         pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
         {
 
-            Location oldLocation = null;
+            Point2D oldLocation = null;
 
             /**
              * Draw a line from the old location to the new location
@@ -132,9 +143,7 @@ public class TurtleDisplay extends StackPane{
 
                 // initialize the location
                 if( oldLocation == null) {
-                    oldLocation = new Location();
-                    oldLocation.x = x+myCanvas.getWidth() / 2;
-                    oldLocation.y = y+myCanvas.getHeight()/2;
+                    oldLocation = new Point2D(x+myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
                     return;
                 }
 
@@ -142,29 +151,13 @@ public class TurtleDisplay extends StackPane{
                 myGC.setStroke(Color.BLUE);
                 myGC.setFill(Color.YELLOW);
                 myGC.setLineWidth(4);
-                myGC.strokeLine(oldLocation.x, oldLocation.y, x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+                myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
 
                 // update old location with current one
-                oldLocation.x = x+ myCanvas.getWidth() / 2;
-                oldLocation.y = y+myCanvas.getHeight()/2;
+                oldLocation = new Point2D(x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
             }
         });
 
         return pathTransition;
     }
-
-    public static class Location {
-        double x;
-        double y;
-    }
-
-
-
-
-
-
-
-
-
-
 }
