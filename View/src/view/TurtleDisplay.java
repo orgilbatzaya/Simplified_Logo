@@ -31,6 +31,7 @@ public class TurtleDisplay extends StackPane{
     private ParallelTransition myCurrentAnimation;
     private Rectangle myBackground;
 
+
     public TurtleDisplay() {
         myBackground = new Rectangle(400, 400);
         myBackground.setFill(Color.WHITE);
@@ -46,25 +47,39 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        Circle pen = new Circle(0, 0, 3);
-        myPos = new Point2D(50, 340);
-        Animation animation1 = move(myTurtle.getView(), Duration.seconds(10));
-        myTurtle.move(100,0);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(10000), myTurtle.getView());
-        tt.setByX(100f);
-        myCurrentAnimation = new ParallelTransition(animation1, tt);
-        myCurrentAnimation.play();
-        //tt.setCycleCount(4);
-        //tt.setAutoReverse(true);
-        System.out.println(myTurtle.getView().getX());
-        System.out.println(myTurtle.getView().getY());
+        move(myTurtle.getX(), myTurtle.getY());
+        move(myTurtle.getX(),myTurtle.getY());
+
     }
 
     public Canvas getCanvas(){
         return myCanvas;
     }
 
-    public EventHandler<MouseEvent> handler = new EventHandler<>() {
+    public void move(double nextX, double nextY){
+        myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
+        Point2D next = new Point2D(nextX + 100, nextY + 100);
+
+        PathTransition drawLine = animate(myPos, next, Duration.seconds(3));
+
+        TranslateTransition translateTurt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
+        translateTurt.setByX(next.getX());
+        translateTurt.setByY(next.getY());
+
+        ParallelTransition both = new ParallelTransition(drawLine,translateTurt);
+        both.play();
+        myTurtle.moveBy((int) next.getX(), (int) next.getY());
+
+        System.out.println(myTurtle.getX());
+
+
+    }
+
+
+
+
+    EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+
 
         public void handle(MouseEvent e) {
             double size = 10.0;
@@ -88,20 +103,17 @@ public class TurtleDisplay extends StackPane{
         myBackground.setFill(c);
     }
 
-    public Animation move(ImageView v, Duration duration)
+    public PathTransition animate(Point2D current, Point2D next, Duration duration)
     {
         Path myPath = new Path();
-        MoveTo initialPosition = new MoveTo(v.getX(), v.getY());
-        LineTo lineTo = new LineTo();
-        lineTo.setX(v.getX()+100);
-        lineTo.setY(v.getY());
+        MoveTo initialPosition = new MoveTo(current.getX(), current.getY());
+        LineTo lineTo = new LineTo(next.getX(),next.getY());
+
         myPath.getElements().add(initialPosition);
         myPath.getElements().add(lineTo);
 
         Circle pen = new Circle(0, 0, 3);
-        TurtleView turt = new TurtleView();
 
-        // create path transition
         PathTransition pathTransition = new PathTransition(duration, myPath, pen);
         pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
         {

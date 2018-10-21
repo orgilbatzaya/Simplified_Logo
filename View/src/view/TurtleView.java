@@ -36,6 +36,11 @@ public class TurtleView {
 
     }
 
+    public void setView(String value){
+        Image turtleImage = new Image(this.getClass().getResourceAsStream(value));
+        myView.setImage(turtleImage);
+    }
+
     public ImageView getView(){
         return myView;
     }
@@ -90,8 +95,12 @@ public class TurtleView {
         return myDistanceTraveled;
     }
 
-    public void setPenDown(Boolean pen){
-        penDown = pen;
+    public void moveBy(int x, int y){
+        xPos += x;
+        yPos += y;
+        myView.setX(xPos);
+        myView.setY(yPos);
+
     }
 
     public Boolean getPenDown(){
