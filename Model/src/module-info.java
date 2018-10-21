@@ -5,6 +5,6 @@ module slogoModel {
     requires javafx.graphics;
     requires javafx.media;
 
-    exports Model;
+    exports model;
 
 }

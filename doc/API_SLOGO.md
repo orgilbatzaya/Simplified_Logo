@@ -30,7 +30,7 @@ These other classes will either be passed to this object's constructor or method
             * readLine()
             
     * What objects will be used for communication: making it clear how needed information will get where it is needed, what will be available and what will be encapsulated, what things will be immutable, and what errors may be thrown. Note, all of these methods will need to be public.
-        * Command class that takes in user input from the interpreter and passes instructions to the Model/backend
+        * Command class that takes in user input from the interpreter and passes instructions to the model/backend
             * getNextSteps() returns an ordered Collection of (x,y) positions
             * getCurrentPos()
             * Errors about invalid commands may be thrown here
