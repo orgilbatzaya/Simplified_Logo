@@ -5,16 +5,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-import java.util.Observer;
-
 public class TurtleView {
-    private static final String DEFAULT_STARTING_TURTLE = "/resources/images/turtle-basic.png";
+    private static final String DEFAULT_STARTING_TURTLE = "turtle-basic.png";
     private static final int DEFAULT_STARTING_POS = 0;
     private static final Color DEFAULT_PEN_COLOR = Color.RED;
     private static final double DEFAULT_PEN_WIDTH = 5;
 
     private double mySpeed;
-
     private Color penColor;
     private boolean penDown;
     private double penWidth;
@@ -24,10 +21,9 @@ public class TurtleView {
     private int yPos;
     private Observable ov = null;
 
-
     public TurtleView(){
         myView = new ImageView();
-        Image turtleImage = new Image(this.getClass().getResourceAsStream(DEFAULT_STARTING_TURTLE));
+        Image turtleImage = new Image(this.getClass().getClassLoader().getResourceAsStream(DEFAULT_STARTING_TURTLE));
         myView.setImage(turtleImage);
         xPos = DEFAULT_STARTING_POS;
         yPos = DEFAULT_STARTING_POS;
@@ -37,9 +33,6 @@ public class TurtleView {
         myView.setFitWidth(30);
         setPenColor(DEFAULT_PEN_COLOR);
         setPenWidth(DEFAULT_PEN_WIDTH);
-
-
-
     }
 
     public ImageView getView(){
@@ -85,8 +78,5 @@ public class TurtleView {
     public void update(Observable item, Object obj){
         System.out.println(ov);
     }
-
-
-
 
 }

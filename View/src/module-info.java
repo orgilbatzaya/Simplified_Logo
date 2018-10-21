@@ -6,5 +6,4 @@ module slogoView {
     requires javafx.media;
 
     exports view;
-
 }

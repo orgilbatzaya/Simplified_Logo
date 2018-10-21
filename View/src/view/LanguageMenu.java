@@ -5,6 +5,12 @@ import javafx.collections.FXCollections;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * This class allows users to switch the language of the commands entered.
+ * The constructor also generates the list of choices for languages, which are specified in the LanguageList.properties file in the resources package.
+ * @author Austin Kao
+ */
+
 public class LanguageMenu extends DropdownMenu{
     private static final String DEFAULT_LANGUAGE_PACKAGE = "resources/languages/";
     private static final String DEFAULT_LANGUAGE_LIST = "resources/LanguageList";

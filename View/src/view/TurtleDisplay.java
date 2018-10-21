@@ -1,25 +1,22 @@
 package view;
 
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.PathTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 
@@ -29,8 +26,6 @@ public class TurtleDisplay extends StackPane{
     private Color penColor;
     private Color bgColor;
     private TurtleView myTurtle;
-
-
 
     public TurtleDisplay(){
         myCanvas = new Canvas(400,400);
@@ -43,7 +38,6 @@ public class TurtleDisplay extends StackPane{
         myTurtle.getView().setVisible(true);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
-
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
         Circle pen = new Circle(0, 0, 3);
         Location next = new Location();
@@ -56,19 +50,13 @@ public class TurtleDisplay extends StackPane{
         animation1.play();
         System.out.println(myTurtle.getX());
         System.out.println(myTurtle.getY());
-
-
     }
 
     public Canvas getCanvas(){
         return myCanvas;
     }
 
-    public
-
-
-
-    EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+    public EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent e) {
             double size = 10.0;
@@ -78,7 +66,6 @@ public class TurtleDisplay extends StackPane{
             myGC.setEffect(new DropShadow());
             myGC.fillRect(x,y,size,size);
         }
-
     };
 
 

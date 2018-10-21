@@ -56,7 +56,7 @@ public class GUISetup implements FrontInternal{
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
-        root.getChildren().addAll(turtleDisplay.getCanvas(), myConsole.getConsoleBox(), userOptions);
+        root.getChildren().addAll(turtleDisplay, myConsole.getConsoleBox(), userOptions);
         return scene;
     }
 
@@ -73,5 +73,9 @@ public class GUISetup implements FrontInternal{
     public Button createButton(String title) {
         Button createdButton = new Button(title);
         return createdButton;
+    }
+
+    public ResourceBundle getDefaultValues() {
+        return myConstants;
     }
 }
