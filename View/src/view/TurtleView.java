@@ -79,6 +79,8 @@ public class TurtleView {
     public void move(int x, int y){
         xPos += x;
         yPos += y;
+        myView.setX(xPos);
+        myView.setY(yPos);
     }
     //@Override
     public void update(Observable item, Object obj){

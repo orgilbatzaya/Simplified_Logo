@@ -33,6 +33,7 @@ public class TurtleDisplay extends StackPane{
 
 
     public TurtleDisplay(){
+        //this.setBackground(new Background(new BackgroundFill(Color.RED)));
         myCanvas = new Canvas(400,400);
         myGC = myCanvas.getGraphicsContext2D();
         initDraw(myGC);
@@ -44,26 +45,8 @@ public class TurtleDisplay extends StackPane{
         myTurtle.getView().setVisible(true);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
-
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        Circle pen = new Circle(0, 0, 3);
-        Location next = new Location();
-        next.x = 50;
-        next.y = 340;
-        Animation animation1 = move(myTurtle.getView(), Duration.seconds(3));
-        myTurtle.move(100,0);
-        animation1.play();
-
-
-        TranslateTransition tt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
-        tt.setByX(100f);
-        //tt.setCycleCount(4);
-        //tt.setAutoReverse(true);
-
-        tt.play();
-        System.out.println(myTurtle.getView().getX());
-        System.out.println(myTurtle.getView().getY());
-
+        move();
 
     }
 
@@ -71,7 +54,33 @@ public class TurtleDisplay extends StackPane{
         return myCanvas;
     }
 
-    public
+    public void move(){
+        Location current = new Location();
+        current.x = myTurtle.getX();
+        current.y = myTurtle.getY();
+        Location next = new Location();
+        next.x = current.x + 100;
+        next.y = current.y;
+
+        Animation drawLine = animate(current, next, Duration.seconds(3));
+        myTurtle.move(100,0);
+
+
+
+
+        TranslateTransition translateTurt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
+        translateTurt.setByX(100f);
+
+
+        ParallelTransition both = new ParallelTransition(drawLine,translateTurt);
+        both.setAutoReverse(true);
+        both.setCycleCount(20);
+        both.play();
+
+        System.out.println(myTurtle.getView().getX());
+
+    }
+
 
 
 
@@ -117,20 +126,18 @@ public class TurtleDisplay extends StackPane{
 
     }
 
-    public Animation move(ImageView v, Duration duration)
+    public Animation animate(Location current, Location next, Duration duration)
     {
         Path myPath = new Path();
-        MoveTo initialPosition = new MoveTo(v.getX(), v.getY());
-        LineTo lineTo = new LineTo();
-        lineTo.setX(v.getX()+100);
-        lineTo.setY(v.getY());
+        MoveTo initialPosition = new MoveTo(current.x, current.y);
+        LineTo lineTo = new LineTo(next.x,next.y);
+
         myPath.getElements().add(initialPosition);
         myPath.getElements().add(lineTo);
 
         Circle pen = new Circle(0, 0, 3);
         TurtleView turt = new TurtleView();
 
-        // create path transition
         PathTransition pathTransition = new PathTransition(duration, myPath, pen);
         pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
         {

@@ -35,19 +35,27 @@ public class GUISetup implements FrontInternal{
         var scene = new Scene(root, width, height, background);
         turtleDisplay = new TurtleDisplay();
         turtleDisplay.getCanvas().setVisible(true);
+
+        myConsole = new Console();
+        myConsole.getConsoleBox().setLayoutX(50);
+        myConsole.getConsoleBox().setLayoutY(400);
+
+        VBox userOptions = createUserOptions();
+        root.getChildren().addAll(turtleDisplay, myConsole.getConsoleBox(), userOptions);
+        return scene;
+    }
+
+    private VBox createUserOptions(){
         ColorPicker colorPicker1 = new ColorPicker(Color.RED);
         Label penTitle = createLabel("Pen Color:");
         colorPicker1.setOnAction(event ->  {
-                turtleDisplay.setPenColor(colorPicker1.getValue());
+            turtleDisplay.setPenColor(colorPicker1.getValue());
         });
         ColorPicker colorPicker2 = new ColorPicker();
         Label bgTitle = createLabel("Background Color:");
         colorPicker2.setOnAction(event ->  {
             turtleDisplay.setBgColor(colorPicker2.getValue());
         });
-        myConsole = new Console();
-        myConsole.getConsoleBox().setLayoutX(50);
-        myConsole.getConsoleBox().setLayoutY(400);
         Label languageTitle = createLabel("Languages:");
         LanguageMenu langMenu = new LanguageMenu();
         Button startButton = createButton("Start");
@@ -57,10 +65,8 @@ public class GUISetup implements FrontInternal{
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
-        root.getChildren().addAll(turtleDisplay, myConsole.getConsoleBox(), userOptions);
-        return scene;
+        return userOptions;
     }
-
     //External API maybe
     public Scene getScene() {
         return myScene;
