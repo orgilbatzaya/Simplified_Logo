@@ -31,6 +31,7 @@ public class TurtleDisplay extends StackPane{
     private Color bgColor;
     private TurtleView myTurtle;
     private Point2D myPos;
+    private ParallelTransition myCurrentAnimation;
 
     public TurtleDisplay(){
         myCanvas = new Canvas(400,400);
@@ -53,17 +54,14 @@ public class TurtleDisplay extends StackPane{
         //myAnimation.getKeyFrames().add(frame);
         //myAnimation.play();
         //Animation animation2 = move(, Duration.millis((3000)));
-        //ParallelTransition parallelTransition = new ParallelTransition(animation1, animation2);
-        //parallelTransition.play();
-        Animation animation1 = move(myTurtle.getView(), Duration.seconds(3));
+        Animation animation1 = move(myTurtle.getView(), Duration.seconds(10));
         myTurtle.move(100,0);
-        animation1.play();
-        TranslateTransition tt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
+        TranslateTransition tt = new TranslateTransition(Duration.millis(10000), myTurtle.getView());
         tt.setByX(100f);
+        myCurrentAnimation = new ParallelTransition(animation1, tt);
+        myCurrentAnimation.play();
         //tt.setCycleCount(4);
         //tt.setAutoReverse(true);
-
-        tt.play();
         System.out.println(myTurtle.getView().getX());
         System.out.println(myTurtle.getView().getY());
     }
@@ -165,5 +163,13 @@ public class TurtleDisplay extends StackPane{
         });
 
         return pathTransition;
+    }
+
+    public ParallelTransition getCurrentAnimation() {
+        return myCurrentAnimation;
+    }
+
+    public TurtleView getMyTurtle() {
+        return myTurtle;
     }
 }

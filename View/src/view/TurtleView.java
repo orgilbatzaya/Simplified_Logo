@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class TurtleView {
-    private static final String DEFAULT_STARTING_TURTLE = "turtle-basic.png";
+    private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
     private static final int DEFAULT_STARTING_POS = 0;
     private static final Color DEFAULT_PEN_COLOR = Color.RED;
     private static final double DEFAULT_PEN_WIDTH = 5;
@@ -23,8 +23,7 @@ public class TurtleView {
 
     public TurtleView(){
         myView = new ImageView();
-        Image turtleImage = new Image(this.getClass().getClassLoader().getResourceAsStream(DEFAULT_STARTING_TURTLE));
-        myView.setImage(turtleImage);
+        setView(DEFAULT_STARTING_TURTLE);
         xPos = DEFAULT_STARTING_POS;
         yPos = DEFAULT_STARTING_POS;
         myView.setX(xPos);
@@ -37,6 +36,11 @@ public class TurtleView {
 
     public ImageView getView(){
         return myView;
+    }
+
+    public void setView(String value) {
+        Image turtleImage = new Image(this.getClass().getResourceAsStream(value));
+        myView.setImage(turtleImage);
     }
 
     public int getX(){

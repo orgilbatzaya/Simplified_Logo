@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
 import java.util.ResourceBundle;
 
 /**
@@ -17,12 +20,15 @@ import java.util.ResourceBundle;
  */
 public class GUISetup implements FrontInternal{
     private static final String DEFAULT_RESOURCE = "resources/ViewDefaults";
+    private static final String RESOURCE_PATH = "data/images/";
+    private static final String IMAGE_PATH = "/images/";
 
     private Scene myScene;
     private TurtleDisplay turtleDisplay;
     private Group root;
     private Console myConsole;
     private ResourceBundle myConstants;
+    private Button playPauseButton;
 
     public GUISetup() {
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
@@ -49,10 +55,13 @@ public class GUISetup implements FrontInternal{
         myConsole.getConsoleBox().setLayoutY(400);
         Label languageTitle = createLabel("Languages:");
         LanguageMenu langMenu = new LanguageMenu();
-        Button startButton = createButton("Start");
+        playPauseButton = createButton("Play");
+        playPauseButton.setOnAction(e -> playPauseAnimation());
         Button stopButton = createButton("Stop");
+        Button changeButton = createButton("Change the turtle");
+        changeButton.setOnAction(e -> chooseNewTurtle());
         VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
-                startButton, stopButton, penTitle, colorPicker1, bgTitle, colorPicker2);
+                playPauseButton, stopButton, changeButton, penTitle, colorPicker1, bgTitle, colorPicker2);
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(100);
@@ -77,5 +86,30 @@ public class GUISetup implements FrontInternal{
 
     public ResourceBundle getDefaultValues() {
         return myConstants;
+    }
+
+    public void chooseNewTurtle() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File");
+        File defaultFile = new File(RESOURCE_PATH);
+        fileChooser.setInitialDirectory(defaultFile);
+        File file = fileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+            try {
+                turtleDisplay.getMyTurtle().setView(IMAGE_PATH + file.getName());
+            } catch (Exception ex) {
+                System.out.println("Invalid image");
+            }
+        }
+    }
+
+    public void playPauseAnimation() {
+        if(playPauseButton.getText().equals("Play")) {
+            turtleDisplay.getCurrentAnimation().play();
+            playPauseButton.setText("Pause");
+        } else {
+            turtleDisplay.getCurrentAnimation().pause();
+            playPauseButton.setText("Play");
+        }
     }
 }
