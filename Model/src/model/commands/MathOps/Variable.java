@@ -4,22 +4,23 @@ import model.Command;
 import view.TurtleDisplay;
 
 import java.util.LinkedList;
-import java.util.List;
 
-public class Argument extends Command {
+public class Variable extends Command {
 
-    private double value;
-    public Argument(Double val) {
+    private String value;
+    public Variable(String val) {
         super(new LinkedList<>());
         value = val;
     }
 
     @Override
     public double execute(TurtleDisplay display) {
-        return value;
+        return 1;
     }
 
-    public void setValue(Double val) {
+    public void setValue(String val) {
         value = val;
     }
+
+    public String getValue() { return value; }
 }

@@ -3,6 +3,7 @@ package model;
 //Receives an input block of text and performs the corresponding commands
 
 import model.commands.MathOps.Argument;
+import model.commands.MathOps.Variable;
 import view.TurtleDisplay;
 
 import java.util.*;
@@ -22,6 +23,7 @@ public class BackMain {
     private ProgramParser myProgParser;
     private TurtleDisplay myTurtleDisplay;
     private String myLanguage;
+    private HashMap<String, Double> variables;
 
 
 
@@ -30,6 +32,7 @@ public class BackMain {
         myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myTurtleDisplay = display;
+        variables = new HashMap<>();
     }
 
     //simple implementation
@@ -139,47 +142,78 @@ public class BackMain {
 
         Factory fac = new Factory();
         for(String s : text) {
-            if(!(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || CONTROL_OPS.contains(s) || TURTLE_COMMANDS.contains(s))) {
+            if((BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || CONTROL_OPS.contains(s) || TURTLE_COMMANDS.contains(s))) {
                 toDo.push(fac.makeCommand(s, new ArrayList<String>()));
             }
             else {
-                ArrayList<String> tempArgument = new ArrayList<>();
-                tempArgument.add(s);
-                toDo.push(new Argument(tempArgument));
+                if(isDouble(s)) {
+                    toDo.push(new Argument(Double.parseDouble(s)));
+                }
+                else {
+                    toDo.push(new Variable(s));
+                }
             }
         }
         while(!toDo.isEmpty()){
             Command temp = toDo.pop();
             tempDone.push(temp);
             String s = temp.getClass().getName();
-            if(!(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || CONTROL_OPS.contains(s) || TURTLE_COMMANDS.contains(s))) {
-                tempArgs.add(temp);
-            }
-            else if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
+
+            if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
                 var interpreter = new Interpret();
                 int numArgs = myNumArgsMap.get(s);
                 ArrayList<String> curArgs = new ArrayList<>();
                 for (int i = 0; i < numArgs; i++) {
-                    curArgs.add(tempArgs.pop());
+                    curArgs.add(0, tempArgs.pop().execute(myTurtleDisplay) + "");
                 }
-                tempArgs.push(interpreter.interpretCommand(s, curArgs, myTurtleDisplay) + "");
+                tempArgs.push(new Argument(interpreter.interpretCommand(s, curArgs, myTurtleDisplay)));
+                tempDone.push(temp);
             }
+
             else if(CONTROL_OPS.contains(s)) {
-                var interpreter = new Interpret();
-                int tempTimes = loopTimes.pop();
-                if(tempTimes >= 0) {
+                if(temp.execute(myTurtleDisplay) <= 0) {
+                    temp.setValue(temp.getOriginalValue());
+                    tempDone.push(temp);
+                }
+                else {
                     while(!tempDone.isEmpty()) {
                         toDo.push(tempDone.pop());
                     }
-                    loopTimes.push(tempTimes - 1);
-                }
-                else {
-                    toDo.pop();
+                    temp.execute(myTurtleDisplay);
                 }
             }
-            else {
+            else if(TURTLE_COMMANDS.contains(s)) {
+                var interpreter = new Interpret();
+                int numArgs = myNumArgsMap.get(s);
+                ArrayList<String> curArgs = new ArrayList<>();
+                for (int i = 0; i < numArgs; i++) {
+                    curArgs.add(0, tempArgs.pop().execute(myTurtleDisplay) + "");
+                }
+                tempDone.push(temp);
+            }
+            else if(s.equals("Variable")) {
+                if(!variables.containsKey(((Variable)temp).getValue())) {
+                    variables.put(((Variable) temp).getValue(), tempArgs.pop().execute(myTurtleDisplay));
+                }
+                tempArgs.push(new Argument(variables.get(((Variable)temp).getValue())));
+                tempDone.push(temp);
+            }
 
+            else if(s.equals("Argument")) {
+                tempArgs.push(temp);
+                tempDone.push(temp);
             }
+        }
+
+    }
+
+    private boolean isDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        }
+        catch(NumberFormatException e) {
+            return false;
         }
 
     }
