@@ -13,10 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
+import javafx.scene.shape.*;
 import javafx.util.Duration;
 
 
@@ -32,28 +29,25 @@ public class TurtleDisplay extends StackPane{
     private TurtleView myTurtle;
     private Point2D myPos;
     private ParallelTransition myCurrentAnimation;
+    private Rectangle myBackground;
 
-    public TurtleDisplay(){
+    public TurtleDisplay() {
+        myBackground = new Rectangle(400, 400);
+        myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(400,400);
         myGC = myCanvas.getGraphicsContext2D();
-        initDraw(myGC);
+        myGC.setLineWidth(10);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
         penColor = Color.RED;
         bgColor = Color.WHITE;
         myTurtle = new TurtleView();
-
         myTurtle.getView().setVisible(true);
+        this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
         Circle pen = new Circle(0, 0, 3);
         myPos = new Point2D(50, 340);
-        //var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
-        //var myAnimation = new Timeline();
-        //myAnimation.setCycleCount(Timeline.INDEFINITE);
-        //myAnimation.getKeyFrames().add(frame);
-        //myAnimation.play();
-        //Animation animation2 = move(, Duration.millis((3000)));
         Animation animation1 = move(myTurtle.getView(), Duration.seconds(10));
         myTurtle.move(100,0);
         TranslateTransition tt = new TranslateTransition(Duration.millis(10000), myTurtle.getView());
@@ -91,24 +85,7 @@ public class TurtleDisplay extends StackPane{
         penColor = c;
     }
     public void setBgColor(Color c){
-        bgColor = c;
-        myGC.setFill(bgColor);
-        myGC.fillRect(0,0,myCanvas.getWidth(),myCanvas.getHeight());
-    }
-
-
-
-    private void initDraw(GraphicsContext gc){
-        double canvasWidth = gc.getCanvas().getWidth();
-        double canvasHeight = gc.getCanvas().getHeight();
-
-        gc.setFill(Color.WHITE);
-
-        gc.fillRect(0, 0, canvasWidth, canvasHeight);
-
-        //gc.setStroke(Color.BLACK);
-        gc.setLineWidth(10);
-
+        myBackground.setFill(c);
     }
 
     public Animation move(ImageView v, Duration duration)

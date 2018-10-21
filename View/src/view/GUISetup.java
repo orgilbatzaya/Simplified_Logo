@@ -42,22 +42,19 @@ public class GUISetup implements FrontInternal{
         turtleDisplay.getCanvas().setVisible(true);
         ColorPicker colorPicker1 = new ColorPicker(Color.RED);
         Label penTitle = createLabel("Pen Color:");
-        colorPicker1.setOnAction(event ->  {
-                turtleDisplay.setPenColor(colorPicker1.getValue());
-        });
+        colorPicker1.setOnAction(event -> turtleDisplay.setPenColor(colorPicker1.getValue()));
         ColorPicker colorPicker2 = new ColorPicker();
         Label bgTitle = createLabel("Background Color:");
-        colorPicker2.setOnAction(event ->  {
-            turtleDisplay.setBgColor(colorPicker2.getValue());
-        });
+        colorPicker2.setOnAction(event -> turtleDisplay.setBgColor(colorPicker2.getValue()));
         myConsole = new Console();
         myConsole.getConsoleBox().setLayoutX(50);
         myConsole.getConsoleBox().setLayoutY(400);
         Label languageTitle = createLabel("Languages:");
         LanguageMenu langMenu = new LanguageMenu();
-        playPauseButton = createButton("Play");
+        playPauseButton = createButton("Pause");
         playPauseButton.setOnAction(e -> playPauseAnimation());
         Button stopButton = createButton("Stop");
+        stopButton.setOnAction(e -> stopAnimation());
         Button changeButton = createButton("Change the turtle");
         changeButton.setOnAction(e -> chooseNewTurtle());
         VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
@@ -88,7 +85,7 @@ public class GUISetup implements FrontInternal{
         return myConstants;
     }
 
-    public void chooseNewTurtle() {
+    private void chooseNewTurtle() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open File");
         File defaultFile = new File(RESOURCE_PATH);
@@ -103,7 +100,7 @@ public class GUISetup implements FrontInternal{
         }
     }
 
-    public void playPauseAnimation() {
+    private void playPauseAnimation() {
         if(playPauseButton.getText().equals("Play")) {
             turtleDisplay.getCurrentAnimation().play();
             playPauseButton.setText("Pause");
@@ -111,5 +108,10 @@ public class GUISetup implements FrontInternal{
             turtleDisplay.getCurrentAnimation().pause();
             playPauseButton.setText("Play");
         }
+    }
+
+    //Potentially change method so that turtle resets to beginning of command
+    private void stopAnimation() {
+        turtleDisplay.getCurrentAnimation().stop();
     }
 }
