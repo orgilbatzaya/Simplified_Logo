@@ -1,6 +1,7 @@
 package model.commands.TurtleCommands;
 
 import model.Command;
+import view.TurtleDisplay;
 import view.TurtleView;
 
 import java.util.List;
@@ -11,9 +12,10 @@ public class Backward extends Command {
     }
 
     @Override
-    public double execute() {
-        TurtleView x = new TurtleView();
-        x.getView();
+    public double execute(TurtleDisplay display) {
+        TurtleView turtle = display.getMyTurtle();
+        double valueForward = getArgsDouble(0);
+        turtle.move(-valueForward,0);
         return 0;
     }
 }
