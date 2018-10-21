@@ -72,7 +72,8 @@ public class TurtleView {
     }
 
     public void move(int x, int y){
-
+        xPos += x;
+        yPos += y;
     }
     //@Override
     public void update(Observable item, Object obj){
