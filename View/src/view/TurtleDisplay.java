@@ -47,8 +47,8 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        move(myTurtle.getX(), myTurtle.getY());
-        move(myTurtle.getX(),myTurtle.getY());
+        move(100, 100);
+        move(30,50);
 
     }
 
@@ -58,7 +58,7 @@ public class TurtleDisplay extends StackPane{
 
     public void move(double nextX, double nextY){
         myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
-        Point2D next = new Point2D(nextX + 100, nextY + 100);
+        Point2D next = new Point2D(myPos.getX() + nextX, myPos.getX() + nextY );
 
         PathTransition drawLine = animate(myPos, next, Duration.seconds(3));
 
@@ -66,8 +66,8 @@ public class TurtleDisplay extends StackPane{
         translateTurt.setByX(next.getX());
         translateTurt.setByY(next.getY());
 
-        ParallelTransition both = new ParallelTransition(drawLine,translateTurt);
-        both.play();
+        myCurrentAnimation = new ParallelTransition(drawLine,translateTurt);
+        myCurrentAnimation.play();
         myTurtle.moveBy((int) next.getX(), (int) next.getY());
 
         System.out.println(myTurtle.getX());

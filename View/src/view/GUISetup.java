@@ -36,6 +36,8 @@ public class GUISetup implements FrontInternal{
 
     public GUISetup() {
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
+        turtleDisplay = new TurtleDisplay();
+
         buttonManager = new ButtonManager(turtleDisplay);
 
         myScene = createGUI(800,800, Color.AZURE);
@@ -44,7 +46,7 @@ public class GUISetup implements FrontInternal{
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        turtleDisplay = new TurtleDisplay();
+        //turtleDisplay = new TurtleDisplay();
 
         turtleDisplay.getCanvas().setVisible(true);
         myConsole = new Console();
@@ -76,30 +78,9 @@ public class GUISetup implements FrontInternal{
         return myConstants;
     }
 
-    private void chooseNewTurtle() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open File");
-        File defaultFile = new File(RESOURCE_PATH);
-        fileChooser.setInitialDirectory(defaultFile);
-        File file = fileChooser.showOpenDialog(new Stage());
-        if (file != null) {
-            try {
-                turtleDisplay.getMyTurtle().setView(IMAGE_PATH + file.getName());
-            } catch (Exception ex) {
-                new ErrorAlert(ex);
-            }
-        }
-    }
 
-    private void playPauseAnimation() {
-        if(playPauseButton.getText().equals("Play")) {
-            turtleDisplay.getCurrentAnimation().play();
-            playPauseButton.setText("Pause");
-        } else {
-            turtleDisplay.getCurrentAnimation().pause();
-            playPauseButton.setText("Play");
-        }
-    }
+
+
 
     //Potentially change method so that turtle resets to beginning of command
     private void stopAnimation() {
