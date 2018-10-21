@@ -46,7 +46,8 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        move();
+        move(myTurtle.getX(), myTurtle.getY());
+        move(myTurtle.getX(),myTurtle.getY());
 
     }
 
@@ -54,30 +55,25 @@ public class TurtleDisplay extends StackPane{
         return myCanvas;
     }
 
-    public void move(){
+    public void move(int nextX, int nextY){
         Location current = new Location();
         current.x = myTurtle.getX();
         current.y = myTurtle.getY();
         Location next = new Location();
-        next.x = current.x + 100;
-        next.y = current.y;
+        next.x = nextX+100;
+        next.y = nextY+100;
 
-        Animation drawLine = animate(current, next, Duration.seconds(3));
-        myTurtle.move(100,0);
-
-
-
+        PathTransition drawLine = animate(current, next, Duration.seconds(3));
 
         TranslateTransition translateTurt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
-        translateTurt.setByX(100f);
-
+        translateTurt.setByX(next.x);
+        translateTurt.setByY(next.x);
 
         ParallelTransition both = new ParallelTransition(drawLine,translateTurt);
-        both.setAutoReverse(true);
-        both.setCycleCount(20);
         both.play();
+        myTurtle.moveBy((int) next.x, (int) next.y);
 
-        System.out.println(myTurtle.getView().getX());
+        System.out.println(myTurtle.getX());
 
     }
 
@@ -126,7 +122,7 @@ public class TurtleDisplay extends StackPane{
 
     }
 
-    public Animation animate(Location current, Location next, Duration duration)
+    public PathTransition animate(Location current, Location next, Duration duration)
     {
         Path myPath = new Path();
         MoveTo initialPosition = new MoveTo(current.x, current.y);
@@ -136,7 +132,6 @@ public class TurtleDisplay extends StackPane{
         myPath.getElements().add(lineTo);
 
         Circle pen = new Circle(0, 0, 3);
-        TurtleView turt = new TurtleView();
 
         PathTransition pathTransition = new PathTransition(duration, myPath, pen);
         pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()

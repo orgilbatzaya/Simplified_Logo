@@ -76,7 +76,7 @@ public class TurtleView {
         return penWidth;
     }
 
-    public void move(int x, int y){
+    public void moveBy(int x, int y){
         xPos += x;
         yPos += y;
         myView.setX(xPos);
