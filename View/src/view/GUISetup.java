@@ -8,10 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.web.WebEngine;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.ResourceBundle;
+import javafx.scene.web.WebView;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -29,6 +31,7 @@ public class GUISetup implements FrontInternal{
     private Console myConsole;
     private ResourceBundle myConstants;
     private Button playPauseButton;
+
 
     public GUISetup() {
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
@@ -57,11 +60,13 @@ public class GUISetup implements FrontInternal{
         stopButton.setOnAction(e -> stopAnimation());
         Button changeButton = createButton("Change the turtle");
         changeButton.setOnAction(e -> chooseNewTurtle());
+        Button helpButton = createButton("Help");
+        helpButton.setOnAction(e -> openHelpPage());
         VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
-                playPauseButton, stopButton, changeButton, penTitle, colorPicker1, bgTitle, colorPicker2);
+                playPauseButton, stopButton, changeButton, helpButton, penTitle, colorPicker1, bgTitle, colorPicker2);
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
-        userOptions.setLayoutY(100);
+        userOptions.setLayoutY(50);
         root.getChildren().addAll(turtleDisplay, myConsole.getConsoleBox(), userOptions);
         return scene;
     }
@@ -113,5 +118,11 @@ public class GUISetup implements FrontInternal{
     //Potentially change method so that turtle resets to beginning of command
     private void stopAnimation() {
         turtleDisplay.getCurrentAnimation().stop();
+    }
+
+    private void openHelpPage() {
+        WebView web = new WebView();
+        WebEngine webEngine = web.getEngine();
+        webEngine.load("https://www2.cs.duke.edu/courses/fall18/compsci308/assign/03_slogo/part2_PZ1.php#gsc.tab=0");
     }
 }
