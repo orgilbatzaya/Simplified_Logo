@@ -1,5 +1,5 @@
 package model;
-
+import view.TurtleDisplay;
 import java.util.List;
 
 public abstract class Command {
@@ -13,6 +13,6 @@ public abstract class Command {
         return Double.parseDouble(myArgs.get(index));
     }
 
-    public abstract double execute();
+    public abstract double execute(TurtleDisplay display);
 
 }

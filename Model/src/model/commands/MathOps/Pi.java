@@ -1,6 +1,7 @@
 package model.commands.MathOps;
 
 import model.Command;
+import view.TurtleDisplay;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Pi extends Command {
     }
 
     @Override
-    public double execute() {
+    public double execute(TurtleDisplay display) {
         return Math.PI;
     }
 }
