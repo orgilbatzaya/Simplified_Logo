@@ -11,11 +11,18 @@ public class BackMain {
 
     public static final String WHITESPACE = "\\s+";
     public static final String NUM_ARGS_PATH = "commands/NumberArgs";
+    private final Set<String> BOOLEAN_OPS = new HashSet<>(Arrays.asList("And", "Equal", "GreaterThan", "LessThan", "Not", "NotEqual", "Or"));
+    private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
+    private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
+    private final Set<String> TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Backward", "ClearScreen", "Forward", "HideTurtle", "Home", "Left", "PenDown", "PenUp", "Right", "SetHeading", "SetPosition", "SetTowards", "Showturtle"));
 
     private Boolean isCommand;
     private Map<String,Integer> myNumArgsMap;
     private ProgramParser myProgParser;
     private TurtleDisplay myTurtleDisplay;
+    private String myLanguage;
+
+
 
     public BackMain(ResourceBundle lang, TurtleDisplay display){
         isCommand = Boolean.TRUE;
@@ -85,4 +92,54 @@ public class BackMain {
         }
         return outMap;
     }
+
+    public void performActions (ProgramParser lang, String[] text) {
+        int type = 1; // 1 - control, 2 - turtle, 3 - math/bool
+        String currentType;
+
+        if(!myLanguage.equals("English")) {
+            for(String s : text) {
+                s = lang.getSymbol(s);
+            }
+        }
+        /*
+        for(String s : text) {
+            if((BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s))) {
+                if(type == 3) {
+                    continue;
+                }
+                else if (type == 2) {
+                    type = 3;
+                    continue;
+                }
+                else {
+                    break; //throw error here
+                }
+            }
+            else if(TURTLE_COMMANDS.contains(s)) {
+                if(type == 2) {
+                    continue;
+                }
+                else {
+                    type = 2;
+                    continue;
+                }
+
+            }
+            else if(CONTROL_OPS.contains(s)) {
+                currentType = "Control";
+            }
+        }
+        */
+
+        Stack<String> toDo = new Stack<>();
+        Stack<String> tempDone = new Stack<>();
+        Queue<String> orderedCommands = new LinkedList<>(Arrays.asList(text));
+        toDo.add(orderedCommands.poll());
+        while(!toDo.isEmpty()){
+            String s = orderedCommands.poll();
+        }
+
+    }
+
 }
