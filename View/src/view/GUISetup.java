@@ -95,7 +95,7 @@ public class GUISetup implements FrontInternal{
             try {
                 turtleDisplay.getMyTurtle().setView(IMAGE_PATH + file.getName());
             } catch (Exception ex) {
-                System.out.println("Invalid image");
+                new ErrorAlert(ex);
             }
         }
     }
