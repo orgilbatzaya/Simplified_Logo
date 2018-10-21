@@ -134,10 +134,40 @@ public class BackMain {
 
         Stack<String> toDo = new Stack<>();
         Stack<String> tempDone = new Stack<>();
-        Queue<String> orderedCommands = new LinkedList<>(Arrays.asList(text));
-        toDo.add(orderedCommands.poll());
+        Stack<String> tempArgs = new Stack<>();
+        Stack<Integer> loopTimes = new Stack<>();
+        for(String s : text) {
+            toDo.push(s);
+        }
         while(!toDo.isEmpty()){
-            String s = orderedCommands.poll();
+            String temp = toDo.pop();
+            tempDone.push(temp);
+            if(!(BOOLEAN_OPS.contains(temp) || MATH_OPS.contains(temp) || CONTROL_OPS.contains(temp) || TURTLE_COMMANDS.contains(temp))) {
+                tempArgs.add(temp);
+            }
+            else if(BOOLEAN_OPS.contains(temp) || MATH_OPS.contains(temp)) {
+                var interpreter = new Interpret();
+                int numArgs = myNumArgsMap.get(temp);
+                ArrayList<String> curArgs = new ArrayList<>();
+                for (int i = 0; i < numArgs; i++) {
+                    curArgs.add(tempArgs.pop());
+                }
+                tempArgs.push(interpreter.interpretCommand(temp, curArgs, myTurtleDisplay) + "");
+            }
+            else if(CONTROL_OPS.contains(temp)) {
+                var interpreter = new Interpret();
+                int tempTimes = loopTimes.pop();
+                if(tempTimes >= 0) {
+                    while(!tempDone.isEmpty()) {
+                        toDo.push(tempDone.pop());
+                    }
+                    loopTimes.push(tempTimes - 1);
+                }
+                else {
+                    toDo.pop();
+                }
+            }
+
         }
 
     }
