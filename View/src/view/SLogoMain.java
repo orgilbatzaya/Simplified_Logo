@@ -14,6 +14,8 @@ public class SLogoMain extends Application {
     @Override
     public void start(Stage stage) {
         GUISetup gui = new GUISetup();
+        //Can't do this b/c this will cause a cyclical dependency
+        //BackMain back = new BackMain(gui.getConsoleCommands(),gui.getLanguage(),gui.getTurtleDisplay());
         stage = new Stage();
         stage.setTitle(gui.getDefaultValues().getString(SLOGO_TITLE));
         stage.setScene(gui.getScene());
