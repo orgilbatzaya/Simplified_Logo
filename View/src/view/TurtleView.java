@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 public class TurtleView{
     private static final String DEFAULT_STARTING_TURTLE = "/resources/images/turtle-basic.png";
     private static final int DEFAULT_STARTING_POS = 0;
+    private static final int DEFAULT_TURTLE_WIDTH = 30;
+    private static final int DEFAULT_TURTLE_HEIGHT = 30;
 
     private double mySpeed;
 
@@ -15,8 +17,11 @@ public class TurtleView{
     private double penWidth;
     private boolean visible;
     private ImageView myView;
-    private int xPos;
-    private int yPos;
+    private double xPos;
+    private double yPos;
+    private double myHeading;
+    private double myDistanceTraveled;
+
 
 
     public TurtleView(){
@@ -27,8 +32,8 @@ public class TurtleView{
         yPos = DEFAULT_STARTING_POS;
         myView.setX(xPos);
         myView.setY(yPos);
-        myView.setFitHeight(30);
-        myView.setFitWidth(30);
+        myView.setFitHeight(DEFAULT_TURTLE_HEIGHT);
+        myView.setFitWidth(DEFAULT_TURTLE_WIDTH);
 
     }
 
@@ -36,21 +41,85 @@ public class TurtleView{
         return myView;
     }
 
-    public int getX(){
+    public double getX(){
         return xPos;
     }
 
-    public int getY(){
+    public double getY(){
         return yPos;
     }
 
-    public void setX(int x){
+    public void setX(double x){
         xPos = x;
     }
     
-    public void setY(int y){
-        xPos = y;
+    public void setY(double y){
+        yPos = y;
     }
 
+    public void setXTurtle(double x){
+        xPos = x;
+        myView.setX(x);
+    }
+    public void setYTurtle(double y){
+        yPos = y;
+        myView.setX(y);
+    }
 
+    public void move(double distance, double angle){
+        double angleFinal = myHeading-angle;// is this necessary?
+        double changeX = distance*Math.cos(Math.toRadians(angleFinal));
+        double changeY = distance*Math.sin(Math.toRadians(angleFinal));
+        setXTurtle(myView.getX()+changeX);
+        setYTurtle(myView.getY()+changeY);
+        myDistanceTraveled = distance+myDistanceTraveled;
+    }
+
+    public void rotate(double angle){
+        myView.setRotate(angle);
+    }
+
+    public double getDefaultX(){
+        return DEFAULT_STARTING_POS;
+    }
+    public double getDefaultY(){
+        return DEFAULT_STARTING_POS;
+    }
+
+    //needed for turtle command "Home"
+    public double getMyDistanceTraveled(){
+        return myDistanceTraveled;
+    }
+
+    public void setPenDown(Boolean pen){
+        penDown = pen;
+    }
+
+    public Boolean getPenDown(){
+        return penDown;
+    }
+
+    public double setHeading(double newHeading){
+        double difference = myHeading-newHeading;
+        myHeading = newHeading;
+        return difference;
+    }
+
+    public double getHeading(){
+        return myHeading;
+    }
+
+    public double getDefaultTurtleWidth(){
+        return DEFAULT_TURTLE_WIDTH;
+    }
+    public double getDefaultTurtleHeight(){
+        return DEFAULT_TURTLE_HEIGHT;
+    }
+
+    public boolean getVisible(){
+        return visible;
+    }
+    public void setVisible(boolean vis){
+        visible = vis;
+    }
 }

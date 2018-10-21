@@ -83,7 +83,9 @@ public class TurtleDisplay extends StackPane{
 
     }
 
-
+    public TurtleView getMyTurtle(){
+        return myTurtle;
+    }
 
 
 
