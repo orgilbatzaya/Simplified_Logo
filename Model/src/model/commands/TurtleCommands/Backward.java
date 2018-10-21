@@ -15,7 +15,7 @@ public class Backward extends Command {
     public double execute(TurtleDisplay display) {
         TurtleView turtle = display.getMyTurtle();
         double valueForward = getArgsDouble(0);
-        turtle.move(-valueForward,0);
+        turtle.move(-valueForward);
         return 0;
     }
 }
