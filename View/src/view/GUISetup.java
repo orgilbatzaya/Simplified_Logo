@@ -24,6 +24,7 @@ public class GUISetup implements FrontInternal{
     private Group root;
     private Console myConsole;
     private ResourceBundle myConstants;
+    private ResourceBundle myLanguage;
 
     public GUISetup() {
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
@@ -50,6 +51,7 @@ public class GUISetup implements FrontInternal{
         myConsole.getConsoleBox().setLayoutY(400);
         Label languageTitle = createLabel("Languages:");
         LanguageMenu langMenu = new LanguageMenu();
+        myLanguage = langMenu.getLanguage();
         Button startButton = createButton("Start");
         Button stopButton = createButton("Stop");
         VBox userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
@@ -75,4 +77,16 @@ public class GUISetup implements FrontInternal{
         Button createdButton = new Button(title);
         return createdButton;
     }
+
+    public ResourceBundle getLanguage(){
+        return myLanguage;
+    }
+
+    public TurtleDisplay getTurtleDisplay(){
+        return turtleDisplay;
+    }
+    public String getConsoleCommands(){
+        return myConsole.getNextCommand();
+    }
+
 }

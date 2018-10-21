@@ -17,7 +17,7 @@ public class BackMain {
     private ProgramParser myProgParser;
     private TurtleDisplay myTurtleDisplay;
 
-    public BackMain(String lang, TurtleDisplay display){
+    public BackMain(ResourceBundle lang, TurtleDisplay display){
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
@@ -70,9 +70,9 @@ public class BackMain {
         return args;
     }
 
-    public ProgramParser createProgramParser(String lang){
+    public ProgramParser createProgramParser(ResourceBundle lang){
         var language = new ProgramParser();
-        language.addPatterns("View/src/resources/languages/"+lang);
+        language.addPatterns(lang);
         return language;
     }
 
