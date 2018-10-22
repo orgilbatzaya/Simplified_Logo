@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -21,6 +24,18 @@ public class GUISetup implements FrontInternal{
     private Console myConsole;
     private ResourceBundle myConstants;
     private ButtonManager buttonManager;
+
+    //for turtle parameter map
+    public static final String HEADING_KEY = "heading";
+    public static final String X_KEY = "xPos";
+    public static final String Y_KEY = "yPos";
+    public static final String DISTANCE_MOVED_KEY = "distanceMoved";
+    public static final String PEN_KEY = "pen";
+    public static final String VISIBLE_KEY= "visible";
+
+    public static final double DEFAULT_PEN = 1;
+    public static final double DEFAULT_VISIBLE = 1;
+    public static final double INITIAL_DISTANCE_MOVED = 0;
 
 
     public GUISetup() {
@@ -60,4 +75,22 @@ public class GUISetup implements FrontInternal{
         return myConstants;
     }
 
+    public Console getConsole(){return myConsole; }
+
+    public Map<String,Double> getTurtleParams(){
+        HashMap<String,Double> mapOut = new HashMap<String,Double>();
+        String[] keyElements = {HEADING_KEY,X_KEY,Y_KEY,PEN_KEY,VISIBLE_KEY,DISTANCE_MOVED_KEY};
+        Double[] valueElements = {buttonManager.getTurtleDisplay().getMyTurtle().getHeading(),
+                buttonManager.getTurtleDisplay().getMyTurtle().getX(),
+                buttonManager.getTurtleDisplay().getMyTurtle().getY(),
+                DEFAULT_PEN,DEFAULT_VISIBLE,INITIAL_DISTANCE_MOVED};
+        for(int i = 0; i<keyElements.length;i++){
+            mapOut.put(keyElements[i],valueElements[i]);
+        }
+        return mapOut;
+    }
+
+    public ButtonManager getButtonManager(){
+        return buttonManager;
+    }
 }

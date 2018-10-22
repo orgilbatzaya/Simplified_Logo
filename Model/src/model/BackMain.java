@@ -29,7 +29,8 @@ public class BackMain {
 
 
     public BackMain(ResourceBundle lang, Map<String,Double> turtleParams){
-        isCommand = Boolean.TRUE;        myProgParser = createProgramParser(lang);
+        isCommand = Boolean.TRUE;
+        myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myTurtleParameters = turtleParams;
         variables = new HashMap<>();
@@ -38,24 +39,25 @@ public class BackMain {
         myLanguage = lang;
     }
 
-    //simple implementation
-    public void EvaluateCommands(String commands){
-        int i=0;
-        while(i<commands.split(WHITESPACE).length){
-            String input = commands.split(WHITESPACE)[i];
-            if (checkValidInput(input)){
-                if(isCommand){
-                    String command = myProgParser.getSymbol(input);
-                    int numArgs = myNumArgsMap.get(command);
-                    List<String> args = getArgs(commands.split(WHITESPACE),numArgs,i);
-                    var interpreter = new Interpret();
-                    double output = interpreter.interpretCommand(command,args,myTurtleParameters,myTurtleActions,myTurtleActionsArgs);
-                    i = i+numArgs+1;
 
-                }
-            }
-        }
-    }
+    //simple implementation
+//    public void EvaluateCommands(String commands){
+//        int i=0;
+//        while(i<commands.split(WHITESPACE).length){
+//            String input = commands.split(WHITESPACE)[i];
+//            if (checkValidInput(input)){
+//                if(isCommand){
+//                    String command = myProgParser.getSymbol(input);
+//                    int numArgs = myNumArgsMap.get(command);
+//                    List<String> args = getArgs(commands.split(WHITESPACE),numArgs,i);
+//                    var interpreter = new Interpret();
+//                    double output = interpreter.interpretCommand(command,args,myTurtleParameters,myTurtleActions,myTurtleActionsArgs);
+//                    i = i+numArgs+1;
+//
+//                }
+//            }
+//        }
+//    }
 
     public Boolean checkValidInput(String s){
         try {
@@ -101,13 +103,14 @@ public class BackMain {
         return outMap;
     }
 
-    public void performActions (ProgramParser lang, String[] text) {
+    public void performCommands (String rawText) {
+        String[] text = rawText.split(WHITESPACE);
         int type = 1; // 1 - control, 2 - turtle, 3 - math/bool
         String currentType;
 
         if(!myLanguage.equals("English")) {
             for(String s : text) {
-                s = lang.getSymbol(s);
+                s = myProgParser.getSymbol(s);
             }
         }
         /*
@@ -221,5 +224,14 @@ public class BackMain {
         }
 
     }
+
+    public List<String> getMyTurtleActions(){
+        return myTurtleActions;
+    }
+
+    public List<Double> getMyTurtleActionsArgs(){
+        return myTurtleActionsArgs;
+    }
+    
 
 }
