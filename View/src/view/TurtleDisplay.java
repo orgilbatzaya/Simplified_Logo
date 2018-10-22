@@ -1,8 +1,6 @@
 package view;
 
-import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
