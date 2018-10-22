@@ -1,9 +1,10 @@
 package model;
-import view.TurtleDisplay;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Command {
-    private String myCommand;
+
+
     private List<String> myArgs;
     public Command(List<String> args) {
         myArgs = args;

@@ -4,6 +4,7 @@ import model.Command;
 import view.TurtleDisplay;
 
 import java.util.List;
+import java.util.Map;
 
 public class LessThan extends Command {
     public LessThan(List<String> args){
@@ -11,7 +12,7 @@ public class LessThan extends Command {
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         return (getArgsDouble(0).compareTo(getArgsDouble(1)))<0 ? 1:0;
     }
 }

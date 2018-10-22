@@ -27,9 +27,8 @@ public class BackMain {
 
 
 
-    public BackMain(ResourceBundle lang, TurtleDisplay display){
-        isCommand = Boolean.TRUE;
-        myProgParser = createProgramParser(lang);
+    public BackMain(ResourceBundle lang, Map<String,Double> turtleParams){
+        isCommand = Boolean.TRUE;        myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myTurtleDisplay = display;
         variables = new HashMap<>();
@@ -45,9 +44,10 @@ public class BackMain {
                     String command = myProgParser.getSymbol(input);
                     int numArgs = myNumArgsMap.get(command);
                     List<String> args = getArgs(commands.split(WHITESPACE),numArgs,i);
-                    i = i+numArgs+1;
                     var interpreter = new Interpret();
-                    interpreter.interpretCommand(command,args,myTurtleDisplay);
+                    double output = interpreter.interpretCommand(command,args,myTurtleParameters,myTurtleActions,myTurtleActionsArgs);
+                    i = i+numArgs+1;
+
                 }
             }
         }

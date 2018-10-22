@@ -1,23 +1,18 @@
 package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class ClearScreen extends Command {
+public class ClearScreen extends TurtleCommand {
     public ClearScreen(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
-        turtle.setXTurtle(turtle.getDefaultX());
-        turtle.setYTurtle(turtle.getDefaultY());
-        //to do erase pen lines
-
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+        clear(turtleAction);
         return 0;
     }
 }
