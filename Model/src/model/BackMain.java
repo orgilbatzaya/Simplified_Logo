@@ -4,6 +4,7 @@ package model;
 
 import model.commands.MathOps.Argument;
 import model.commands.MathOps.Variable;
+import model.commands.OtherCommands.DoTimes;
 
 import java.util.*;
 
@@ -159,8 +160,7 @@ public class BackMain {
             }
         }
         while(!toDo.isEmpty()){
-            Command temp = toDo.pop();
-            tempDone.push(temp);
+            Command temp = toDo.peek();
             String s = temp.getClass().getName();
 
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
@@ -171,12 +171,14 @@ public class BackMain {
                     curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
                 }
                 tempArgs.push(new Argument(interpreter.interpretCommand(s, curArgs, myTurtleParameters,myTurtleActions,myTurtleActionsArgs)));
+                toDo.pop();
                 tempDone.push(temp);
             }
 
             else if(CONTROL_OPS.contains(s)) {
                 if(temp.execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) <= 0) {
-                    temp.setValue(temp.getOriginalValue());
+                    ((DoTimes) temp).setValue(((DoTimes)temp).getOriginalValue());
+                    toDo.pop();
                     tempDone.push(temp);
                 }
                 else {
@@ -193,6 +195,7 @@ public class BackMain {
                 for (int i = 0; i < numArgs; i++) {
                     curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
                 }
+                toDo.pop();
                 tempDone.push(temp);
             }
             else if(s.equals("Variable")) {
@@ -200,11 +203,13 @@ public class BackMain {
                     variables.put(((Variable) temp).getValue(), tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters));
                 }
                 tempArgs.push(new Argument(variables.get(((Variable)temp).getValue())));
+                toDo.pop();
                 tempDone.push(temp);
             }
 
             else if(s.equals("Argument")) {
                 tempArgs.push(temp);
+                toDo.pop();
                 tempDone.push(temp);
             }
         }
