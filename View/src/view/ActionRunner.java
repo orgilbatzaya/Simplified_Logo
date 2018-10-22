@@ -18,7 +18,7 @@ public class ActionRunner {
         for(String a: actions){
             int numArgs = numArgsActions.get(a);
             List<Double> args = getArgs(totalArgs,numArgs,argIndex);
-            argIndex+=numArgs;
+            argIndex+=(numArgs-1);//because one indexed
             interpretCommand(a,args,display);
         }
     }

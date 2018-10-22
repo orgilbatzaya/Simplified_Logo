@@ -1,7 +1,6 @@
 package model.commands.BooleanOps;
 
 import model.Command;
-import view.TurtleDisplay;
 
 import java.util.List;
 import java.util.Map;

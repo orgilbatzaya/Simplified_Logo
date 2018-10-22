@@ -4,6 +4,7 @@ package model;
 
 import model.commands.MathOps.Argument;
 import model.commands.MathOps.Variable;
+import model.commands.OtherCommands.DoTimes;
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ import java.util.*;
 public class BackMain {
 
     public static final String WHITESPACE = "\\s+";
-    public static final String NUM_ARGS_PATH = "commands/NumberArgs";
+    public static final String NUM_ARGS_PATH = "commands/NumberArgsCommands";
     private final Set<String> BOOLEAN_OPS = new HashSet<>(Arrays.asList("And", "Equal", "GreaterThan", "LessThan", "Not", "NotEqual", "Or"));
     private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
     private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
@@ -162,8 +163,7 @@ public class BackMain {
             }
         }
         while(!toDo.isEmpty()){
-            Command temp = toDo.pop();
-            tempDone.push(temp);
+            Command temp = toDo.peek();
             String s = temp.getClass().getName();
 
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
@@ -174,12 +174,14 @@ public class BackMain {
                     curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
                 }
                 tempArgs.push(new Argument(interpreter.interpretCommand(s, curArgs, myTurtleParameters,myTurtleActions,myTurtleActionsArgs)));
+                toDo.pop();
                 tempDone.push(temp);
             }
 
             else if(CONTROL_OPS.contains(s)) {
                 if(temp.execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) <= 0) {
-                    temp.setValue(temp.getOriginalValue());
+                    ((DoTimes) temp).setValue(((DoTimes)temp).getOriginalValue());
+                    toDo.pop();
                     tempDone.push(temp);
                 }
                 else {
@@ -196,6 +198,7 @@ public class BackMain {
                 for (int i = 0; i < numArgs; i++) {
                     curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
                 }
+                toDo.pop();
                 tempDone.push(temp);
             }
             else if(s.equals("Variable")) {
@@ -203,11 +206,13 @@ public class BackMain {
                     variables.put(((Variable) temp).getValue(), tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters));
                 }
                 tempArgs.push(new Argument(variables.get(((Variable)temp).getValue())));
+                toDo.pop();
                 tempDone.push(temp);
             }
 
             else if(s.equals("Argument")) {
                 tempArgs.push(temp);
+                toDo.pop();
                 tempDone.push(temp);
             }
         }
@@ -232,6 +237,6 @@ public class BackMain {
     public List<Double> getMyTurtleActionsArgs(){
         return myTurtleActionsArgs;
     }
-    
+
 
 }
