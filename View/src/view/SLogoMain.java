@@ -2,9 +2,6 @@ package view;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.BackMain;
-
-import java.util.List;
 
 /**
  * This class is mainly intended to launch the SLogo application.
@@ -24,12 +21,12 @@ public class SLogoMain extends Application {
         stage.show();
 
         //add language resource bundle as first parameter of backMain
-        BackMain back = new BackMain(gui.getTurtleParams());
-        back.performCommands(gui.getConsole().getNextCommand());
-        List<String> actionList = back.getMyTurtleActions();
-        List<Double> actionArgs = back.getMyTurtleActionsArgs();
-        ActionRunner actInterpret = new ActionRunner();
-        actInterpret.performActions(actionList,actionArgs,gui.getButtonManager().getTurtleDisplay());
+//        BackMain back = new BackMain(gui.getTurtleParams());
+//        back.performCommands(gui.getConsole().getNextCommand());
+//        List<String> actionList = back.getMyTurtleActions();
+//        List<Double> actionArgs = back.getMyTurtleActionsArgs();
+//        ActionRunner actInterpret = new ActionRunner();
+//        actInterpret.performActions(actionList,actionArgs,gui.getButtonManager().getTurtleDisplay());
 
     }
 

@@ -1,10 +1,10 @@
 package model.commands.MathOps;
 
 import model.Command;
-import view.TurtleDisplay;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Argument extends Command {
 
@@ -15,7 +15,8 @@ public class Argument extends Command {
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+
         return value;
     }
 
