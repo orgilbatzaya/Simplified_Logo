@@ -4,6 +4,7 @@ import model.Command;
 import view.TurtleDisplay;
 
 import java.util.List;
+import java.util.Map;
 
 public class ArcTangent extends Command {
     public ArcTangent(List<String> args){
@@ -11,7 +12,7 @@ public class ArcTangent extends Command {
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double inputVal = getArgsDouble(0);
         return Math.atan(Math.toRadians(inputVal));
     }

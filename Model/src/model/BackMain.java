@@ -2,7 +2,6 @@ package model;
 
 //Receives an input block of text and performs the corresponding commands
 
-import view.TurtleDisplay;
 
 import java.util.*;
 
@@ -15,13 +14,14 @@ public class BackMain {
     private Boolean isCommand;
     private Map<String,Integer> myNumArgsMap;
     private ProgramParser myProgParser;
-    private TurtleDisplay myTurtleDisplay;
+    private Map<String,Double> myTurtleParameters;
+    private List<String> myTurtleActions;
+    private List<Double> myTurtleActionsArgs;
 
-    public BackMain(ResourceBundle lang, TurtleDisplay display){
-        isCommand = Boolean.TRUE;
-        myProgParser = createProgramParser(lang);
+    public BackMain(ResourceBundle lang, Map<String,Double> turtleParams){
+        isCommand = Boolean.TRUE;        myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
-        myTurtleDisplay = display;
+        myTurtleParameters = turtleParams;
     }
 
     //simple implementation
@@ -34,9 +34,10 @@ public class BackMain {
                     String command = myProgParser.getSymbol(input);
                     int numArgs = myNumArgsMap.get(command);
                     List<String> args = getArgs(commands.split(WHITESPACE),numArgs,i);
-                    i = i+numArgs+1;
                     var interpreter = new Interpret();
-                    interpreter.interpretCommand(command,args,myTurtleDisplay);
+                    double output = interpreter.interpretCommand(command,args,myTurtleParameters,myTurtleActions,myTurtleActionsArgs);
+                    i = i+numArgs+1;
+
                 }
             }
         }

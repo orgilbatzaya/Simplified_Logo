@@ -1,9 +1,10 @@
 package model;
-import view.TurtleDisplay;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Command {
-    private String myCommand;
+
+
     private List<String> myArgs;
     public Command(List<String> args) {
         myArgs = args;
@@ -13,6 +14,6 @@ public abstract class Command {
         return Double.parseDouble(myArgs.get(index));
     }
 
-    public abstract double execute(TurtleDisplay display);
+    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams);
 
 }

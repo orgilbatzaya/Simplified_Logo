@@ -1,19 +1,18 @@
 package model.commands.TurtleQueries;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class YCoordinate extends Command {
+public class YCoordinate extends TurtleCommand {
     public YCoordinate(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
-        return turtle.getY();
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+        return turtleParams.get(Y_KEY);
+
     }
 }
