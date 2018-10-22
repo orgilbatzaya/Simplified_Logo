@@ -27,7 +27,6 @@ public class ButtonManager {
     public ButtonManager(){
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
         createUserOptions();
-
     }
 
     private void createUserOptions(){
