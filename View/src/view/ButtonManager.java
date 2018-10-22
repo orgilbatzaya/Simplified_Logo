@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,30 +30,23 @@ public class ButtonManager {
     public ButtonManager(){
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
         createUserOptions();
-
     }
 
     private void createUserOptions(){
         turtleDisplay = new TurtleDisplay();
         turtleDisplay.getCanvas().setVisible(true);
-        ColorPicker colorPicker1 = new ColorPicker(Color.RED);
-        Label penTitle = createLabel("Pen Color:");
-        colorPicker1.setOnAction(event -> turtleDisplay.setPenColor(colorPicker1.getValue()));
-        ColorPicker colorPicker2 = new ColorPicker();
-        Label bgTitle = createLabel("Background Color:");
-        colorPicker2.setOnAction(event -> turtleDisplay.setBgColor(colorPicker2.getValue()));
-        Label languageTitle = createLabel("Languages:");
-        myLanguageMenu = new LanguageMenu();
-        Button playPauseButton = createButton("Pause");
+        PenColor penColor = new PenColor(Color.RED, "Pen Color:", turtleDisplay);
+        BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", turtleDisplay);
+        myLanguageMenu = new LanguageMenu("Languages:");
+        Button playPauseButton = new Button("Pause");
         playPauseButton.setOnAction(e -> playPauseAnimation(playPauseButton));
-        Button stopButton = createButton("Stop");
+        Button stopButton = new Button("Stop");
         stopButton.setOnAction(e -> stopAnimation());
-        Button changeButton = createButton("Change the turtle");
+        Button changeButton = new Button("Change the turtle");
         changeButton.setOnAction(e -> chooseNewTurtle());
-        Button helpButton = createButton("Help");
+        Button helpButton = new Button("Help");
         helpButton.setOnAction(e -> openHelpPage(new Stage()));
-        userOptions = new VBox(languageTitle, myLanguageMenu.getChoiceBox(),
-                playPauseButton, stopButton, changeButton,helpButton, penTitle, colorPicker1, bgTitle, colorPicker2);
+        userOptions = new VBox(myLanguageMenu.getDisplay(), playPauseButton, stopButton, changeButton,helpButton, penColor.getDisplay(), backgroundColor.getDisplay());
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);
@@ -65,11 +59,6 @@ public class ButtonManager {
     private Label createLabel(String text) {
         Label createdLabel = new Label(text);
         return createdLabel;
-    }
-
-    public Button createButton(String title) {
-        Button createdButton = new Button(title);
-        return createdButton;
     }
 
     private void chooseNewTurtle() {

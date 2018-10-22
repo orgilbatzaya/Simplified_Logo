@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -60,14 +61,8 @@ public class GUISetup implements FrontInternal{
         return myScene;
     }
 
-    public Label createLabel(String text) {
-        Label createdLabel = new Label(text);
-        return createdLabel;
-    }
-
-    public Button createButton(String title) {
-        Button createdButton = new Button(title);
-        return createdButton;
+    public VBox getDisplay() {
+        return null;
     }
 
     public ResourceBundle getDefaultValues() {

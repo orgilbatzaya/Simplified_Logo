@@ -18,8 +18,8 @@ public class LanguageMenu extends DropdownMenu{
 
     private ResourceBundle myLanguage;
 
-    public LanguageMenu() {
-        super(new ArrayList<>());
+    public LanguageMenu(String label) {
+        super(new ArrayList<>(), label);
         ArrayList<String> languages = new ArrayList<>();
         ResourceBundle languageList = ResourceBundle.getBundle(DEFAULT_LANGUAGE_LIST);
         for(String key : languageList.keySet()) {

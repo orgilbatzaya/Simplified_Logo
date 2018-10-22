@@ -31,12 +31,10 @@ public class Console implements FrontExternal {
         Button submitButton = new Button("Go!");
         HBox commandBox = new HBox(userInput, submitButton);
         commandBox.setSpacing(10);
-        pastCommands = new CurrentEnvironmentDisplay(200);
-        Text variableTitle = new Text("Current variables in environment:");
-        currentVariables = new CurrentEnvironmentDisplay(100);
-        Text functionTitle = new Text("Current user-defined commands in environment:");
-        currentFunctions = new CurrentEnvironmentDisplay(100);
-        VBox rightColumn = new VBox(variableTitle, currentVariables.getDisplay(), functionTitle, currentFunctions.getDisplay());
+        pastCommands = new CurrentEnvironmentDisplay(200, "Past commands:");
+        currentVariables = new CurrentEnvironmentDisplay(100, "Current variables in environment:");
+        currentFunctions = new CurrentEnvironmentDisplay(100, "Current user-defined commands in environment:");
+        VBox rightColumn = new VBox(currentVariables.getDisplay(), currentFunctions.getDisplay());
         rightColumn.setSpacing(10);
         submitButton.setOnAction(event -> processCommand());
         VBox leftColumn = new VBox(consoleTitle, commandBox, pastCommands.getDisplay());

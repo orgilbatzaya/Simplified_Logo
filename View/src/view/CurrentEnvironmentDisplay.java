@@ -2,7 +2,9 @@ package view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 
 /**
  * This class stores a list of items as well as the display of that list.
@@ -11,19 +13,22 @@ import javafx.scene.control.ListView;
  * @author Austin Kao
  */
 public class CurrentEnvironmentDisplay {
+    private VBox parentBox;
     private ListView<String> currentDisplay;
     private ObservableList<String> currentItems;
     private int maxSize;
 
-    public CurrentEnvironmentDisplay(double height) {
-        this(height, -1);
+    public CurrentEnvironmentDisplay(double height, String label) {
+        this(height, -1, label);
     }
 
-    public CurrentEnvironmentDisplay(double height, int max) {
+    public CurrentEnvironmentDisplay(double height, int max, String label) {
         currentDisplay = new ListView<>();
+        Label displayLabel = new Label(label);
         currentItems = FXCollections.observableArrayList();
         currentDisplay.setMaxHeight(height);
         maxSize = max;
+        parentBox = new VBox(displayLabel, currentDisplay);
     }
 
     public void addItem(String newItem) {
@@ -48,7 +53,7 @@ public class CurrentEnvironmentDisplay {
         currentDisplay.setItems(currentItems);
     }
 
-    public ListView<String> getDisplay() {
-        return currentDisplay;
+    public VBox getDisplay() {
+        return parentBox;
     }
 }
