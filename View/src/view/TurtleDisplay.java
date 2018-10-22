@@ -48,9 +48,14 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
-        this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        move(new Point2D(50,70));//translation vector
-        move(new Point2D(60,-30));
+        //this.setAlignment(myTurtle.getView(), Pos.CENTER);
+        //move(new Point2D(50,70));//translation vector
+        //move(new Point2D(60,-30));
+        SequentialTransition seq = new SequentialTransition(move(new Point2D(50,70)),
+                                                            move(new Point2D(60,-30)),
+                                                            move(new Point2D(50,0)));
+        seq.play();
+
 
     }
 
@@ -58,20 +63,23 @@ public class TurtleDisplay extends StackPane{
         return myCanvas;
     }
 
-    public void move(Point2D translate){
+    public Animation move(Point2D translate){
         myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
         Point2D next = new Point2D(myPos.getX() + translate.getX(), myPos.getX() + translate.getY() );
 
 
         PathTransition drawLine = animate(myPos, next, Duration.seconds(3));
+
         TranslateTransition translateTurt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
-        translateTurt.setByX(next.getX());
-        translateTurt.setByY(next.getY());
+
+        translateTurt.setByX(translate.getX());
+        translateTurt.setByY(translate.getY());
 
         myCurrentAnimation = new ParallelTransition(drawLine,translateTurt);
-        myCurrentAnimation.play();
-        myTurtle.moveBy((int) next.getX(), (int) next.getY());
-        System.out.println(myTurtle.getX());
+        myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
+        //System.out.println(myTurtle.getY());
+
+        return myCurrentAnimation;
     }
 
 
@@ -142,8 +150,7 @@ public class TurtleDisplay extends StackPane{
 
                 // draw line
                 myGC.setStroke(penColor);
-                //myGC.setFill(Color.YELLOW);
-                myGC.setLineWidth(4);
+                myGC.setLineWidth(2);
                 myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
 
                 // update old location with current one
