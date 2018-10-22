@@ -22,8 +22,10 @@ public class Console implements FrontExternal {
     private CurrentEnvironmentDisplay pastCommands;
     private CurrentEnvironmentDisplay currentVariables;
     private CurrentEnvironmentDisplay currentFunctions;
+    private GUISetup parentGUI;
 
-    public Console() {
+    public Console(GUISetup GUI) {
+        parentGUI = GUI;
         userInput = createUserCommandLine();
         Text consoleTitle = new Text("Enter your command here:");
         Button submitButton = new Button("Go!");
@@ -66,6 +68,7 @@ public class Console implements FrontExternal {
         pastCommands.addItem(userInput.getText());
         userInput.clear();
         userInput.setPrefHeight(commandLineHeight);
+        new CommandProcessor(parentGUI);
     }
 
     public String getNextCommand(){

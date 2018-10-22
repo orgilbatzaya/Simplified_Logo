@@ -30,7 +30,7 @@ public class CurrentEnvironmentDisplay {
         if(!currentItems.contains(newItem)) {
             currentItems.add(0, newItem);
         }
-        if(maxSize < 0 && currentItems.size() > maxSize) {
+        if(maxSize >= 0 && currentItems.size() > maxSize) {
             currentItems.remove(maxSize - 1);
         }
         currentDisplay.setItems(currentItems);
