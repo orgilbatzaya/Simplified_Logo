@@ -4,7 +4,6 @@ package model;
 
 import model.commands.MathOps.Argument;
 import model.commands.MathOps.Variable;
-import view.TurtleDisplay;
 
 import java.util.*;
 
@@ -21,17 +20,22 @@ public class BackMain {
     private Boolean isCommand;
     private Map<String,Integer> myNumArgsMap;
     private ProgramParser myProgParser;
-    private TurtleDisplay myTurtleDisplay;
-    private String myLanguage;
+    private ResourceBundle myLanguage;
     private HashMap<String, Double> variables;
+    private Map<String,Double> myTurtleParameters;
+    private List<String> myTurtleActions;
+    private List<Double> myTurtleActionsArgs;
 
 
 
     public BackMain(ResourceBundle lang, Map<String,Double> turtleParams){
         isCommand = Boolean.TRUE;        myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
-        myTurtleDisplay = display;
+        myTurtleParameters = turtleParams;
         variables = new HashMap<>();
+        myTurtleActions = new ArrayList<String>();
+        myTurtleActionsArgs = new ArrayList<Double>();
+        myLanguage = lang;
     }
 
     //simple implementation
@@ -164,14 +168,14 @@ public class BackMain {
                 int numArgs = myNumArgsMap.get(s);
                 ArrayList<String> curArgs = new ArrayList<>();
                 for (int i = 0; i < numArgs; i++) {
-                    curArgs.add(0, tempArgs.pop().execute(myTurtleDisplay) + "");
+                    curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
                 }
-                tempArgs.push(new Argument(interpreter.interpretCommand(s, curArgs, myTurtleDisplay)));
+                tempArgs.push(new Argument(interpreter.interpretCommand(s, curArgs, myTurtleParameters,myTurtleActions,myTurtleActionsArgs)));
                 tempDone.push(temp);
             }
 
             else if(CONTROL_OPS.contains(s)) {
-                if(temp.execute(myTurtleDisplay) <= 0) {
+                if(temp.execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) <= 0) {
                     temp.setValue(temp.getOriginalValue());
                     tempDone.push(temp);
                 }
@@ -179,7 +183,7 @@ public class BackMain {
                     while(!tempDone.isEmpty()) {
                         toDo.push(tempDone.pop());
                     }
-                    temp.execute(myTurtleDisplay);
+                    temp.execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters);
                 }
             }
             else if(TURTLE_COMMANDS.contains(s)) {
@@ -187,13 +191,13 @@ public class BackMain {
                 int numArgs = myNumArgsMap.get(s);
                 ArrayList<String> curArgs = new ArrayList<>();
                 for (int i = 0; i < numArgs; i++) {
-                    curArgs.add(0, tempArgs.pop().execute(myTurtleDisplay) + "");
+                    curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
                 }
                 tempDone.push(temp);
             }
             else if(s.equals("Variable")) {
                 if(!variables.containsKey(((Variable)temp).getValue())) {
-                    variables.put(((Variable) temp).getValue(), tempArgs.pop().execute(myTurtleDisplay));
+                    variables.put(((Variable) temp).getValue(), tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters));
                 }
                 tempArgs.push(new Argument(variables.get(((Variable)temp).getValue())));
                 tempDone.push(temp);
