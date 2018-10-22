@@ -16,6 +16,6 @@ public abstract class Command {
 
     public void setArgs(List<String> args) { myArgs = args; }
 
-    public abstract double execute(TurtleDisplay display);
+    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams);
 
 }

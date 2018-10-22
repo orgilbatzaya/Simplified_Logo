@@ -4,7 +4,6 @@ package model;
 
 import model.commands.MathOps.Argument;
 import model.commands.MathOps.Variable;
-import view.TurtleDisplay;
 
 import java.util.*;
 
@@ -21,17 +20,22 @@ public class BackMain {
     private Boolean isCommand;
     private Map<String,Integer> myNumArgsMap;
     private ProgramParser myProgParser;
-    private TurtleDisplay myTurtleDisplay;
-    private String myLanguage;
+    private ResourceBundle myLanguage;
     private HashMap<String, Double> variables;
+    private Map<String,Double> myTurtleParameters;
+    private List<String> myTurtleActions;
+    private List<Double> myTurtleActionsArgs;
 
 
 
     public BackMain(ResourceBundle lang, Map<String,Double> turtleParams){
         isCommand = Boolean.TRUE;        myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
-        myTurtleDisplay = display;
+        myTurtleParameters = turtleParams;
         variables = new HashMap<>();
+        myTurtleActions = new ArrayList<String>();
+        myTurtleActionsArgs = new ArrayList<Double>();
+        myLanguage = lang;
     }
 
     //simple implementation
