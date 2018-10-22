@@ -1,21 +1,19 @@
 package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class SetHeading extends Command {
+public class SetHeading extends TurtleCommand {
     public SetHeading(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double newHeading = getArgsDouble(0);
-        return turtle.setHeading(newHeading);
+        return heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
 
     }
 }

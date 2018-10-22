@@ -6,10 +6,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class TurtleView {
-    private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
-    private static final int DEFAULT_STARTING_POS = 0;
-    private static final int DEFAULT_TURTLE_WIDTH = 30;
-    private static final int DEFAULT_TURTLE_HEIGHT = 30;
+    public static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
+    public static final int DEFAULT_STARTING_POS = 0;
+    public static final int DEFAULT_TURTLE_WIDTH = 30;
+    public static final int DEFAULT_TURTLE_HEIGHT = 30;
 
     private double mySpeed;
     private Color penColor;
@@ -62,18 +62,17 @@ public class TurtleView {
     }
 
     public void setXTurtle(double x){
-        xPos = x;
+        setX(x);
         myView.setX(x);
     }
     public void setYTurtle(double y){
-        yPos = y;
+        setY(y);
         myView.setX(y);
     }
 
-    public void move(double distance, double angle){
-        double angleFinal = myHeading-angle;// is this necessary?
-        double changeX = distance*Math.cos(Math.toRadians(angleFinal));
-        double changeY = distance*Math.sin(Math.toRadians(angleFinal));
+    public void move(double distance){
+        double changeX = distance*Math.cos(Math.toRadians(myHeading));
+        double changeY = distance*Math.sin(Math.toRadians(myHeading));
         setXTurtle(myView.getX()+changeX);
         setYTurtle(myView.getY()+changeY);
         myDistanceTraveled = distance+myDistanceTraveled;

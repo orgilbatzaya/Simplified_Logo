@@ -1,5 +1,4 @@
 module slogoModel {
-    requires slogoView;
     requires javafx.base;
     requires javafx.controls;
     requires javafx.graphics;

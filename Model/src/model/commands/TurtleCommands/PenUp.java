@@ -1,20 +1,19 @@
 package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class PenUp extends Command {
+public class PenUp extends TurtleCommand{
     public PenUp(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
-        turtle.setPenDown(Boolean.FALSE);
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+        pen(ZERO_DOUBLE,turtleAction,turtleActionArgs,turtleParams);
+
         return 0;
     }
 }

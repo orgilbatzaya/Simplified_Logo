@@ -1,19 +1,18 @@
 package model.commands.TurtleQueries;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class IsPenDown extends Command {
+public class IsPenDown extends TurtleCommand {
     public IsPenDown(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
-        return turtle.getPenDown()? 1:0;
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+        return turtleParams.get(PEN_KEY);
+
     }
 }

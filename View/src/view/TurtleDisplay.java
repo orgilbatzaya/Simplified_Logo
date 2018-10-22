@@ -24,6 +24,7 @@ public class TurtleDisplay extends StackPane{
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
+    private Color prevPenColor;
     private Color penColor;
     private Color bgColor;
     private TurtleView myTurtle;
@@ -40,6 +41,7 @@ public class TurtleDisplay extends StackPane{
         myGC.setLineWidth(10);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
         penColor = Color.RED;
+        prevPenColor = Color.RED;
         bgColor = Color.WHITE;
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);
@@ -47,8 +49,8 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        move(myTurtle.getX(), myTurtle.getY());
-        move(myTurtle.getX(),myTurtle.getY());
+        move(new Point2D(50,70));//translation vector
+        move(new Point2D(60,-30));
 
     }
 
@@ -56,13 +58,16 @@ public class TurtleDisplay extends StackPane{
         return myCanvas;
     }
 
-    public void move(double nextX, double nextY){
+    public void move(Point2D translate){
         myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
-        Point2D next = new Point2D(nextX + 100, nextY + 100);
+        Point2D next = new Point2D(myPos.getX() + translate.getX(), myPos.getX() + translate.getY() );
+
+
         PathTransition drawLine = animate(myPos, next, Duration.seconds(3));
         TranslateTransition translateTurt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
         translateTurt.setByX(next.getX());
         translateTurt.setByY(next.getY());
+
         myCurrentAnimation = new ParallelTransition(drawLine,translateTurt);
         myCurrentAnimation.play();
         myTurtle.moveBy((int) next.getX(), (int) next.getY());
@@ -92,6 +97,7 @@ public class TurtleDisplay extends StackPane{
 
     public void setPenColor(Color c){
         penColor = c;
+        prevPenColor = c;
     }
     public void setBgColor(Color c){
         myBackground.setFill(c);
@@ -135,8 +141,8 @@ public class TurtleDisplay extends StackPane{
                 }
 
                 // draw line
-                myGC.setStroke(Color.BLUE);
-                myGC.setFill(Color.YELLOW);
+                myGC.setStroke(penColor);
+                //myGC.setFill(Color.YELLOW);
                 myGC.setLineWidth(4);
                 myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
 
@@ -155,4 +161,19 @@ public class TurtleDisplay extends StackPane{
     public TurtleView getMyTurtle() {
         return myTurtle;
     }
+
+    public void clearScreen(){
+        myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
+
+    }
+
+    public void showPen(){
+        penColor = prevPenColor;
+    }
+
+    public void hidePen(){
+        penColor = (Color) myBackground.getFill();
+    }
+
+
 }

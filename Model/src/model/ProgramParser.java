@@ -1,5 +1,6 @@
 package model;
 
+import java.security.InvalidKeyException;
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
@@ -28,8 +29,7 @@ public class ProgramParser {
     /**
      * Adds the given resource file to this language's recognized types
      */
-    public void addPatterns (String syntax) {
-        var resources = ResourceBundle.getBundle(syntax);
+    public void addPatterns (ResourceBundle resources) {
         for (var key : Collections.list(resources.getKeys())) {
             var regex = resources.getString(key);
             mySymbols.add(new SimpleEntry<>(key,
@@ -48,7 +48,6 @@ public class ProgramParser {
                 return e.getKey();
             }
         }
-        // FIXME: perhaps throw an exception instead
         return ERROR;
     }
 

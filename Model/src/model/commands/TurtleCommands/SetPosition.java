@@ -1,23 +1,20 @@
 package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class SetPosition extends Command {
+public class SetPosition extends TurtleCommand {
     public SetPosition(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double xPos = getArgsDouble(0);
-        double yPos = getArgsDouble(1);
-        turtle.setXTurtle(xPos);
-        turtle.setYTurtle(yPos);
+        double yPos = getArgsDouble(0);
+        position(xPos,yPos,turtleAction,turtleActionArgs,turtleParams);
         return 0;
     }
 }
