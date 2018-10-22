@@ -142,7 +142,6 @@ public class TurtleDisplay extends StackPane{
 
                 // draw line
                 myGC.setStroke(penColor);
-                //myGC.setFill(Color.YELLOW);
                 myGC.setLineWidth(4);
                 myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
 
