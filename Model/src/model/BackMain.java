@@ -179,7 +179,7 @@ public class BackMain {
 
             else if(CONTROL_OPS.contains(s)) {
                 if(temp.execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) <= 0) {
-                    temp.setValue(temp.getOriginalValue());
+                    //temp.setValue(temp.getOriginalValue());
                     tempDone.push(temp);
                 }
                 else {
@@ -232,6 +232,6 @@ public class BackMain {
     public List<Double> getMyTurtleActionsArgs(){
         return myTurtleActionsArgs;
     }
-    
+
 
 }
