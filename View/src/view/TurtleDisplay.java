@@ -1,37 +1,56 @@
 package view;
 
+import javafx.animation.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
 
 
 public class TurtleDisplay extends StackPane{
+    public static final int FRAMES_PER_SECOND = 60;
+    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+
     private Canvas myCanvas;
     private GraphicsContext myGC;
+    private Color prevPenColor;
     private Color penColor;
     private Color bgColor;
     private TurtleView myTurtle;
+    private Point2D myPos;
+    private ParallelTransition myCurrentAnimation;
+    private Rectangle myBackground;
 
 
-    public TurtleDisplay(){
+    public TurtleDisplay() {
+        myBackground = new Rectangle(400, 400);
+        myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(400,400);
         myGC = myCanvas.getGraphicsContext2D();
-        initDraw(myGC);
+        myGC.setLineWidth(10);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
         penColor = Color.RED;
+        prevPenColor = Color.RED;
         bgColor = Color.WHITE;
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);
+        this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
         this.setAlignment(myTurtle.getView(), Pos.CENTER);
-
-
+        move(new Point2D(50,70));//translation vector
+        move(new Point2D(60,-30));
 
     }
 
@@ -39,9 +58,27 @@ public class TurtleDisplay extends StackPane{
         return myCanvas;
     }
 
+    public void move(Point2D translate){
+        myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
+        Point2D next = new Point2D(myPos.getX() + translate.getX(), myPos.getX() + translate.getY() );
+
+
+        PathTransition drawLine = animate(myPos, next, Duration.seconds(3));
+        TranslateTransition translateTurt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
+        translateTurt.setByX(next.getX());
+        translateTurt.setByY(next.getY());
+
+        myCurrentAnimation = new ParallelTransition(drawLine,translateTurt);
+        myCurrentAnimation.play();
+        myTurtle.moveBy((int) next.getX(), (int) next.getY());
+        System.out.println(myTurtle.getX());
+    }
+
+
 
 
     EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+
 
         public void handle(MouseEvent e) {
             double size = 10.0;
@@ -49,9 +86,8 @@ public class TurtleDisplay extends StackPane{
             double y = e.getY() - size/2;
             myGC.setFill(penColor);
             myGC.setEffect(new DropShadow());
-            myGC.fillRect(x,y,size,size);
+            myGC.fillOval(x,y,size,size);
         }
-
     };
 
 
@@ -61,32 +97,83 @@ public class TurtleDisplay extends StackPane{
 
     public void setPenColor(Color c){
         penColor = c;
+        prevPenColor = c;
     }
     public void setBgColor(Color c){
-        bgColor = c;
-        myGC.setFill(bgColor);
-        myGC.fillRect(0,0,myCanvas.getWidth(),myCanvas.getHeight());
+        myBackground.setFill(c);
     }
 
+    public PathTransition animate(Point2D current, Point2D next, Duration duration)
+    {
+        Path myPath = new Path();
+        MoveTo initialPosition = new MoveTo(current.getX(), current.getY());
+        LineTo lineTo = new LineTo(next.getX(),next.getY());
 
+        myPath.getElements().add(initialPosition);
+        myPath.getElements().add(lineTo);
 
-    private void initDraw(GraphicsContext gc){
-        double canvasWidth = gc.getCanvas().getWidth();
-        double canvasHeight = gc.getCanvas().getHeight();
+        Circle pen = new Circle(0, 0, 3);
 
-        gc.setFill(Color.WHITE);
+        PathTransition pathTransition = new PathTransition(duration, myPath, pen);
+        pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
+        {
 
-        gc.fillRect(0, 0, canvasWidth, canvasHeight);
+            Point2D oldLocation = null;
 
-        //gc.setStroke(Color.BLACK);
-        gc.setLineWidth(10);
+            /**
+             * Draw a line from the old location to the new location
+             */
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
 
+                // skip starting at 0/0
+                if( oldValue == Duration.ZERO)
+                    return;
+
+                // get current location
+                double x = pen.getTranslateX();
+                double y = pen.getTranslateY();
+
+                // initialize the location
+                if( oldLocation == null) {
+                    oldLocation = new Point2D(x+myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+                    return;
+                }
+
+                // draw line
+                myGC.setStroke(penColor);
+                //myGC.setFill(Color.YELLOW);
+                myGC.setLineWidth(4);
+                myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+
+                // update old location with current one
+                oldLocation = new Point2D(x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+            }
+        });
+
+        return pathTransition;
     }
 
-    public TurtleView getMyTurtle(){
+    public ParallelTransition getCurrentAnimation() {
+        return myCurrentAnimation;
+    }
+
+    public TurtleView getMyTurtle() {
         return myTurtle;
     }
 
+    public void clearScreen(){
+        myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
+
+    }
+
+    public void showPen(){
+        penColor = prevPenColor;
+    }
+
+    public void hidePen(){
+        penColor = (Color) myBackground.getFill();
+    }
 
 
 }

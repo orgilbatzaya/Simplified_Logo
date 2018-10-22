@@ -14,6 +14,8 @@ public abstract class Command {
         return Double.parseDouble(myArgs.get(index));
     }
 
-    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams);
+    public void setArgs(List<String> args) { myArgs = args; }
+
+    public abstract double execute(TurtleDisplay display);
 
 }

@@ -4,6 +4,7 @@ module slogoView {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.media;
-    exports view;
+    requires javafx.web;
 
+    exports view;
 }
