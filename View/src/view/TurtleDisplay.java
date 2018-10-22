@@ -24,6 +24,7 @@ public class TurtleDisplay extends StackPane{
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
+    private Color prevPenColor;
     private Color penColor;
     private Color bgColor;
     private TurtleView myTurtle;
@@ -40,6 +41,7 @@ public class TurtleDisplay extends StackPane{
         myGC.setLineWidth(10);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
         penColor = Color.RED;
+        prevPenColor = Color.RED;
         bgColor = Color.WHITE;
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);
@@ -95,6 +97,7 @@ public class TurtleDisplay extends StackPane{
 
     public void setPenColor(Color c){
         penColor = c;
+        prevPenColor = c;
     }
     public void setBgColor(Color c){
         myBackground.setFill(c);
@@ -138,8 +141,8 @@ public class TurtleDisplay extends StackPane{
                 }
 
                 // draw line
-                myGC.setStroke(Color.BLUE);
-                myGC.setFill(Color.YELLOW);
+                myGC.setStroke(penColor);
+                //myGC.setFill(Color.YELLOW);
                 myGC.setLineWidth(4);
                 myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
 
@@ -158,4 +161,19 @@ public class TurtleDisplay extends StackPane{
     public TurtleView getMyTurtle() {
         return myTurtle;
     }
+
+    public void clearScreen(){
+        myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
+
+    }
+
+    public void showPen(){
+        penColor = prevPenColor;
+    }
+
+    public void hidePen(){
+        penColor = (Color) myBackground.getFill();
+    }
+
+
 }
