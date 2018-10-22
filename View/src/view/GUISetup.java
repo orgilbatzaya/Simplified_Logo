@@ -40,7 +40,6 @@ public class GUISetup implements FrontInternal{
 
     public GUISetup() {
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
-
         buttonManager = new ButtonManager();
         myScene = createGUI(800,800, Color.AZURE);
     }
@@ -49,7 +48,7 @@ public class GUISetup implements FrontInternal{
         root = new Group();
         var scene = new Scene(root, width, height, background);
 
-        myConsole = new Console();
+        myConsole = new Console(this);
         myConsole.getConsoleBox().setLayoutX(50);
         myConsole.getConsoleBox().setLayoutY(400);
         root.getChildren().addAll(buttonManager.getTurtleDisplay(), myConsole.getConsoleBox(), buttonManager.getUserOptions());
@@ -78,7 +77,7 @@ public class GUISetup implements FrontInternal{
     public Console getConsole(){return myConsole; }
 
     public Map<String,Double> getTurtleParams(){
-        HashMap<String,Double> mapOut = new HashMap<String,Double>();
+        HashMap<String,Double> mapOut = new HashMap<>();
         String[] keyElements = {HEADING_KEY,X_KEY,Y_KEY,PEN_KEY,VISIBLE_KEY,DISTANCE_MOVED_KEY};
         Double[] valueElements = {buttonManager.getTurtleDisplay().getMyTurtle().getHeading(),
                 buttonManager.getTurtleDisplay().getMyTurtle().getX(),
