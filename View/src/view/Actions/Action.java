@@ -5,7 +5,6 @@ import view.TurtleDisplay;
 import java.util.List;
 
 public abstract class Action {
-    private String myCommand;
     private List<Double> myArgs;
 
     public Action(List<Double> args) {

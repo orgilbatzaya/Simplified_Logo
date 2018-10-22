@@ -88,7 +88,9 @@ public class GUISetup implements FrontInternal{
             mapOut.put(keyElements[i],valueElements[i]);
         }
         return mapOut;
-
     }
 
+    public ButtonManager getButtonManager(){
+        return buttonManager;
+    }
 }
