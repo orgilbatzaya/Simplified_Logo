@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -102,10 +103,13 @@ public class ButtonManager {
 
     private void openHelpPage(Stage stage) {
         WebView web = new WebView();
+        var root = new Group();
+        root.getChildren().add(web);
+        Scene scene = new Scene(root);
         WebEngine webEngine = web.getEngine();
-        webEngine.load("https://www2.cs.duke.edu/courses/fall18/compsci308/assign/03_slogo/part2_PZ1.php#gsc.tab=0");
-        Scene scene = new Scene(web);
+        webEngine.load("https://www2.cs.duke.edu/courses/compsci308/fall18/assign/03_slogo/commands.php#gsc.tab=0");
         stage.setScene(scene);
+        stage.show();
     }
 
     public TurtleDisplay getTurtleDisplay() {
