@@ -1,19 +1,18 @@
-package model.commands.TurtleQueries;
+package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class Heading extends Command {
+public class Heading extends TurtleCommand {
     public Heading(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
-        return turtle.getHeading();
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+        turtleParams.get(HEADING_KEY);
+        return 0;
     }
 }

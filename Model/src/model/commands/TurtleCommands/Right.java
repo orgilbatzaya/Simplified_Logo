@@ -1,21 +1,19 @@
 package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class Right extends Command {
+public class Right extends TurtleCommand {
     public Right(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double valueRotate = getArgsDouble(0);
-        turtle.rotate(valueRotate);
+        rotate(-valueRotate,turtleAction,turtleActionArgs,turtleParams);
         return 0;
     }
 }

@@ -1,9 +1,9 @@
 package model.commands.MathOps;
 
 import model.Command;
-import view.TurtleDisplay;
 
 import java.util.List;
+import java.util.Map;
 
 public class Cosine extends Command {
     public Cosine(List<String> args){
@@ -11,7 +11,7 @@ public class Cosine extends Command {
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double inputVal = getArgsDouble(0);
         return Math.cos(Math.toRadians(inputVal));
     }

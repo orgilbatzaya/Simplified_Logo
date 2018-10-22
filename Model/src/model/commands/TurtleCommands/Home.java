@@ -1,21 +1,18 @@
 package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class Home extends Command {
+public class Home extends TurtleCommand {
     public Home(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
-        turtle.setXTurtle(turtle.getDefaultX());
-        turtle.setYTurtle(turtle.getDefaultY());
-        return turtle.getMyDistanceTraveled();
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+        home(turtleAction,turtleActionArgs,turtleParams);
+        return 0;
     }
 }

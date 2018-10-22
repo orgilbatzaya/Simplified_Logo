@@ -1,22 +1,18 @@
 package model.commands.TurtleCommands;
 
-import model.Command;
-import view.TurtleDisplay;
-import view.TurtleView;
+import model.commands.TurtleCommand;
 
 import java.util.List;
+import java.util.Map;
 
-public class HideTurtle extends Command {
+public class HideTurtle extends TurtleCommand {
     public HideTurtle(List<String> args){
         super(args);
     }
 
     @Override
-    public double execute(TurtleDisplay display) {
-        TurtleView turtle = display.getMyTurtle();
-        turtle.getView().setFitWidth(0);
-        turtle.getView().setFitHeight(0);
-        turtle.setVisible(Boolean.FALSE);
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+        visible(ZERO_DOUBLE,turtleAction,turtleActionArgs,turtleParams);
         return 0;
     }
 }
