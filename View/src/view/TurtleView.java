@@ -6,10 +6,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class TurtleView {
-    private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
-    private static final int DEFAULT_STARTING_POS = 0;
-    private static final int DEFAULT_TURTLE_WIDTH = 30;
-    private static final int DEFAULT_TURTLE_HEIGHT = 30;
+    public static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
+    public static final int DEFAULT_STARTING_POS = 0;
+    public static final int DEFAULT_TURTLE_WIDTH = 30;
+    public static final int DEFAULT_TURTLE_HEIGHT = 30;
 
     private double mySpeed;
     private Color penColor;
