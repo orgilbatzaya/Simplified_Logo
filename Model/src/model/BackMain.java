@@ -12,7 +12,7 @@ import java.util.*;
 public class BackMain {
 
     public static final String WHITESPACE = "\\s+";
-    public static final String NUM_ARGS_PATH = "commands/NumberArgs";
+    public static final String NUM_ARGS_PATH = "commands/NumberArgsCommands";
     private final Set<String> BOOLEAN_OPS = new HashSet<>(Arrays.asList("And", "Equal", "GreaterThan", "LessThan", "Not", "NotEqual", "Or"));
     private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
     private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));

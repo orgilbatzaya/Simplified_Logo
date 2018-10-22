@@ -22,6 +22,7 @@ public class ButtonManager {
     private TurtleDisplay turtleDisplay;
     private VBox userOptions;
     private ResourceBundle myConstants;
+    private LanguageMenu myLanguageMenu;
 
 
     public ButtonManager(){
@@ -40,7 +41,7 @@ public class ButtonManager {
         Label bgTitle = createLabel("Background Color:");
         colorPicker2.setOnAction(event -> turtleDisplay.setBgColor(colorPicker2.getValue()));
         Label languageTitle = createLabel("Languages:");
-        LanguageMenu langMenu = new LanguageMenu();
+        myLanguageMenu = new LanguageMenu();
         Button playPauseButton = createButton("Pause");
         playPauseButton.setOnAction(e -> playPauseAnimation(playPauseButton));
         Button stopButton = createButton("Stop");
@@ -49,7 +50,7 @@ public class ButtonManager {
         changeButton.setOnAction(e -> chooseNewTurtle());
         Button helpButton = createButton("Help");
         helpButton.setOnAction(e -> openHelpPage(new Stage()));
-        userOptions = new VBox(languageTitle, langMenu.getChoiceBox(),
+        userOptions = new VBox(languageTitle, myLanguageMenu.getChoiceBox(),
                 playPauseButton, stopButton, changeButton,helpButton, penTitle, colorPicker1, bgTitle, colorPicker2);
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
@@ -110,6 +111,10 @@ public class ButtonManager {
 
     public TurtleDisplay getTurtleDisplay() {
         return turtleDisplay;
+    }
+
+    public ResourceBundle getLanguageFromUserOptions() {
+        return myLanguageMenu.getLanguage();
     }
 
 }
