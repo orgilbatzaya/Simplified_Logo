@@ -1,6 +1,7 @@
-package view;
+package view.dropdown;
 
 import javafx.collections.FXCollections;
+import view.dropdown.DropdownMenu;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -11,7 +12,7 @@ import java.util.ResourceBundle;
  * @author Austin Kao
  */
 
-public class LanguageMenu extends DropdownMenu{
+public class LanguageMenu extends DropdownMenu {
     private static final String DEFAULT_LANGUAGE_PACKAGE = "resources/languages/";
     private static final String DEFAULT_LANGUAGE_LIST = "resources/LanguageList";
     private static final String DEFAULT_LANGUAGE = "ENG";

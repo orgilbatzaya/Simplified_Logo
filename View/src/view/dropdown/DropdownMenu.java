@@ -1,4 +1,4 @@
-package view;
+package view.dropdown;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.ChoiceBox;

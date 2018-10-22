@@ -1,4 +1,4 @@
-package view;
+package view.colorpicker;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.ColorPicker;

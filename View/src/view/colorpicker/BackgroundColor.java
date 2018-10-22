@@ -1,8 +1,10 @@
-package view;
+package view.colorpicker;
 
 import javafx.scene.paint.Color;
+import view.TurtleDisplay;
+import view.colorpicker.SLogoColor;
 
-public class BackgroundColor extends SLogoColor{
+public class BackgroundColor extends SLogoColor {
     private TurtleDisplay myDisplay;
 
     public BackgroundColor(Color defaultColor, String label, TurtleDisplay display) {
