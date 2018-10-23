@@ -29,6 +29,7 @@ public class CurrentEnvironmentDisplay {
         currentDisplay.setMaxHeight(height);
         maxSize = max;
         parentBox = new VBox(displayLabel, currentDisplay);
+        //currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getEditingIndex()));
     }
 
     public void addItem(String newItem) {
@@ -55,5 +56,9 @@ public class CurrentEnvironmentDisplay {
 
     public VBox getDisplay() {
         return parentBox;
+    }
+
+    public void editItem(int index) {
+
     }
 }

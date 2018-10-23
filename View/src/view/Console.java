@@ -6,6 +6,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.BackMain;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * This class represents the console of SLogo.
@@ -14,22 +20,23 @@ import javafx.scene.text.Text;
  */
 
 public class Console implements FrontExternal {
-    private TextArea userInput;
-    private double commandLineHeight;
+
+    private CommandLine myCommandLine;
     private String currentCommand;
     private HBox consoleBox;
-    private String currentLang;
+    private ResourceBundle currentLang;
     private CurrentEnvironmentDisplay pastCommands;
     private CurrentEnvironmentDisplay currentVariables;
     private CurrentEnvironmentDisplay currentFunctions;
     private GUISetup parentGUI;
+    private TurtleDisplay mainDisplay;
 
-    public Console(GUISetup GUI) {
-        parentGUI = GUI;
-        userInput = createUserCommandLine();
+    public Console(GUISetup gui) {
+        parentGUI = gui;
         Text consoleTitle = new Text("Enter your command here:");
+        myCommandLine = new CommandLine();
         Button submitButton = new Button("Go!");
-        HBox commandBox = new HBox(userInput, submitButton);
+        HBox commandBox = new HBox(myCommandLine.getDisplay(), submitButton);
         commandBox.setSpacing(10);
         pastCommands = new CurrentEnvironmentDisplay(200, "Past commands:");
         currentVariables = new CurrentEnvironmentDisplay(100, "Current variables in environment:");
@@ -42,42 +49,24 @@ public class Console implements FrontExternal {
         consoleBox.setSpacing(10);
     }
 
-    public TextArea createUserCommandLine() {
-        TextArea input = new TextArea();
-        input.setPrefWidth(300);
-        input.setPrefHeight(20);
-        commandLineHeight = input.getPrefHeight();
-        input.setOnKeyPressed(e -> increaseHeight(e.getCode()));
-        return input;
-    }
-
-    public void increaseHeight(KeyCode code) {
-        if(code == KeyCode.ENTER) {
-            userInput.setPrefHeight(userInput.getPrefHeight() + commandLineHeight);
-        }
-    }
-
     public HBox getConsoleBox() {
         return consoleBox;
     }
 
     public void processCommand () {
-        currentCommand = userInput.getText();
-        pastCommands.addItem(userInput.getText());
-        userInput.clear();
-        userInput.setPrefHeight(commandLineHeight);
-        new CommandProcessor(parentGUI);
+        currentCommand = myCommandLine.getCommand();
+        pastCommands.addItem(currentCommand);
     }
 
     public String getNextCommand(){
         return currentCommand;
     }
 
-    private void setLanguage(String lang){
+    private void setLanguage(ResourceBundle lang){
         currentLang = lang;
     }
 
-    public String getLanguage() {
+    public ResourceBundle getLanguage() {
         return currentLang;
     }
 

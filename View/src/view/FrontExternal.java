@@ -1,7 +1,9 @@
 package view;
 
+import java.util.ResourceBundle;
+
 public interface FrontExternal {
     String getNextCommand();
 
-    String getLanguage();
+    ResourceBundle getLanguage();
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import model.BackMain;
 import view.button.HelpButton;
 import view.button.ImageChooseButton;
 import view.button.PlayPauseButton;
@@ -15,6 +16,7 @@ import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -68,7 +70,8 @@ public class GUISetup implements FrontInternal{
         stopButton.setOnAction(e -> stopAnimation());
         ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", turtleDisplay.getMyTurtle());
         HelpButton help = new HelpButton("Help");
-        VBox userOptions = new VBox(myLanguageMenu.getDisplay(), playPause.getDisplay(), stopButton, changeTurtle.getDisplay() ,help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay());
+        VBox userOptions = new VBox(myLanguageMenu.getDisplay(), playPause.getDisplay(), stopButton, changeTurtle.getDisplay() ,
+                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay());
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);
@@ -114,5 +117,15 @@ public class GUISetup implements FrontInternal{
 
     public TurtleDisplay getTurtleDisplay() {
         return turtleDisplay;
+    }
+
+    public void runCommand() {
+        Map<String, Double> commandParams = getTurtleParams();
+        BackMain back = new BackMain(myLanguageMenu.getLanguage(), commandParams);
+        back.performCommands(myConsole.getNextCommand());
+        List<String> actionList = back.getMyTurtleActions();
+        List<Double> actionArgs = back.getMyTurtleActionsArgs();
+        ActionRunner actInterpret = new ActionRunner();
+        actInterpret.performActions(actionList,actionArgs, turtleDisplay);
     }
 }
