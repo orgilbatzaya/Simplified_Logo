@@ -50,7 +50,7 @@ public class TurtleDisplay extends StackPane{
         //move(new Point2D(50,70));//translation vector
         //move(new Point2D(60,-30));
         SequentialTransition seq = new SequentialTransition(move(new Point2D(50,70)),
-                                                            move(new Point2D(60,-30)),
+                                                            move(new Point2D(50,0)),
                                                             move(new Point2D(50,0)));
         seq.play();
 
@@ -73,9 +73,9 @@ public class TurtleDisplay extends StackPane{
         translateTurt.setByX(translate.getX());
         translateTurt.setByY(translate.getY());
 
-        myCurrentAnimation = new ParallelTransition(drawLine,translateTurt);
+        myCurrentAnimation = new ParallelTransition(drawLine,translate Turt);
         myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
-        //System.out.println(myTurtle.getY());
+        System.out.println(myTurtle.getY());
 
         return myCurrentAnimation;
     }
