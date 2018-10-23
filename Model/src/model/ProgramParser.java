@@ -1,9 +1,11 @@
 package model;
 
-import java.security.InvalidKeyException;
-import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 
@@ -48,7 +50,7 @@ public class ProgramParser {
                 return e.getKey();
             }
         }
-        return ERROR;
+        return text;
     }
 
     /**

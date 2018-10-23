@@ -12,7 +12,7 @@ import java.util.*;
 public class BackMain {
 
     public static final String WHITESPACE = "\\s+";
-    public static final String NUM_ARGS_PATH = "commands/NumberArgsCommands";
+    public static final String NUM_ARGS_PATH = "model/commands/NumArgsCommands";
     private final Set<String> BOOLEAN_OPS = new HashSet<>(Arrays.asList("And", "Equal", "GreaterThan", "LessThan", "Not", "NotEqual", "Or"));
     private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
     private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
@@ -99,7 +99,7 @@ public class BackMain {
         var outMap = new HashMap<String,Integer>();
         for (String key : properties.keySet()) {
             String value = properties.getString(key);
-            outMap.put(key, Integer.valueOf(value));
+            outMap.put(key, Integer.parseInt(value));
         }
         return outMap;
     }
@@ -108,12 +108,13 @@ public class BackMain {
         String[] text = rawText.split(WHITESPACE);
         int type = 1; // 1 - control, 2 - turtle, 3 - math/bool
         String currentType;
-
-        if(!myLanguage.equals("English")) {
-            for(String s : text) {
-                s = myProgParser.getSymbol(s);
-            }
+        for(int i =0; i<text.length; i++){
+            text[i] = myProgParser.getSymbol(text[i]);
+            System.out.println(text[i]);
         }
+
+
+
         /*
         for(String s : text) {
             if((BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s))) {
@@ -163,8 +164,10 @@ public class BackMain {
             }
         }
         while(!toDo.isEmpty()){
+
             Command temp = toDo.peek();
             String s = temp.getClass().getName();
+            // System.out.println(((Argument) temp).execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
 
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
                 var interpreter = new Interpret();
