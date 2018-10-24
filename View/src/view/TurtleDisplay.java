@@ -46,12 +46,10 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
-        //this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        //move(new Point2D(50,70));//translation vector
-        //move(new Point2D(60,-30));
+
         SequentialTransition seq = new SequentialTransition(move(new Point2D(50,70)),
-                                                            move(new Point2D(50,0)),
-                                                            move(new Point2D(50,0)));
+                move(new Point2D(50,-40)),
+                move(new Point2D(50,0)));
         seq.play();
 
 
@@ -62,20 +60,27 @@ public class TurtleDisplay extends StackPane{
     }
 
     public Animation move(Point2D translate){
-        myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
-        Point2D next = new Point2D(myPos.getX() + translate.getX(), myPos.getX() + translate.getY() );
+        //myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
+        Location myPos = new Location();
+
+        myPos.x = myTurtle.getX();
+        myPos.y = myTurtle.getY();
+        //Point2D next = new Point2D(myPos.getX() + translate.getX(), myPos.getX() + translate.getY() );
+        Location next = new Location();
+        next.x = myPos.x + translate.getX();
+        next.y = myPos.y + translate.getY();
 
 
-        PathTransition drawLine = animate(myPos, next, Duration.seconds(3));
+        PathTransition drawLine = animate(myPos, next, Duration.seconds(2));
 
-        TranslateTransition translateTurt = new TranslateTransition(Duration.millis(3000), myTurtle.getView());
+        TranslateTransition translateTurt = new TranslateTransition(Duration.millis(2000), myTurtle.getView());
 
         translateTurt.setByX(translate.getX());
         translateTurt.setByY(translate.getY());
 
-        myCurrentAnimation = new ParallelTransition(drawLine,translate Turt);
+        myCurrentAnimation = new ParallelTransition(drawLine,translateTurt);
         myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
-        System.out.println(myTurtle.getY());
+        System.out.println(myTurtle.getView().getY());
 
         return myCurrentAnimation;
     }
@@ -109,11 +114,11 @@ public class TurtleDisplay extends StackPane{
         myBackground.setFill(c);
     }
 
-    public PathTransition animate(Point2D current, Point2D next, Duration duration)
+    public PathTransition animate(Location current, Location next, Duration duration)
     {
         Path myPath = new Path();
-        MoveTo initialPosition = new MoveTo(current.getX(), current.getY());
-        LineTo lineTo = new LineTo(next.getX(),next.getY());
+        MoveTo initialPosition = new MoveTo(current.x, current.y);
+        LineTo lineTo = new LineTo(next.x,next.y);
 
         myPath.getElements().add(initialPosition);
         myPath.getElements().add(lineTo);
@@ -124,7 +129,7 @@ public class TurtleDisplay extends StackPane{
         pathTransition.currentTimeProperty().addListener(new ChangeListener<Duration>()
         {
 
-            Point2D oldLocation = null;
+            Location oldLocation = null;
 
             /**
              * Draw a line from the old location to the new location
@@ -142,17 +147,22 @@ public class TurtleDisplay extends StackPane{
 
                 // initialize the location
                 if( oldLocation == null) {
-                    oldLocation = new Point2D(x+myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+                    oldLocation = new Location();//new Point2D(x+myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+                    oldLocation.x = x + myCanvas.getWidth()/2;
+                    oldLocation.y = y + myCanvas.getHeight()/2;
                     return;
                 }
 
                 // draw line
                 myGC.setStroke(penColor);
                 myGC.setLineWidth(2);
-                myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+                myGC.strokeLine(oldLocation.x, oldLocation.y, x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+
 
                 // update old location with current one
-                oldLocation = new Point2D(x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+                //oldLocation = new Point2D(x+ myCanvas.getWidth() / 2, y+myCanvas.getHeight()/2);
+                oldLocation.x = x +  myCanvas.getWidth() / 2;
+                oldLocation.y = y +  myCanvas.getWidth() / 2;
             }
         });
 
@@ -180,7 +190,13 @@ public class TurtleDisplay extends StackPane{
         penColor = (Color) myBackground.getFill();
     }
 
+    public static class Location {
+        double x;
+        double y;
+    }
+
 
 
 
 }
+
