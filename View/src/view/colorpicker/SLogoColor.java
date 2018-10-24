@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 
 /**
  * This class represents a GUI element that allows users to select the color they want for a certain other elements, such as the background of the canvas and the color of the pen.
+ * Extend this class if there is a need for a color picker.
  * @author Austin Kao
  */
 
