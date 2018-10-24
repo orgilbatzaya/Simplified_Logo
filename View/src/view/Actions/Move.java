@@ -16,6 +16,6 @@ public class Move extends Action{
         TurtleView turtleView = turtleDisplay.getMyTurtle();
         Point2D next = new Point2D(getArgsDouble(0)*Math.cos(Math.toRadians(turtleView.getHeading())),
                                 getArgsDouble(0)*Math.sin(Math.toRadians(turtleView.getHeading())));
-        turtleDisplay.move(next);
+        //turtleDisplay.move(next);
     }
 }

@@ -53,36 +53,23 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
-        //this.setAlignment(myTurtle.getView(), Pos.CENTER);
-        //move(new Point2D(50,70));//translation vector
-        //move(new Point2D(60,-30));
-        myCurrentAnimation = new SequentialTransition(move(new Point2D(50,70)),
-                                                            move(new Point2D(50,0)),
-                                                            move(new Point2D(50,0)));
+        Animate animate = new Animate(myCanvas,myGC,penColor,Duration.millis(2000),myTurtle);
+
+
+        myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
+                                                            animate.move(new Point2D(50,30)),
+                                                            animate.move(new Point2D(100,-100)),
+                                                            animate.move(new Point2D(-40,60)));
+        myCurrentAnimation.setCycleCount(2);
+        myCurrentAnimation.setAutoReverse(true);
         myCurrentAnimation.play();
+
 
 
     }
 
     public Canvas getCanvas(){
         return myCanvas;
-    }
-
-    public Animation move(Point2D translate){
-        myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
-        Point2D next = myPos.add(translate);
-
-        PathTransition drawLine = animate(myPos, next, Duration.seconds(myDuration.getDuration()));
-
-        TranslateTransition translateTurt = new TranslateTransition(Duration.seconds(myDuration.getDuration()), myTurtle.getView());
-
-        translateTurt.setByX(translate.getX());
-        translateTurt.setByY(translate.getY());
-
-        ParallelTransition pt = new ParallelTransition(drawLine,translateTurt);
-        myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
-
-        return pt;
     }
 
     public VBox getDurationDisplay() {
@@ -114,51 +101,7 @@ public class TurtleDisplay extends StackPane{
         myBackground.setFill(c);
     }
 
-    public PathTransition animate(Point2D current, Point2D next, Duration duration)
-    {
-        Path myPath = new Path();
-        MoveTo initialPosition = new MoveTo(current.getX(), current.getY());
-        LineTo lineTo = new LineTo(next.getX(),next.getY());
 
-        myPath.getElements().add(initialPosition);
-        myPath.getElements().add(lineTo);
-
-        Circle pen = new Circle(0, 0, 3);
-
-        PathTransition pathTransition = new PathTransition(duration, myPath, pen);
-        pathTransition.currentTimeProperty().addListener(new ChangeListener<>()
-        {
-            Point2D oldLocation = null;
-            //Draw a line from the old location to the new location
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-
-                // skip starting at 0/0
-                if( oldValue == Duration.ZERO)
-                    return;
-
-                // get current location
-                Point2D moveVector = new Point2D(pen.getTranslateX(), pen.getTranslateY());
-                //double x = pen.getTranslateX();
-                //double y = pen.getTranslateY();
-
-                // initialize the location
-                if( oldLocation == null) {
-                    oldLocation = new Point2D(moveVector.getX() + zeroPos.getX(), moveVector.getY() + zeroPos.getY());
-                    return;
-                }
-                Point2D newLocation = new Point2D(moveVector.getX() + zeroPos.getX(), moveVector.getY() + zeroPos.getY());
-                // draw line
-                myGC.setStroke(penColor);
-                myGC.setLineWidth(2);
-                myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
-
-                // update old location with current one
-                oldLocation = newLocation;
-            }
-        });
-        return pathTransition;
-    }
 
     public SequentialTransition getCurrentAnimation() {
         return myCurrentAnimation;
@@ -181,3 +124,4 @@ public class TurtleDisplay extends StackPane{
         penColor = (Color) myBackground.getFill();
     }
 }
+
