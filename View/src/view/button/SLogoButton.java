@@ -2,6 +2,10 @@ package view.button;
 
 import javafx.scene.control.Button;
 
+/**
+ * This class represents one of the buttons displayed on the GUI.
+ * @author Austin Kao
+ */
 public abstract class SLogoButton {
     private Button myButton;
 

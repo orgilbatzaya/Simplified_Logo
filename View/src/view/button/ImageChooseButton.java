@@ -7,6 +7,10 @@ import view.TurtleView;
 
 import java.io.File;
 
+/**
+ * This class controls what image will be used for the turtle.
+ * @author Austin Kao
+ */
 public class ImageChooseButton extends SLogoButton{
     private static final String RESOURCE_PATH = "data/images/";
     private static final String IMAGE_PATH = "/images/";

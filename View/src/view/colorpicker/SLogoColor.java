@@ -7,7 +7,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * Class to potentially replace color pickers. Will need to think about implementation more.
+ * This class represents a GUI element that allows users to select the color they want for a certain other elements, such as the background of the canvas and the color of the pen.
+ * @author Austin Kao
  */
 
 public abstract class SLogoColor {

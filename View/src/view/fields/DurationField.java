@@ -4,6 +4,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class represents the field where users can specify the duration of the animations running onscreen.
+ * @author Austin Kao
+ */
 public class DurationField {
     private static final double DEFAULT_DURATION = 10;
 
