@@ -1,5 +1,7 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
@@ -17,6 +19,7 @@ public class CurrentEnvironmentDisplay {
     private ListView<String> currentDisplay;
     private ObservableList<String> currentItems;
     private int maxSize;
+    private Label selectionLabel;
 
     public CurrentEnvironmentDisplay(double height, String label) {
         this(height, -1, label);
@@ -28,8 +31,9 @@ public class CurrentEnvironmentDisplay {
         currentItems = FXCollections.observableArrayList();
         currentDisplay.setMaxHeight(height);
         maxSize = max;
-        parentBox = new VBox(displayLabel, currentDisplay);
-        //currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getEditingIndex()));
+        selectionLabel = new Label("Selection");
+        parentBox = new VBox(displayLabel, currentDisplay, selectionLabel);
+        currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getSelectionModel().getSelectedItem()));
     }
 
     public void addItem(String newItem) {
@@ -58,7 +62,11 @@ public class CurrentEnvironmentDisplay {
         return parentBox;
     }
 
-    public void editItem(int index) {
-
+    /**
+     * This method should change depending on the type of CurrentEnvironmentDisplay?
+     * @param oldValue
+     */
+    public void editItem(String oldValue) {
+        selectionLabel.setText("You Selected " + oldValue);
     }
 }
