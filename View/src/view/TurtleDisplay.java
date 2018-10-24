@@ -53,7 +53,7 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
-        Animate animate = new Animate(myCanvas,myGC,penColor,Duration.millis(2000),myTurtle);
+        Animate animate = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
 
 
         myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
