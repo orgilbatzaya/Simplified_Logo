@@ -4,6 +4,10 @@ import javafx.scene.paint.Color;
 import view.TurtleDisplay;
 import view.colorpicker.SLogoColor;
 
+/**
+ * This class picks the current background of the display.
+ * @author Austin Kao
+ */
 public class BackgroundColor extends SLogoColor {
     private TurtleDisplay myDisplay;
 

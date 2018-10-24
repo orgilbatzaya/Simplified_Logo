@@ -4,6 +4,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class represents a command line where users can input whatever commands they want.
+ * @author Austin Kao
+ */
 public class CommandLine {
     private TextArea userInput;
     private double commandLineHeight;

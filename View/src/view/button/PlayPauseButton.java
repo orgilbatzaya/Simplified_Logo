@@ -2,6 +2,10 @@ package view.button;
 
 import view.TurtleDisplay;
 
+/**
+ * This class controls if the current animation on screen will be played or paused.
+ * @author Austin Kao
+ */
 public class PlayPauseButton extends SLogoButton{
     private TurtleDisplay myDisplay;
 

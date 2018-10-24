@@ -12,14 +12,16 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
+import view.fields.DurationField;
 
 public class TurtleDisplay extends StackPane{
-    public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private static final int FRAMES_PER_SECOND = 60;
+    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -31,9 +33,11 @@ public class TurtleDisplay extends StackPane{
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
+    private DurationField myDuration;
 
 
     public TurtleDisplay() {
+        myDuration = new DurationField("Duration of Animation: ");
         myBackground = new Rectangle(400, 400);
         myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(400,400);
@@ -68,7 +72,9 @@ public class TurtleDisplay extends StackPane{
         return myCanvas;
     }
 
-
+    public VBox getDurationDisplay() {
+        return myDuration.getDisplay();
+    }
 
 
     EventHandler<MouseEvent> handler = new EventHandler<>() {
@@ -117,14 +123,5 @@ public class TurtleDisplay extends StackPane{
     public void hidePen(){
         penColor = (Color) myBackground.getFill();
     }
-
-    public static class Location {
-        double x;
-        double y;
-    }
-
-
-
-
 }
 
