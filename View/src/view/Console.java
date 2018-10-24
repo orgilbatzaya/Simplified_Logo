@@ -29,7 +29,6 @@ public class Console implements FrontExternal {
     private CurrentEnvironmentDisplay currentVariables;
     private CurrentEnvironmentDisplay currentFunctions;
     private GUISetup parentGUI;
-    private TurtleDisplay mainDisplay;
 
     public Console(GUISetup gui) {
         parentGUI = gui;
@@ -56,6 +55,13 @@ public class Console implements FrontExternal {
     public void processCommand () {
         currentCommand = myCommandLine.getCommand();
         pastCommands.addItem(currentCommand);
+        Map<String, Double> commandParams = parentGUI.getTurtleParams();
+        BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
+        back.performCommands(currentCommand);
+        List<String> actionList = back.getMyTurtleActions();
+        List<Double> actionArgs = back.getMyTurtleActionsArgs();
+        ActionRunner actInterpret = new ActionRunner();
+        actInterpret.performActions(actionList,actionArgs, parentGUI.getCurrentDisplay());
     }
 
     public String getNextCommand(){

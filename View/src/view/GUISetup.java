@@ -3,7 +3,6 @@ package view;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -15,10 +14,7 @@ import view.colorpicker.BackgroundColor;
 import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -32,7 +28,8 @@ public class GUISetup implements FrontInternal{
     private Group root;
     private Console myConsole;
     private ResourceBundle myConstants;
-    private TurtleDisplay turtleDisplay;
+    private TurtleDisplay currentDisplay;
+    private ArrayList<TurtleDisplay> myDisplays;
     private LanguageMenu myLanguageMenu;
 
     //for turtle parameter map
@@ -56,26 +53,27 @@ public class GUISetup implements FrontInternal{
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-
         myConsole = new Console(this);
         myConsole.getConsoleBox().setLayoutX(50);
         myConsole.getConsoleBox().setLayoutY(400);
-        turtleDisplay = new TurtleDisplay();
-        turtleDisplay.getCanvas().setVisible(true);
-        PenColor penColor = new PenColor(Color.RED, "Pen Color:", turtleDisplay);
-        BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", turtleDisplay);
+        myDisplays = new ArrayList<>();
+        currentDisplay = new TurtleDisplay();
+        myDisplays.add(currentDisplay);
+        currentDisplay.getCanvas().setVisible(true);
+        PenColor penColor = new PenColor(Color.RED, "Pen Color:", currentDisplay);
+        BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", currentDisplay);
         myLanguageMenu = new LanguageMenu("Languages:");
-        PlayPauseButton playPause = new PlayPauseButton("Pause", turtleDisplay);
+        PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);
         Button stopButton = new Button("Stop");
         stopButton.setOnAction(e -> stopAnimation());
-        ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", turtleDisplay.getMyTurtle());
+        ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay.getMyTurtle());
         HelpButton help = new HelpButton("Help");
         VBox userOptions = new VBox(myLanguageMenu.getDisplay(), playPause.getDisplay(), stopButton, changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay());
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);
-        root.getChildren().addAll(turtleDisplay, myConsole.getConsoleBox(), userOptions);
+        root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions);
         return scene;
     }
 
@@ -97,9 +95,9 @@ public class GUISetup implements FrontInternal{
     public Map<String,Double> getTurtleParams(){
         HashMap<String,Double> mapOut = new HashMap<>();
         String[] keyElements = {HEADING_KEY,X_KEY,Y_KEY,PEN_KEY,VISIBLE_KEY,DISTANCE_MOVED_KEY};
-        Double[] valueElements = {turtleDisplay.getMyTurtle().getHeading(),
-                turtleDisplay.getMyTurtle().getX(),
-                turtleDisplay.getMyTurtle().getY(),
+        Double[] valueElements = {currentDisplay.getMyTurtle().getHeading(),
+                currentDisplay.getMyTurtle().getX(),
+                currentDisplay.getMyTurtle().getY(),
                 DEFAULT_PEN,DEFAULT_VISIBLE,INITIAL_DISTANCE_MOVED};
         for(int i = 0; i<keyElements.length;i++){
             mapOut.put(keyElements[i],valueElements[i]);
@@ -108,24 +106,14 @@ public class GUISetup implements FrontInternal{
     }
 
     private void stopAnimation() {
-        turtleDisplay.getCurrentAnimation().stop();
+        currentDisplay.getCurrentAnimation().stop();
     }
 
     public ResourceBundle getLanguage() {
         return myLanguageMenu.getLanguage();
     }
 
-    public TurtleDisplay getTurtleDisplay() {
-        return turtleDisplay;
-    }
-
-    public void runCommand() {
-        Map<String, Double> commandParams = getTurtleParams();
-        BackMain back = new BackMain(myLanguageMenu.getLanguage(), commandParams);
-        back.performCommands(myConsole.getNextCommand());
-        List<String> actionList = back.getMyTurtleActions();
-        List<Double> actionArgs = back.getMyTurtleActionsArgs();
-        ActionRunner actInterpret = new ActionRunner();
-        actInterpret.performActions(actionList,actionArgs, turtleDisplay);
+    public TurtleDisplay getCurrentDisplay() {
+        return currentDisplay;
     }
 }
