@@ -49,11 +49,13 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
+        Animate animate = new Animate(myCanvas,myGC,penColor,Duration.millis(2000),myTurtle);
 
-        myCurrentAnimation = new SequentialTransition(move(new Point2D(50,70)),
-                                                            move(new Point2D(50,30)),
-                                                            move(new Point2D(100,-100)),
-                                                            move(new Point2D(-40,60)));
+
+        myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
+                                                            animate.move(new Point2D(50,30)),
+                                                            animate.move(new Point2D(100,-100)),
+                                                            animate.move(new Point2D(-40,60)));
         myCurrentAnimation.setCycleCount(2);
         myCurrentAnimation.setAutoReverse(true);
         myCurrentAnimation.play();
@@ -64,28 +66,6 @@ public class TurtleDisplay extends StackPane{
 
     public Canvas getCanvas(){
         return myCanvas;
-    }
-
-    public Animation move(Point2D translate){
-
-        myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
-        Point2D next = myPos.add(translate);
-        Animate animate = new Animate(myCanvas,penColor,myPos,next,Duration.seconds(1));
-        PathTransition drawLine = animate.getAnimation();
-
-
-        TranslateTransition translateTurt = new TranslateTransition(Duration.millis(1000), myTurtle.getView());
-
-        translateTurt.setByX(translate.getX());
-        translateTurt.setByY(translate.getY());
-
-        ParallelTransition p = new ParallelTransition(drawLine,translateTurt);
-        myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
-
-
-
-
-        return p;
     }
 
 
