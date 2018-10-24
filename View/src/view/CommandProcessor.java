@@ -3,6 +3,10 @@ package view;
 import model.BackMain;
 import java.util.List;
 
+/**
+ * Aim to delete this class.
+ */
+
 public class CommandProcessor {
 
     public CommandProcessor(GUISetup gui) {
@@ -18,6 +22,6 @@ public class CommandProcessor {
         System.out.println(3);
         List<Double> actionArgs = back.getMyTurtleActionsArgs();
         ActionRunner actInterpret = new ActionRunner();
-        actInterpret.performActions(actionList,actionArgs,gui.getTurtleDisplay());
+        actInterpret.performActions(actionList,actionArgs,gui.getCurrentDisplay());
     }
 }
