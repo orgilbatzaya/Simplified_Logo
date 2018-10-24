@@ -10,7 +10,7 @@ public class CommandProcessor {
     }
 
     public void processAndAnimateCommand(GUISetup gui) {
-        BackMain back = new BackMain(gui.getButtonManager().getLanguageFromUserOptions(), gui.getTurtleParams());
+        BackMain back = new BackMain(gui.getLanguage(), gui.getTurtleParams());
         System.out.println(1);
         back.performCommands(gui.getConsole().getNextCommand());
         System.out.println(2);
@@ -18,6 +18,6 @@ public class CommandProcessor {
         System.out.println(3);
         List<Double> actionArgs = back.getMyTurtleActionsArgs();
         ActionRunner actInterpret = new ActionRunner();
-        actInterpret.performActions(actionList,actionArgs,gui.getButtonManager().getTurtleDisplay());
+        actInterpret.performActions(actionList,actionArgs,gui.getTurtleDisplay());
     }
 }
