@@ -2,11 +2,9 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import model.BackMain;
 import view.button.HelpButton;
 import view.button.ImageChooseButton;
 import view.button.PlayPauseButton;
@@ -14,7 +12,10 @@ import view.colorpicker.BackgroundColor;
 import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -64,11 +65,9 @@ public class GUISetup implements FrontInternal{
         BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", currentDisplay);
         myLanguageMenu = new LanguageMenu("Languages:");
         PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);
-        Button stopButton = new Button("Stop");
-        stopButton.setOnAction(e -> stopAnimation());
         ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay.getMyTurtle());
         HelpButton help = new HelpButton("Help");
-        VBox userOptions = new VBox(myLanguageMenu.getDisplay(), playPause.getDisplay(), stopButton, changeTurtle.getDisplay() ,
+        VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay());
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
@@ -103,10 +102,6 @@ public class GUISetup implements FrontInternal{
             mapOut.put(keyElements[i],valueElements[i]);
         }
         return mapOut;
-    }
-
-    private void stopAnimation() {
-        currentDisplay.getCurrentAnimation().stop();
     }
 
     public ResourceBundle getLanguage() {

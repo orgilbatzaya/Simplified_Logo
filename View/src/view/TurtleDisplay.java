@@ -12,14 +12,16 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
+import view.fields.DurationField;
 
 public class TurtleDisplay extends StackPane{
-    public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private static final int FRAMES_PER_SECOND = 60;
+    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -28,12 +30,14 @@ public class TurtleDisplay extends StackPane{
     private Color bgColor;
     private TurtleView myTurtle;
     private Point2D myPos;
-    private ParallelTransition myCurrentAnimation;
+    private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
+    private DurationField myDuration;
 
 
     public TurtleDisplay() {
+        myDuration = new DurationField("Duration of Animation: ");
         myBackground = new Rectangle(400, 400);
         myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(400,400);
@@ -52,10 +56,10 @@ public class TurtleDisplay extends StackPane{
         //this.setAlignment(myTurtle.getView(), Pos.CENTER);
         //move(new Point2D(50,70));//translation vector
         //move(new Point2D(60,-30));
-        SequentialTransition seq = new SequentialTransition(move(new Point2D(50,70)),
+        myCurrentAnimation = new SequentialTransition(move(new Point2D(50,70)),
                                                             move(new Point2D(50,0)),
                                                             move(new Point2D(50,0)));
-        seq.play();
+        myCurrentAnimation.play();
 
 
     }
@@ -68,20 +72,22 @@ public class TurtleDisplay extends StackPane{
         myPos = new Point2D(myTurtle.getX(), myTurtle.getY());
         Point2D next = myPos.add(translate);
 
-        PathTransition drawLine = animate(myPos, next, Duration.seconds(2));
+        PathTransition drawLine = animate(myPos, next, Duration.seconds(myDuration.getDuration()));
 
-        TranslateTransition translateTurt = new TranslateTransition(Duration.millis(2000), myTurtle.getView());
+        TranslateTransition translateTurt = new TranslateTransition(Duration.seconds(myDuration.getDuration()), myTurtle.getView());
 
         translateTurt.setByX(translate.getX());
         translateTurt.setByY(translate.getY());
 
-        myCurrentAnimation = new ParallelTransition(drawLine,translateTurt);
+        ParallelTransition pt = new ParallelTransition(drawLine,translateTurt);
         myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
 
-        return myCurrentAnimation;
+        return pt;
     }
 
-
+    public VBox getDurationDisplay() {
+        return myDuration.getDisplay();
+    }
 
 
     EventHandler<MouseEvent> handler = new EventHandler<>() {
@@ -122,9 +128,7 @@ public class TurtleDisplay extends StackPane{
         PathTransition pathTransition = new PathTransition(duration, myPath, pen);
         pathTransition.currentTimeProperty().addListener(new ChangeListener<>()
         {
-
             Point2D oldLocation = null;
-
             //Draw a line from the old location to the new location
             @Override
             public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
@@ -156,7 +160,7 @@ public class TurtleDisplay extends StackPane{
         return pathTransition;
     }
 
-    public ParallelTransition getCurrentAnimation() {
+    public SequentialTransition getCurrentAnimation() {
         return myCurrentAnimation;
     }
 
@@ -176,8 +180,4 @@ public class TurtleDisplay extends StackPane{
     public void hidePen(){
         penColor = (Color) myBackground.getFill();
     }
-
-
-
-
 }

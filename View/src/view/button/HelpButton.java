@@ -7,6 +7,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import view.TurtleDisplay;
 
+/**
+ * This class controls how users will access a reference of all the SLogo commands.
+ * May change to something that is completely encapsulated within the GUI.
+ * @author Austin Kao
+ */
 public class HelpButton extends SLogoButton{
     private Stage myStage;
 
