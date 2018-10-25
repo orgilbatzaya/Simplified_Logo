@@ -12,6 +12,6 @@ public class Pen extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.getCanvas().changePenVisibilty();
+        turtleDisplay.getCanvas().getPen().changePenVisibilty();
     }
 }

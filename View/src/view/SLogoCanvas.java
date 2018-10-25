@@ -12,8 +12,7 @@ public class SLogoCanvas {
     private Canvas myCanvas;
     private GraphicsContext myGC;
     private Point2D zeroPos;
-    private Color penColor;
-    private boolean penVisibility;
+    private SLogoPen myPen;
 
     public SLogoCanvas(double width, double height) {
         myCanvas = new Canvas(width,height);
@@ -22,7 +21,7 @@ public class SLogoCanvas {
         myGC.setLineWidth(10);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
         zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
-        penColor = Color.RED;
+        myPen = new SLogoPen(Color.RED);
     }
 
     EventHandler<MouseEvent> handler = new EventHandler<>() {
@@ -30,7 +29,7 @@ public class SLogoCanvas {
             double size = 10.0;
             double x = e.getX() - size/2;
             double y = e.getY() - size/2;
-            myGC.setFill(penColor);
+            myGC.setFill(myPen.getPenColor());
             myGC.setEffect(new DropShadow());
             myGC.fillOval(x,y,size,size);
         }
@@ -56,15 +55,7 @@ public class SLogoCanvas {
         return zeroPos.getY();
     }
 
-    public Color getPenColor() {
-        return penColor;
-    }
-
-    public void setPenColor(Color c){
-        penColor = c;
-    }
-
-    public void changePenVisibilty(){
-        penVisibility = !penVisibility;
+    public SLogoPen getPen() {
+        return myPen;
     }
 }

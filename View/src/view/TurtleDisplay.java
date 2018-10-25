@@ -23,27 +23,25 @@ public class TurtleDisplay extends StackPane{
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    private Color prevPenColor;
-
     private TurtleView myTurtle;
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private DurationField myDuration;
     private SLogoCanvas myCanvas;
-
+    private SLogoPen myPen;
 
     public TurtleDisplay() {
         myCanvas = new SLogoCanvas(400, 400);
+        myPen = myCanvas.getPen();
         myDuration = new DurationField("Duration of Animation: ");
         myBackground = new Rectangle(400, 400);
         myBackground.setFill(Color.WHITE);
-        prevPenColor = Color.RED;
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas.getCanvas());
         this.getChildren().add(myTurtle.getView());
-        Animate animate = new Animate(myCanvas,myCanvas.getPenColor(),Duration.seconds(myDuration.getDuration()),myTurtle);
+        Animate animate = new Animate(myCanvas,myPen,Duration.seconds(myDuration.getDuration()),myTurtle);
         myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
                                                             animate.move(new Point2D(50,30)),
                                                             animate.move(new Point2D(100,-100)),
