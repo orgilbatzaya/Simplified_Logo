@@ -110,40 +110,7 @@ public class BackMain {
         String currentType;
         for(int i =0; i<text.length; i++){
             text[i] = myProgParser.getSymbol(text[i]);
-            System.out.println(text[i]);
         }
-
-
-
-        /*
-        for(String s : text) {
-            if((BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s))) {
-                if(type == 3) {
-                    continue;
-                }
-                else if (type == 2) {
-                    type = 3;
-                    continue;
-                }
-                else {
-                    break; //throw error here
-                }
-            }
-            else if(TURTLE_COMMANDS.contains(s)) {
-                if(type == 2) {
-                    continue;
-                }
-                else {
-                    type = 2;
-                    continue;
-                }
-
-            }
-            else if(CONTROL_OPS.contains(s)) {
-                currentType = "Control";
-            }
-        }
-        */
 
         Stack<Command> toDo = new Stack<>();
         Stack<Command> tempDone = new Stack<>();
@@ -166,7 +133,8 @@ public class BackMain {
         while(!toDo.isEmpty()){
 
             Command temp = toDo.peek();
-            String s = temp.getClass().getName();
+            String[] split = temp.getClass().getName().split("\\.");
+            String s = split[split.length - 1];
             // System.out.println(((Argument) temp).execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
 
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
@@ -199,7 +167,16 @@ public class BackMain {
                 int numArgs = myNumArgsMap.get(s);
                 ArrayList<String> curArgs = new ArrayList<>();
                 for (int i = 0; i < numArgs; i++) {
-                    curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
+                    curArgs.add(0, tempArgs.peek().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
+                    Command com = tempArgs.peek();
+                    myTurtleActions = com.getMyTurtleActions();
+                    myTurtleActionsArgs = com.getMyTurtleArgs();
+                    tempArgs.pop();
+
+                    for(int j=0; j<myTurtleActions.size(); i++){
+                        System.out.print(myTurtleActions.get(j)+" ");
+                    }
+                    System.out.println();
                 }
                 toDo.pop();
                 tempDone.push(temp);
@@ -219,7 +196,6 @@ public class BackMain {
                 tempDone.push(temp);
             }
         }
-
     }
 
     private boolean isDouble(String str) {
