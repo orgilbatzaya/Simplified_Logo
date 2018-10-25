@@ -21,14 +21,18 @@ public class Animate {
     private GraphicsContext myGC;
     private PathTransition myPathTans;
     private ParallelTransition myAnimation;
+
     private Color myPenColor;
     private Canvas myCanvas;
+
     private TurtleView myTurtle;
     private Point2D myPos;
     private Duration duration;
 
 
+
     public Animate(Canvas myCanvas, GraphicsContext gc, Color penColor, Duration duration, TurtleView turtle){
+
         myTurtle = turtle;
         zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
         this.duration = duration;
@@ -46,7 +50,6 @@ public class Animate {
         myPos = new Point2D(myTurtle.getX(),myTurtle.getY());
         Point2D next = myPos.add(translate);
         pathAnimate(myPos,next,duration);
-
         TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
         translateTurt.setByX(translate.getX());
         translateTurt.setByY(translate.getY());
