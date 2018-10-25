@@ -113,6 +113,18 @@ public class BackMain {
             System.out.println(text[i]);
         }
 
+        ArrayList<String> commandList = new ArrayList<>(Arrays.asList(text));
+        ArrayList<String> newCommands = new ArrayList<>();
+
+        for(int i = 0; i < commandList.size(); i++) {
+            String s = commandList.get(i);
+            if(CONTROL_OPS.contains(s)) {
+                
+            }
+        }
+
+
+        /*
         Stack<Command> toDo = new Stack<>();
         Stack<Command> tempDone = new Stack<>();
         Stack<Command> tempArgs = new Stack<>();
@@ -187,6 +199,7 @@ public class BackMain {
                 tempDone.push(temp);
             }
         }
+        */
 
     }
 
