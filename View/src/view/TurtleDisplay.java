@@ -41,11 +41,11 @@ public class TurtleDisplay extends StackPane{
 
     //private StatusView statusView;
 
-    public TurtleDisplay() {
+    public TurtleDisplay(double width, double height) {
         myDuration = new DurationField("Duration of Animation: ");
-        myBackground = new Rectangle(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
-        myBackground.setFill(BACKGROUND_COLOR);
-        myCanvas = new Canvas(CANVAS_WIDTH,CANVAS_HEIGHT);
+        myBackground = new Rectangle(width, height);
+        myBackground.setFill(Color.WHITE);
+        myCanvas = new Canvas(width,height);
         zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
         myGC = myCanvas.getGraphicsContext2D();
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
@@ -128,6 +128,11 @@ public class TurtleDisplay extends StackPane{
 
     public void hidePen(){
         penColor = (Color) myBackground.getFill();
+    }
+
+    public void resetToHomePosition() {
+        myTurtle.setX(zeroPos.getX());
+        myTurtle.setY(zeroPos.getY());
     }
 }
 

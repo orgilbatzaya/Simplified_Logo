@@ -2,7 +2,6 @@ package view.colorpicker;
 
 import javafx.scene.paint.Color;
 import view.TurtleDisplay;
-import view.colorpicker.SLogoColor;
 
 /**
  * This class picks the current background of the display.

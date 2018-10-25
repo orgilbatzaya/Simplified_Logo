@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import view.TurtleDisplay;
 
 /**
  * This class controls how users will access a reference of all the SLogo commands.

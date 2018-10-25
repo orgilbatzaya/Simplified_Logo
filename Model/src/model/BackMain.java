@@ -34,8 +34,8 @@ public class BackMain {
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myTurtleParameters = turtleParams;
         variables = new HashMap<>();
-        myTurtleActions = new ArrayList<String>();
-        myTurtleActionsArgs = new ArrayList<Double>();
+        myTurtleActions = new ArrayList<>();
+        myTurtleActionsArgs = new ArrayList<>();
         myLanguage = lang;
     }
 

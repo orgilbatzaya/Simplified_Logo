@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.BackMain;
+import view.environmentdisplays.CurrentEnvironmentDisplay;
 
 import java.util.List;
 import java.util.Map;

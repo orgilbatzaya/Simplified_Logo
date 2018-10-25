@@ -5,7 +5,7 @@ import view.Actions.Action;
 import java.util.*;
 
 public class ActionRunner {
-    public String NUM_ARGS_ACTIONS_MAP_PATH = "view/Actions/NumArgsActions";
+    private String NUM_ARGS_ACTIONS_MAP_PATH = "view/Actions/NumArgsActions";
 
     private Map<String,Integer> numArgsActions;
 
@@ -13,7 +13,7 @@ public class ActionRunner {
         numArgsActions = getNumArgsMap(NUM_ARGS_ACTIONS_MAP_PATH);
     }
 
-    public void performActions(List<String> actions, List<Double> totalArgs,TurtleDisplay display){
+    public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display){
         int argIndex = 0;
         for(String a: actions){
             int numArgs = numArgsActions.get(a);
