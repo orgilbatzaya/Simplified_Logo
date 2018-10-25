@@ -18,6 +18,15 @@ public class TurtleDisplay extends StackPane{
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private static final double BACKGROUND_WIDTH = 400;
+    private static final double BACKGROUND_HEIGHT = 400;
+    private static final Color BACKGROUND_COLOR = Color.WHITE;
+    private static final double CANVAS_WIDTH = 400;
+    private static final double CANVAS_HEIGHT = 400;
+    private static final double GRAPHICS_CONTENT_WIDTH = 10;
+    private static final Color PEN_COLOR = Color.RED;
+    private static final Color PREVIOUS_PEN_COLOR = Color.RED;
+    private static final double MOUSE_SIZE = 10;
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -29,6 +38,7 @@ public class TurtleDisplay extends StackPane{
     private Rectangle myBackground;
     private Point2D zeroPos;
     private DurationField myDuration;
+
     //private StatusView statusView;
 
     public TurtleDisplay(double width, double height) {
@@ -38,10 +48,10 @@ public class TurtleDisplay extends StackPane{
         myCanvas = new Canvas(width,height);
         zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
         myGC = myCanvas.getGraphicsContext2D();
-        myGC.setLineWidth(10);
+        myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
-        penColor = Color.RED;
-        prevPenColor = Color.RED;
+        penColor = PEN_COLOR;
+        prevPenColor = PREVIOUS_PEN_COLOR;
 
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);
@@ -75,7 +85,7 @@ public class TurtleDisplay extends StackPane{
 
     EventHandler<MouseEvent> handler = new EventHandler<>() {
         public void handle(MouseEvent e) {
-            double size = 10.0;
+            double size = MOUSE_SIZE;
             double x = e.getX() - size/2;
             double y = e.getY() - size/2;
             myGC.setFill(penColor);

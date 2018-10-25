@@ -59,21 +59,11 @@ public class commandStack {
     public void execute() {
         for(String s : out) {
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
-                int numArgs = myNumArgsMap.get(s);
-                LinkedList<String> tempArgs = new LinkedList<>();
-                for(int i = 0; i < numArgs; i++) {
-                    tempArgs.add(args.pop());
-                }
-                Command temp = myFactory.makeCommand(s, tempArgs);
+                Command temp = createTempCommand(s);
                 args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
             }
             else if(TURTLE_COMMANDS.contains(s)) {
-                int numArgs = myNumArgsMap.get(s);
-                LinkedList<String> tempArgs = new LinkedList<>();
-                for(int i = 0; i < numArgs; i++) {
-                    tempArgs.add(args.pop());
-                }
-                Command temp = myFactory.makeCommand(s, tempArgs);
+                Command temp = createTempCommand(s);
                 temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters);
             }
             else {
@@ -96,7 +86,16 @@ public class commandStack {
         }
     }
 
-    public Map<String,Integer> getNumArgsMap(String path){
+    private Command createTempCommand(String s) {
+        int numArgs = myNumArgsMap.get(s);
+        LinkedList<String> tempArgs = new LinkedList<>();
+        for(int i = 0; i < numArgs; i++) {
+            tempArgs.add(args.pop());
+        }
+        return myFactory.makeCommand(s, tempArgs);
+    }
+
+    private Map<String,Integer> getNumArgsMap(String path){
         ResourceBundle properties = ResourceBundle.getBundle(path);
         var outMap = new HashMap<String,Integer>();
         for (String key : properties.keySet()) {
