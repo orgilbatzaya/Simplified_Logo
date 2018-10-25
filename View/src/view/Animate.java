@@ -85,14 +85,14 @@ public class Animate {
                 // get current location
                 Point2D moveVector = new Point2D(pen.getTranslateX(), pen.getTranslateY());
 
-
+                Point2D newLocation = zeroPos.add(moveVector);
                 // initialize the location
                 if (oldLocation == null) {
 
-                    oldLocation = new Point2D(moveVector.getX() + zeroPos.getX(), moveVector.getY() + zeroPos.getY());
+                    oldLocation = newLocation;
                     return;
                 }
-                Point2D newLocation = new Point2D(moveVector.getX() + zeroPos.getX(), moveVector.getY() + zeroPos.getY());
+
                 // draw line
                 myGC.setStroke(myPenColor);
                 myGC.setLineWidth(2);
