@@ -27,7 +27,6 @@ public class TurtleDisplay extends StackPane{
     private GraphicsContext myGC;
     private Color prevPenColor;
     private Color penColor;
-    private Color bgColor;
     private TurtleView myTurtle;
     private Point2D myPos;
     private SequentialTransition myCurrentAnimation;
@@ -46,7 +45,6 @@ public class TurtleDisplay extends StackPane{
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
         penColor = Color.RED;
         prevPenColor = Color.RED;
-        bgColor = Color.WHITE;
 
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);

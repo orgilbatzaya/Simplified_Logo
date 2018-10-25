@@ -6,8 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
-public interface FrontInternal {
-    Scene createGUI(int width, int height, Paint background);
-
-    VBox getDisplay();
+public interface Animated {
+    void move();
+    
 }
