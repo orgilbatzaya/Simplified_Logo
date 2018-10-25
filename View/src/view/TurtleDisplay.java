@@ -23,39 +23,27 @@ public class TurtleDisplay extends StackPane{
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    private Canvas myCanvas;
-    private GraphicsContext myGC;
     private Color prevPenColor;
-    private Color penColor;
-    private Color bgColor;
+
     private TurtleView myTurtle;
-    private Point2D myPos;
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
-    private Point2D zeroPos;
     private DurationField myDuration;
+    private SLogoCanvas myCanvas;
 
 
     public TurtleDisplay() {
+        myCanvas = new SLogoCanvas(400, 400);
         myDuration = new DurationField("Duration of Animation: ");
         myBackground = new Rectangle(400, 400);
         myBackground.setFill(Color.WHITE);
-        myCanvas = new Canvas(400,400);
-        zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
-        myGC = myCanvas.getGraphicsContext2D();
-        myGC.setLineWidth(10);
-        myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,handler);
-        penColor = Color.RED;
         prevPenColor = Color.RED;
-        bgColor = Color.WHITE;
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);
         this.getChildren().add(myBackground);
-        this.getChildren().add(myCanvas);
+        this.getChildren().add(myCanvas.getCanvas());
         this.getChildren().add(myTurtle.getView());
-        Animate animate = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
-
-
+        Animate animate = new Animate(myCanvas,myCanvas.getPenColor(),Duration.seconds(myDuration.getDuration()),myTurtle);
         myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
                                                             animate.move(new Point2D(50,30)),
                                                             animate.move(new Point2D(100,-100)),
@@ -63,12 +51,9 @@ public class TurtleDisplay extends StackPane{
         myCurrentAnimation.setCycleCount(2);
         myCurrentAnimation.setAutoReverse(true);
         myCurrentAnimation.play();
-
-
-
     }
 
-    public Canvas getCanvas(){
+    public SLogoCanvas getCanvas(){
         return myCanvas;
     }
 
@@ -76,27 +61,6 @@ public class TurtleDisplay extends StackPane{
         return myDuration.getDisplay();
     }
 
-
-    EventHandler<MouseEvent> handler = new EventHandler<>() {
-        public void handle(MouseEvent e) {
-            double size = 10.0;
-            double x = e.getX() - size/2;
-            double y = e.getY() - size/2;
-            myGC.setFill(penColor);
-            myGC.setEffect(new DropShadow());
-            myGC.fillOval(x,y,size,size);
-        }
-    };
-
-
-    public GraphicsContext getGraphicsContext(){
-        return myGC;
-    }
-
-    public void setPenColor(Color c){
-        penColor = c;
-        prevPenColor = c;
-    }
     public void setBgColor(Color c){
         myBackground.setFill(c);
     }
@@ -111,17 +75,9 @@ public class TurtleDisplay extends StackPane{
         return myTurtle;
     }
 
-    public void clearScreen(){
-        myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
-
-    }
-
-    public void showPen(){
-        penColor = prevPenColor;
-    }
-
-    public void hidePen(){
-        penColor = (Color) myBackground.getFill();
+    public void resetToHomePosition() {
+        myTurtle.setX(myCanvas.getHomeX());
+        myTurtle.setY(myCanvas.getHomeY());
     }
 }
 

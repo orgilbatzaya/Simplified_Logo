@@ -1,5 +1,8 @@
 package model;
+
 import java.util.List;
+import model.commands.*;
+
 
 public class Factory {
     public Command makeCommand(String commandName, List<String> args){

@@ -17,6 +17,6 @@ public class PenColor extends SLogoColor {
 
     @Override
     public void processChoice(Color c) {
-        myDisplay.setPenColor(c);
+        myDisplay.getCanvas().setPenColor(c);
     }
 }
