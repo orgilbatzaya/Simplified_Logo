@@ -167,8 +167,11 @@ public class BackMain {
                 int numArgs = myNumArgsMap.get(s);
                 ArrayList<String> curArgs = new ArrayList<>();
                 for (int i = 0; i < numArgs; i++) {
+                    System.out.println(s);
+                    System.out.println(tempArgs.peek());
                     curArgs.add(0, tempArgs.peek().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
                     Command com = tempArgs.peek();
+                    System.out.println(com.toString());
                     myTurtleActions = com.getMyTurtleActions();
                     myTurtleActionsArgs = com.getMyTurtleArgs();
                     tempArgs.pop();

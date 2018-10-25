@@ -3,6 +3,7 @@ package model.commands;
 import model.Command;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public abstract class TurtleCommand extends Command {
 
     }
 
-    public void move(double distance,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public Map<List<String>,List<Double>> move(double distance,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
         turtleActions.add(MOVE_ACTION);
         turtleArgs.add(distance);
         double newX = turtleParams.get(X_KEY)+distance*Math.cos(Math.toRadians(turtleParams.get(HEADING_KEY)));
@@ -47,9 +48,9 @@ public abstract class TurtleCommand extends Command {
         turtleParams.put(Y_KEY,newY);
         turtleParams.put(DISTANCE_MOVED_KEY,turtleParams.get(DISTANCE_MOVED_KEY)+distance);
         ArrayList<List<String>> out = new ArrayList<List<String>>();
-
-        setMyTurtleActions(turtleActions);
-        setMyTurtleArgs(turtleArgs);
+        Map<List<String>,List<Double>> outMap = new HashMap<List<String>,List<Double>>();
+        outMap.put(turtleActions,turtleArgs);
+        return outMap;
     }
 
     public void rotate(double angle,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
