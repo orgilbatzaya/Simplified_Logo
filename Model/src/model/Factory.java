@@ -4,8 +4,10 @@ import java.util.List;
 public class Factory {
     public Command makeCommand(String commandName, List<String> args){
         try{
-            Class cls = Class.forName(commandName);
-            var constructor = cls.getConstructor();
+
+            String name = "model.commands.TurtleCommands."+commandName;
+            Class cls = Class.forName(name);
+            var constructor = cls.getConstructor(List.class);
             Object newCommand = constructor.newInstance(args);
             return (Command) newCommand;
         }

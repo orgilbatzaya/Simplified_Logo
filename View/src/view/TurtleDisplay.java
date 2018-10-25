@@ -35,7 +35,6 @@ public class TurtleDisplay extends StackPane{
     private Point2D zeroPos;
     private DurationField myDuration;
 
-
     public TurtleDisplay() {
         myDuration = new DurationField("Duration of Animation: ");
         myBackground = new Rectangle(400, 400);
@@ -48,13 +47,14 @@ public class TurtleDisplay extends StackPane{
         penColor = Color.RED;
         prevPenColor = Color.RED;
         bgColor = Color.WHITE;
+
         myTurtle = new TurtleView();
         myTurtle.getView().setVisible(true);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         this.getChildren().add(myTurtle.getView());
-        Animate animate = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
 
+        Animate animate = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
 
         myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
                                                             animate.move(new Point2D(50,30)),

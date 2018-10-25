@@ -110,7 +110,6 @@ public class BackMain {
         String currentType;
         for(int i =0; i<text.length; i++){
             text[i] = myProgParser.getSymbol(text[i]);
-            System.out.println(text[i]);
         }
 
         ArrayList<String> commandList = new ArrayList<>(Arrays.asList(text));
@@ -146,7 +145,8 @@ public class BackMain {
         while(!toDo.isEmpty()){
 
             Command temp = toDo.peek();
-            String s = temp.getClass().getName();
+            String[] split = temp.getClass().getName().split("\\.");
+            String s = split[split.length - 1];
             // System.out.println(((Argument) temp).execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
 
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
@@ -179,7 +179,19 @@ public class BackMain {
                 int numArgs = myNumArgsMap.get(s);
                 ArrayList<String> curArgs = new ArrayList<>();
                 for (int i = 0; i < numArgs; i++) {
-                    curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
+                    System.out.println(s);
+                    System.out.println(tempArgs.peek());
+                    curArgs.add(0, tempArgs.peek().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
+                    Command com = tempArgs.peek();
+                    System.out.println(com.toString());
+                    myTurtleActions = com.getMyTurtleActions();
+                    myTurtleActionsArgs = com.getMyTurtleArgs();
+                    tempArgs.pop();
+
+                    for(int j=0; j<myTurtleActions.size(); i++){
+                        System.out.print(myTurtleActions.get(j)+" ");
+                    }
+                    System.out.println();
                 }
                 toDo.pop();
                 tempDone.push(temp);
