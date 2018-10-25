@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
  */
 public class GUISetup {
     private static final String DEFAULT_RESOURCE = "resources/ViewDefaults";
+    private static final double CANVAS_WIDTH = 400;
+    private static final double CANVAS_HEIGHT = 400;
 
     private Scene myScene;
     private Group root;
@@ -34,16 +36,16 @@ public class GUISetup {
     private LanguageMenu myLanguageMenu;
 
     //for turtle parameter map
-    public static final String HEADING_KEY = "heading";
-    public static final String X_KEY = "xPos";
-    public static final String Y_KEY = "yPos";
-    public static final String DISTANCE_MOVED_KEY = "distanceMoved";
-    public static final String PEN_KEY = "pen";
-    public static final String VISIBLE_KEY= "visible";
+    private static final String HEADING_KEY = "heading";
+    private static final String X_KEY = "xPos";
+    private static final String Y_KEY = "yPos";
+    private static final String DISTANCE_MOVED_KEY = "distanceMoved";
+    private static final String PEN_KEY = "pen";
+    private static final String VISIBLE_KEY= "visible";
 
-    public static final double DEFAULT_PEN = 1;
-    public static final double DEFAULT_VISIBLE = 1;
-    public static final double INITIAL_DISTANCE_MOVED = 0;
+    private static final double DEFAULT_PEN = 1;
+    private static final double DEFAULT_VISIBLE = 1;
+    private static final double INITIAL_DISTANCE_MOVED = 0;
 
 
     public GUISetup() {
@@ -58,7 +60,7 @@ public class GUISetup {
         myConsole.getConsoleBox().setLayoutX(50);
         myConsole.getConsoleBox().setLayoutY(400);
         myDisplays = new ArrayList<>();
-        currentDisplay = new TurtleDisplay();
+        currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
         myDisplays.add(currentDisplay);
         currentDisplay.getCanvas().setVisible(true);
         PenColor penColor = new PenColor(Color.RED, "Pen Color:", currentDisplay);

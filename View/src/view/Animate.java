@@ -1,6 +1,5 @@
 package view;
 
-import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.TranslateTransition;

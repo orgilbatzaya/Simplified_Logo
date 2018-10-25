@@ -1,13 +1,11 @@
-package view;
+package view.environmentdisplays;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
-import javafx.scene.text.Text;
+import view.TurtleView;
 
-public class StatusView extends CurrentEnvironmentDisplay{
+public class StatusView extends CurrentEnvironmentDisplay {
     DoubleProperty xProperty = new SimpleDoubleProperty();
     DoubleProperty yProperty = new SimpleDoubleProperty();
     double xPos;

@@ -1,20 +1,16 @@
 package view;
 
-import javafx.animation.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.PickResult;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
@@ -35,11 +31,11 @@ public class TurtleDisplay extends StackPane{
     private DurationField myDuration;
     //private StatusView statusView;
 
-    public TurtleDisplay() {
+    public TurtleDisplay(double width, double height) {
         myDuration = new DurationField("Duration of Animation: ");
-        myBackground = new Rectangle(400, 400);
+        myBackground = new Rectangle(width, height);
         myBackground.setFill(Color.WHITE);
-        myCanvas = new Canvas(400,400);
+        myCanvas = new Canvas(width,height);
         zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
         myGC = myCanvas.getGraphicsContext2D();
         myGC.setLineWidth(10);
@@ -122,6 +118,11 @@ public class TurtleDisplay extends StackPane{
 
     public void hidePen(){
         penColor = (Color) myBackground.getFill();
+    }
+
+    public void resetToHomePosition() {
+        myTurtle.setX(zeroPos.getX());
+        myTurtle.setY(zeroPos.getY());
     }
 }
 
