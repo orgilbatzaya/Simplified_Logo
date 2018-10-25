@@ -1,14 +1,11 @@
 package view;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.BackMain;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -56,14 +53,27 @@ public class Console implements FrontExternal {
         currentCommand = myCommandLine.getCommand();
         pastCommands.addItem(currentCommand);
         Map<String, Double> commandParams = parentGUI.getTurtleParams();
-        /*
+
         BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
+        System.out.println(1);
         back.performCommands(currentCommand);
+        System.out.println(2);
         List<String> actionList = back.getMyTurtleActions();
+        System.out.println(3);
+        for(int i=0; i<actionList.size(); i++){
+            System.out.print(actionList.get(i)+" ");
+        }
+        System.out.println();
         List<Double> actionArgs = back.getMyTurtleActionsArgs();
+        for(int i=0; i<actionArgs.size(); i++){
+            System.out.print(actionArgs.get(i)+" ");
+        }
+        System.out.println();
+        System.out.println(4);
         ActionRunner actInterpret = new ActionRunner();
         actInterpret.performActions(actionList,actionArgs, parentGUI.getCurrentDisplay());
-        */
+        System.out.println(5);
+
     }
 
     public String getNextCommand(){

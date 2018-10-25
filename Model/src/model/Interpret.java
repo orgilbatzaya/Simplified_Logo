@@ -10,7 +10,11 @@ public class Interpret {
 
     public double interpretCommand(String commandName, List<String> args, Map<String,Double> turtleParams,List<String> turtleActions,List<Double> actionArgs){
         Factory fac = new Factory();
+        System.out.println("a");
         Command com = fac.makeCommand(commandName,args);
-        return com.execute(turtleActions,actionArgs,turtleParams);
+        System.out.println("b");
+        double out =  com.execute(turtleActions,actionArgs,turtleParams);
+        System.out.println("c");
+        return out;
     }
 }

@@ -5,7 +5,7 @@ import view.Actions.Action;
 import java.util.*;
 
 public class ActionRunner {
-    public String NUM_ARGS_ACTIONS_MAP_PATH = "view/NumArgsActions";
+    public String NUM_ARGS_ACTIONS_MAP_PATH = "view/Actions/NumArgsActions";
 
     private Map<String,Integer> numArgsActions;
 
