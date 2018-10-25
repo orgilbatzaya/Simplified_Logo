@@ -113,38 +113,6 @@ public class BackMain {
             System.out.println(text[i]);
         }
 
-
-
-        /*
-        for(String s : text) {
-            if((BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s))) {
-                if(type == 3) {
-                    continue;
-                }
-                else if (type == 2) {
-                    type = 3;
-                    continue;
-                }
-                else {
-                    break; //throw error here
-                }
-            }
-            else if(TURTLE_COMMANDS.contains(s)) {
-                if(type == 2) {
-                    continue;
-                }
-                else {
-                    type = 2;
-                    continue;
-                }
-
-            }
-            else if(CONTROL_OPS.contains(s)) {
-                currentType = "Control";
-            }
-        }
-        */
-
         Stack<Command> toDo = new Stack<>();
         Stack<Command> tempDone = new Stack<>();
         Stack<Command> tempArgs = new Stack<>();
