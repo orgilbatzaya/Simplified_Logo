@@ -21,20 +21,25 @@ public class Animate {
     private GraphicsContext myGC;
     private PathTransition myPathTans;
     private ParallelTransition myAnimation;
-    private SLogoPen myPen;
-    private SLogoCanvas myCanvas;
+
+    private Color myPenColor;
+    private Canvas myCanvas;
+
     private TurtleView myTurtle;
     private Point2D myPos;
     private Duration duration;
 
 
-    public Animate(SLogoCanvas canvas, SLogoPen pen, Duration duration, TurtleView turtle){
+
+    public Animate(Canvas myCanvas, GraphicsContext gc, Color penColor, Duration duration, TurtleView turtle){
+
         myTurtle = turtle;
+        zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
         this.duration = duration;
-        myCanvas = canvas;
-        myGC = canvas.getGraphicsContext();
-        myPen = pen;
-        zeroPos = new Point2D(canvas.getHomeX(), canvas.getHomeY());
+        this.myCanvas = myCanvas;
+        myGC = gc;
+        myPenColor = penColor;
+
     }
 
     public ParallelTransition getAnimation(){
@@ -44,11 +49,7 @@ public class Animate {
     public ParallelTransition move(Point2D translate){
         myPos = new Point2D(myTurtle.getX(),myTurtle.getY());
         Point2D next = myPos.add(translate);
-        if(myPen.isVisible()) {
-            pathAnimate(myPos,next,duration);
-        } else {
-            myPathTans = new PathTransition(0,new Path(), new Circle(0,0,3));
-        }
+        pathAnimate(myPos,next,duration);
         TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
         translateTurt.setByX(translate.getX());
         translateTurt.setByY(translate.getY());
@@ -89,12 +90,12 @@ public class Animate {
                 // initialize the location
                 if (oldLocation == null) {
 
-                    oldLocation = zeroPos.add(moveVector);
+                    oldLocation = new Point2D(moveVector.getX() + zeroPos.getX(), moveVector.getY() + zeroPos.getY());
                     return;
                 }
-                Point2D newLocation = zeroPos.add(oldLocation);
+                Point2D newLocation = new Point2D(moveVector.getX() + zeroPos.getX(), moveVector.getY() + zeroPos.getY());
                 // draw line
-                myGC.setStroke(myPen.getPenColor());
+                myGC.setStroke(myPenColor);
                 myGC.setLineWidth(2);
                 myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
 

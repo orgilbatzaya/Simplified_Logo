@@ -12,6 +12,12 @@ public class Home extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.resetToHomePosition();
+        double defaultXPos = turtleDisplay.getMyTurtle().DEFAULT_STARTING_POS;
+        double defaultYPos = turtleDisplay.getMyTurtle().DEFAULT_STARTING_POS;
+        turtleDisplay.getMyTurtle().setXTurtle(defaultXPos);
+        turtleDisplay.getMyTurtle().setYTurtle(defaultYPos);
+
+
+
     }
 }

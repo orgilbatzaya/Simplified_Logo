@@ -12,7 +12,10 @@ public class Heading extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.getMyTurtle().getView().setRotate(getArgsDouble(0));
+        turtleDisplay
+                .getMyTurtle()
+                .getView()
+                .setRotate(getArgsDouble(0));
 
     }
 }

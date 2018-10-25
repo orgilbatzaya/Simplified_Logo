@@ -60,7 +60,8 @@ public class GUISetup implements FrontInternal{
         myDisplays = new ArrayList<>();
         currentDisplay = new TurtleDisplay();
         myDisplays.add(currentDisplay);
-        PenColor penColor = new PenColor(Color.RED, "SLogoPen Color:", currentDisplay);
+        currentDisplay.getCanvas().setVisible(true);
+        PenColor penColor = new PenColor(Color.RED, "Pen Color:", currentDisplay);
         BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", currentDisplay);
         myLanguageMenu = new LanguageMenu("Languages:");
         PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);
