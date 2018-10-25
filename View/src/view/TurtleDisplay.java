@@ -33,6 +33,7 @@ public class TurtleDisplay extends StackPane{
     private Rectangle myBackground;
     private Point2D zeroPos;
     private DurationField myDuration;
+    //private StatusView statusView;
 
     public TurtleDisplay() {
         myDuration = new DurationField("Duration of Animation: ");
@@ -57,7 +58,8 @@ public class TurtleDisplay extends StackPane{
         myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
                                                             animate.move(new Point2D(50,30)),
                                                             animate.move(new Point2D(100,-100)),
-                                                            animate.move(new Point2D(-40,60)));
+                                                            animate.move(new Point2D(-40,60)),
+                                                            animate.move(new Point2D(-60,200)));
         myCurrentAnimation.setCycleCount(2);
         myCurrentAnimation.setAutoReverse(true);
         myCurrentAnimation.play();

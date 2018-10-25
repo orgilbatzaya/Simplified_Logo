@@ -67,6 +67,7 @@ public class GUISetup {
         PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);
         ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay.getMyTurtle());
         HelpButton help = new HelpButton("Help");
+        //StatusView status = new StatusView(currentDisplay.getMyTurtle());
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay());
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
