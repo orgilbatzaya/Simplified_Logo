@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * The default constructor calls createGUI() automatically, so myScene is automatically initialized to some scene.
  * @author Austin Kao
  */
-public class GUISetup implements FrontInternal{
+public class GUISetup {
     private static final String DEFAULT_RESOURCE = "resources/ViewDefaults";
 
     private Scene myScene;

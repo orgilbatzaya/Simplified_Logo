@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
-public interface Animated {
+public interface Commandable {
     void move();
     
 }
