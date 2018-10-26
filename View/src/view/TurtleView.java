@@ -1,5 +1,6 @@
 package view;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -77,6 +78,7 @@ public class TurtleView {
         myDistanceTraveled = distance+myDistanceTraveled;
     }
 
+
     public void rotate(double angle){
         myView.setRotate(angle);
     }
@@ -93,7 +95,11 @@ public class TurtleView {
         return myDistanceTraveled;
     }
 
-    public void moveBy(int x, int y){
+    public void move(Point2D point){
+        moveBy(point.getX(),point.getY());
+    }
+
+    public void moveBy(double x, double y){
         xPos += x;
         yPos += y;
         myView.setX(xPos);
