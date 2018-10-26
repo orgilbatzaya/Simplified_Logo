@@ -3,7 +3,6 @@ package view;
 import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
@@ -140,6 +139,7 @@ public class TurtleDisplay extends StackPane {
         returnValue = myTurtle.setNewCoordinates(x, y);
         myTurtle.getView().setX(zeroPos.getX() + x);
         myTurtle.getView().setY(zeroPos.getY() + y);
+
     }
 
     public void createNewAnimation(Point2D next) {
