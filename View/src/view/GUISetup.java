@@ -62,7 +62,6 @@ public class GUISetup {
         myDisplays = new ArrayList<>();
         currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
         myDisplays.add(currentDisplay);
-        currentDisplay.getCanvas().setVisible(true);
         PenColor penColor = new PenColor(Color.RED, "Pen Color:", currentDisplay);
         BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", currentDisplay);
         myLanguageMenu = new LanguageMenu("Languages:");

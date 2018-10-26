@@ -14,5 +14,6 @@ public class Heading extends Action {
     public void execute(TurtleDisplay turtleDisplay)
     {
         turtleDisplay.getMyTurtle().rotate(getArgsDouble(0));
+        turtleDisplay.getReturnValue();
     }
 }
