@@ -11,7 +11,6 @@ import java.util.*;
 
 public class BackMain {
 
-    public static final String WHITESPACE = "\\s+";
     public static final String NUM_ARGS_PATH = "model/commands/NumArgsCommands";
     private final Set<String> BOOLEAN_OPS = new HashSet<>(Arrays.asList("And", "Equal", "GreaterThan", "LessThan", "Not", "NotEqual", "Or"));
     private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
@@ -39,26 +38,6 @@ public class BackMain {
         myTurtleActionsArgs = new ArrayList<>();
         myLanguage = lang;
     }
-
-
-    //simple implementation
-//    public void EvaluateCommands(String commands){
-//        int i=0;
-//        while(i<commands.split(WHITESPACE).length){
-//            String input = commands.split(WHITESPACE)[i];
-//            if (checkValidInput(input)){
-//                if(isCommand){
-//                    String command = myProgParser.getSymbol(input);
-//                    int numArgs = myNumArgsMap.get(command);
-//                    List<String> args = getArgs(commands.split(WHITESPACE),numArgs,i);
-//                    var interpreter = new Interpret();
-//                    double output = interpreter.interpretCommand(command,args,myTurtleParameters,myTurtleActions,myTurtleActionsArgs);
-//                    i = i+numArgs+1;
-//
-//                }
-//            }
-//        }
-//    }
 
     public Boolean checkValidInput(String s){
         try {
@@ -105,9 +84,7 @@ public class BackMain {
     }
 
     public void performCommands (String rawText) {
-        String[] text = rawText.split(WHITESPACE);
-        int type = 1; // 1 - control, 2 - turtle, 3 - math/bool
-        String currentType;
+        String[] text = rawText.split("\\s+");
         for(int i =0; i<text.length; i++){
             text[i] = myProgParser.getSymbol(text[i]);
         }
@@ -121,98 +98,6 @@ public class BackMain {
                 
             }
         }
-
-
-        /*
-        Stack<Command> toDo = new Stack<>();
-        Stack<Command> tempDone = new Stack<>();
-        Stack<Command> tempArgs = new Stack<>();
-
-        Factory fac = new Factory();
-        for(String s : text) {
-            if((BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || CONTROL_OPS.contains(s) || TURTLE_COMMANDS.contains(s))) {
-                toDo.push(fac.makeCommand(s, new ArrayList<String>()));
-            }
-            else {
-                if(isDouble(s)) {
-                    toDo.push(new Argument(Double.parseDouble(s)));
-                }
-                else {
-                    toDo.push(new Variable(s));
-                }
-            }
-        }
-        while(!toDo.isEmpty()){
-
-            Command temp = toDo.peek();
-            String[] split = temp.getClass().getName().split("\\.");
-            String s = split[split.length - 1];
-            // System.out.println(((Argument) temp).execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
-
-            if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s)) {
-                var interpreter = new Interpret();
-                int numArgs = myNumArgsMap.get(s);
-                ArrayList<String> curArgs = new ArrayList<>();
-                for (int i = 0; i < numArgs; i++) {
-                    curArgs.add(0, tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
-                }
-                tempArgs.push(new Argument(interpreter.interpretCommand(s, curArgs, myTurtleParameters,myTurtleActions,myTurtleActionsArgs)));
-                toDo.pop();
-                tempDone.push(temp);
-            }
-
-            else if(CONTROL_OPS.contains(s)) {
-                if(temp.execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) <= 0) {
-                    ((DoTimes) temp).setValue(((DoTimes)temp).getOriginalValue());
-                    toDo.pop();
-                    tempDone.push(temp);
-                }
-                else {
-                    while(!tempDone.isEmpty()) {
-                        toDo.push(tempDone.pop());
-                    }
-                    temp.execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters);
-                }
-            }
-            else if(TURTLE_COMMANDS.contains(s)) {
-                var interpreter = new Interpret();
-                int numArgs = myNumArgsMap.get(s);
-                ArrayList<String> curArgs = new ArrayList<>();
-                for (int i = 0; i < numArgs; i++) {
-                    System.out.println(s);
-                    System.out.println(tempArgs.peek());
-                    curArgs.add(0, tempArgs.peek().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters) + "");
-                    Command com = tempArgs.peek();
-                    System.out.println(com.toString());
-                    myTurtleActions = com.getMyTurtleActions();
-                    myTurtleActionsArgs = com.getMyTurtleArgs();
-                    tempArgs.pop();
-
-                    for(int j=0; j<myTurtleActions.size(); i++){
-                        System.out.print(myTurtleActions.get(j)+" ");
-                    }
-                    System.out.println();
-                }
-                toDo.pop();
-                tempDone.push(temp);
-            }
-            else if(s.equals("Variable")) {
-                if(!variables.containsKey(((Variable)temp).getValue())) {
-                    variables.put(((Variable) temp).getValue(), tempArgs.pop().execute(myTurtleActions, myTurtleActionsArgs,  myTurtleParameters));
-                }
-                tempArgs.push(new Argument(variables.get(((Variable)temp).getValue())));
-                toDo.pop();
-                tempDone.push(temp);
-            }
-
-            else if(s.equals("Argument")) {
-                tempArgs.push(temp);
-                toDo.pop();
-                tempDone.push(temp);
-            }
-        }
-        */
-
     }
 
     private boolean isDouble(String str) {
