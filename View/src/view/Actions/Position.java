@@ -14,6 +14,7 @@ public class Position extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setPosition(new Point2D(getArgsDouble(0), getArgsDouble(1)));
+        turtleDisplay.setToNewPosition(getArgsDouble(0), getArgsDouble(1));
+        turtleDisplay.getReturnValue();
     }
 }
