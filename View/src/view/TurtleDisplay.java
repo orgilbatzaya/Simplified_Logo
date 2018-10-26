@@ -61,15 +61,16 @@ public class TurtleDisplay extends StackPane{
 
         Animate animate = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
 
-        myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
+        /*myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
                                                             animate.move(new Point2D(50,30)),
                                                             animate.move(new Point2D(100,-100)),
                                                             animate.move(new Point2D(-40,60)),
                                                             animate.move(new Point2D(-60,200)));
+
         myCurrentAnimation.setCycleCount(2);
         myCurrentAnimation.setAutoReverse(true);
         myCurrentAnimation.play();
-
+        */
 
 
     }
@@ -135,8 +136,10 @@ public class TurtleDisplay extends StackPane{
         myTurtle.setY(zeroPos.getY());
     }
 
-    public Animate createNewAnimation() {
-        return new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
+    public void createNewAnimation(Point2D next) {
+        Animate animation = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
+        myCurrentAnimation = new SequentialTransition(animation.move(next));
+        myCurrentAnimation.play();
     }
 }
 
