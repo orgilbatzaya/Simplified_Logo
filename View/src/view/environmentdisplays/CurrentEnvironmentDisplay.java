@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -14,7 +15,7 @@ import javafx.scene.layout.VBox;
  * There is also a maximum size that the list can be before the oldest elements of the list start disappearing. When the maximum size is -1, the maximum size of the list is infinite.
  * @author Austin Kao
  */
-public class CurrentEnvironmentDisplay {
+public class CurrentEnvironmentDisplay implements EnvironmentDisplay{
     private VBox parentBox;
     private ListView<String> currentDisplay;
     private ObservableList<String> currentItems;
