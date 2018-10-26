@@ -13,6 +13,6 @@ public class ShowTurtle extends TurtleCommand {
     @Override
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         visible(ONE_DOUBLE,turtleAction,turtleActionArgs,turtleParams);
-        return 0;
+        return 1;
     }
 }

@@ -23,10 +23,12 @@ public class ActionRunner {
         }
     }
 
-    public Action makeAction(String commandName, List<Double> args){
+    public Action makeAction(String actionName, List<Double> args){
         try{
-            Class cls = Class.forName(commandName);
-            var constructor = cls.getConstructor();
+            String name = "view.Actions."+actionName;
+
+            Class cls = Class.forName(name);
+            var constructor = cls.getConstructor(List.class);
             Object newCommand = constructor.newInstance(args);
             return (Action) newCommand;
         }

@@ -17,6 +17,6 @@ public class Backward extends TurtleCommand {
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double valueForward = getArgsDouble(0);
         move(-valueForward,turtleAction,  turtleActionArgs, turtleParams);
-        return 0;
+        return valueForward;
     }
 }

@@ -13,6 +13,6 @@ public class PenDown extends TurtleCommand {
     @Override
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         pen(ONE_DOUBLE,turtleAction,turtleActionArgs,turtleParams);
-        return 0;
+        return 1;
     }
 }

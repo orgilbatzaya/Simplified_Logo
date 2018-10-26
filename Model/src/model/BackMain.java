@@ -2,10 +2,6 @@ package model;
 
 //Receives an input block of text and performs the corresponding commands
 
-import model.commands.MathOps.Argument;
-import model.commands.MathOps.Variable;
-import model.commands.OtherCommands.DoTimes;
-
 import java.util.*;
 
 
@@ -98,6 +94,23 @@ public class BackMain {
                 
             }
         }
+        //Russell testing commands
+        Factory fac = new Factory();
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(text[1]);
+        commandArgs.add(text[2]);
+        var com = fac.makeCommand(text[0],commandArgs);
+        com.execute(myTurtleActions,myTurtleActionsArgs,myTurtleParameters);
+        for(int i = 0; i<myTurtleActions.size(); i++){
+            System.out.println(myTurtleActions.get(i));
+        }
+        for(int i = 0; i<myTurtleActionsArgs.size(); i++){
+            System.out.println(myTurtleActionsArgs.get(i));
+        }
+        for (Map.Entry entry : myTurtleParameters.entrySet()) {
+            System.out.println(entry.getKey() + ", " + entry.getValue());
+        }
+
     }
 
     private boolean isDouble(String str) {

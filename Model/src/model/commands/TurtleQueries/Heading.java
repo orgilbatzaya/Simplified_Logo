@@ -1,4 +1,4 @@
-package model.commands.TurtleCommands;
+package model.commands.TurtleQueries;
 
 import model.commands.TurtleCommand;
 
@@ -12,7 +12,7 @@ public class Heading extends TurtleCommand {
 
     @Override
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
-        turtleParams.get(HEADING_KEY);
-        return 0;
+        return turtleParams.get(HEADING_KEY);
+
     }
 }

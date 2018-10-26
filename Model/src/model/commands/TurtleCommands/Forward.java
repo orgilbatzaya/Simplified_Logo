@@ -14,13 +14,9 @@ public class Forward extends TurtleCommand {
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double valueForward = getArgsDouble(0);
 
-        Map<List<String>,List<Double>> actionMap= move(valueForward,turtleAction, turtleActionArgs, turtleParams);
-        List<String> actionNames = (List<String>)(actionMap.keySet().toArray()[0]);
-        List<Double> actionArgs = (List<Double>)(actionMap.values().toArray()[0]);
-        setMyTurtleActions(actionNames);
-        setMyTurtleArgs(actionArgs);
+        move(valueForward,turtleAction, turtleActionArgs, turtleParams);
 
 
-        return 0;
+        return valueForward;
     }
 }
