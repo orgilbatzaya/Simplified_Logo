@@ -77,6 +77,7 @@ public abstract class TurtleCommand extends Command {
         double distanceMoved = Math.sqrt(Math.pow(x-turtleParams.get(X_KEY),2)+Math.pow(y-turtleParams.get(Y_KEY),2));
         turtleParams.put(DISTANCE_MOVED_KEY, turtleParams.get(DISTANCE_MOVED_KEY)+distanceMoved);
         turtleParams.put(Y_KEY,y);
+        turtleParams.put(X_KEY,x);
         return distanceMoved;
 
     }

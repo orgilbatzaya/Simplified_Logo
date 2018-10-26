@@ -9,7 +9,6 @@ public class SetPosition extends TurtleCommand {
     public SetPosition(List<String> args){
         super(args);
     }
-
     @Override
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double xPos = getArgsDouble(0);

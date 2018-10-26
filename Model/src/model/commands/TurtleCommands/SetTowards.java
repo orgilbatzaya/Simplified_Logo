@@ -14,8 +14,10 @@ public class SetTowards extends TurtleCommand {
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double xVec = getArgsDouble(0);
         double yVec = getArgsDouble(1);
-        double newHeading = Math.tan(Math.toRadians(yVec/xVec));
-        //return heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
-        return 0;
+        double newHeading = 180*Math.atan(yVec/xVec)/Math.PI;
+        heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
+        return newHeading-turtleParams.get(HEADING_KEY);
+
+
     }
 }
