@@ -1,6 +1,5 @@
 package view;
 
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -95,9 +94,6 @@ public class TurtleView {
         return myDistanceTraveled;
     }
 
-    public void move(Point2D point){
-        moveBy(point.getX(),point.getY());
-    }
 
     public void moveBy(double x, double y){
         xPos += x;

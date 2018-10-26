@@ -110,6 +110,7 @@ public class BackMain {
         for (Map.Entry entry : myTurtleParameters.entrySet()) {
             System.out.println(entry.getKey() + ", " + entry.getValue());
         }
+        //end of Russell Testing Commands
 
     }
 
