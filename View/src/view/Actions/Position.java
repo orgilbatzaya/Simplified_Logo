@@ -1,5 +1,6 @@
 package view.Actions;
 
+import javafx.geometry.Point2D;
 import view.TurtleDisplay;
 import view.TurtleView;
 
@@ -13,8 +14,6 @@ public class Position extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        TurtleView myTurt = turtleDisplay.getMyTurtle();
-        myTurt.setXTurtle(getArgsDouble(0));
-        myTurt.setYTurtle(getArgsDouble(1));
+        turtleDisplay.setPosition(new Point2D(getArgsDouble(0), getArgsDouble(1)));
     }
 }
