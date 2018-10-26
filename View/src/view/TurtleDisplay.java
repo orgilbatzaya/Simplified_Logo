@@ -124,5 +124,9 @@ public class TurtleDisplay extends StackPane{
         myTurtle.setX(zeroPos.getX());
         myTurtle.setY(zeroPos.getY());
     }
+
+    public Animate createNewAnimation() {
+        return new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
+    }
 }
 
