@@ -60,16 +60,16 @@ public class TurtleDisplay extends StackPane{
         this.getChildren().add(myTurtle.getView());
 
         Animate animate = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
-//
-//        myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
-//                                                            animate.move(new Point2D(50,30)),
-//                                                            animate.move(new Point2D(100,-100)),
-//                                                            animate.move(new Point2D(-40,60)),
-//                                                            animate.move(new Point2D(-60,200)));
-        myCurrentAnimation = new SequentialTransition();
+        /*myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
+                                                            animate.move(new Point2D(50,30)),
+                                                            animate.move(new Point2D(100,-100)),
+                                                            animate.move(new Point2D(-40,60)),
+                                                            animate.move(new Point2D(-60,200)));
+
         myCurrentAnimation.setCycleCount(2);
         myCurrentAnimation.setAutoReverse(true);
         myCurrentAnimation.play();
+        */
 
     }
 
@@ -133,5 +133,17 @@ public class TurtleDisplay extends StackPane{
         myTurtle.setX(zeroPos.getX());
         myTurtle.setY(zeroPos.getY());
     }
-}
 
+    public void createNewAnimation(Point2D next) {
+        Animate animation = new Animate(myCanvas,myGC,penColor,Duration.seconds(myDuration.getDuration()),myTurtle);
+        myCurrentAnimation = new SequentialTransition(animation.move(next));
+        myCurrentAnimation.play();
+    }
+
+    public void setPosition(Point2D next) {
+        this.getChildren().remove(myTurtle.getView());
+        myTurtle.setX(next.getX());
+        myTurtle.setY(next.getY());
+        this.getChildren().add(myTurtle.getView());
+    }
+}
