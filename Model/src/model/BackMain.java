@@ -98,6 +98,7 @@ public class BackMain {
         Factory fac = new Factory();
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(text[1]);
+        commandArgs.add(text[2]);
         var com = fac.makeCommand(text[0],commandArgs);
         com.execute(myTurtleActions,myTurtleActionsArgs,myTurtleParameters);
         for(int i = 0; i<myTurtleActions.size(); i++){
