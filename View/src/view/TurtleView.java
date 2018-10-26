@@ -10,10 +10,6 @@ public class TurtleView {
     private static final int DEFAULT_TURTLE_WIDTH = 30;
     private static final int DEFAULT_TURTLE_HEIGHT = 30;
 
-    private double mySpeed;
-    private Color penColor;
-    private boolean penDown;
-    private double penWidth;
     private boolean visible;
     private ImageView myView;
     private double xPos;
@@ -21,18 +17,13 @@ public class TurtleView {
     private double myHeading;
     private double myDistanceTraveled;
 
-
-
     public TurtleView(){
         myView = new ImageView();
         setView(DEFAULT_STARTING_TURTLE);
         xPos = DEFAULT_STARTING_POS;
         yPos = DEFAULT_STARTING_POS;
-        myView.setX(xPos);
-        myView.setY(yPos);
         myView.setFitHeight(DEFAULT_TURTLE_HEIGHT);
         myView.setFitWidth(DEFAULT_TURTLE_WIDTH);
-
     }
 
     public void setView(String value){
@@ -52,34 +43,9 @@ public class TurtleView {
         return yPos;
     }
 
-    public void setX(double x){
-        xPos = x;
-    }
-    
-    public void setY(double y){
-        yPos = y;
-    }
-
-    public void setXTurtle(double x){
-        setX(x);
-        myView.setX(x);
-    }
-    public void setYTurtle(double y){
-        setY(y);
-        myView.setX(y);
-    }
-
-    public void move(double distance){
-        double changeX = distance*Math.cos(Math.toRadians(myHeading));
-        double changeY = distance*Math.sin(Math.toRadians(myHeading));
-        setXTurtle(myView.getX()+changeX);
-        setYTurtle(myView.getY()+changeY);
-        myDistanceTraveled = distance+myDistanceTraveled;
-    }
-
-
-    public void rotate(double angle){
+    public double rotate(double angle){
         myView.setRotate(angle);
+        return angle;
     }
 
     public double getDefaultX(){
@@ -98,13 +64,10 @@ public class TurtleView {
     public void moveBy(double x, double y){
         xPos += x;
         yPos += y;
-        myView.setX(xPos);
-        myView.setY(yPos);
-
     }
 
-    public Boolean getPenDown(){
-        return penDown;
+    public Boolean isVisible(){
+        return visible;
     }
 
     public double setHeading(double newHeading){
@@ -124,10 +87,14 @@ public class TurtleView {
         return DEFAULT_TURTLE_HEIGHT;
     }
 
-    public boolean getVisible(){
-        return visible;
-    }
-    public void setVisible(boolean vis){
+    public void setVisibility(boolean vis){
         visible = vis;
+    }
+
+    public double setNewCoordinates(double x, double y) {
+        xPos = x;
+        yPos = y;
+        myDistanceTraveled = Math.sqrt(Math.pow(xPos, 2) + Math.pow(yPos, 2));
+        return myDistanceTraveled;
     }
 }
