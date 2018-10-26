@@ -2,7 +2,6 @@ package view.Actions;
 
 import javafx.geometry.Point2D;
 import view.TurtleDisplay;
-import view.TurtleView;
 
 import java.util.List;
 
@@ -14,10 +13,11 @@ public class Move extends Action{
     }
 
     public void execute(TurtleDisplay turtleDisplay){
-        TurtleView turtleView = turtleDisplay.getMyTurtle();
-        Point2D next = new Point2D(getArgsDouble(0)*Math.cos(Math.toRadians(turtleView.getHeading())),
-                                getArgsDouble(0)*Math.sin(Math.toRadians(turtleView.getHeading())));
-        turtleView.move(next);
+        double heading = turtleDisplay.getMyTurtle().getHeading();
+        Point2D next = new Point2D(getArgsDouble(0)*Math.cos(Math.toRadians(heading)),
+                                getArgsDouble(0)*Math.sin(Math.toRadians(heading)));
+        System.out.println(next.getX()+" , "+next.getY());
+        turtleDisplay.getMyTurtle().move(next);
         System.out.println("HERE");
     }
 }
