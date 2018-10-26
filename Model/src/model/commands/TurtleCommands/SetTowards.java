@@ -15,7 +15,7 @@ public class SetTowards extends TurtleCommand {
         double xVec = getArgsDouble(0);
         double yVec = getArgsDouble(1);
         double newHeading = Math.tan(Math.toRadians(yVec/xVec));
-        return heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
-
+        //return heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
+        return 0;
     }
 }

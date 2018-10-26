@@ -13,7 +13,7 @@ public class SetHeading extends TurtleCommand {
     @Override
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double newHeading = getArgsDouble(0);
-        return heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
-
+        heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
+        return newHeading-turtleParams.get(HEADING_KEY);
     }
 }
