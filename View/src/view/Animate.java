@@ -21,7 +21,7 @@ public class Animate {
     private PathTransition myPathTans;
     private ParallelTransition myAnimation;
 
-    private Color myPenColor;
+    private SLogoPen myPen;
     private Canvas myCanvas;
 
     private TurtleView myTurtle;
@@ -30,14 +30,14 @@ public class Animate {
 
 
 
-    public Animate(Canvas myCanvas, GraphicsContext gc, Color penColor, Duration duration, TurtleView turtle){
+    public Animate(Canvas myCanvas, GraphicsContext gc, SLogoPen pen, Duration duration, TurtleView turtle){
 
         myTurtle = turtle;
         zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
         this.duration = duration;
         this.myCanvas = myCanvas;
         myGC = gc;
-        myPenColor = penColor;
+        myPen = pen;
 
     }
 
@@ -52,7 +52,6 @@ public class Animate {
         TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
         translateTurt.setByX(translate.getX());
         translateTurt.setByY(translate.getY());
-
         myAnimation = new ParallelTransition(myPathTans,translateTurt);
         myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
 
@@ -94,7 +93,7 @@ public class Animate {
                 }
 
                 // draw line
-                myGC.setStroke(myPenColor);
+                myGC.setStroke(myPen.getPenColor());
                 myGC.setLineWidth(2);
                 myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
 

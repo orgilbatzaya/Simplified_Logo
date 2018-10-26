@@ -20,13 +20,11 @@ public class TurtleDisplay extends StackPane {
     private static final int FRAMES_PER_SECOND = 60;
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
-    private static final Color PREVIOUS_PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
-    private Color prevPenColor;
-    private Color penColor;
+    private SLogoPen myPen;
     private TurtleView myTurtle;
     private Point2D myPos;
     private SequentialTransition myCurrentAnimation;
@@ -45,11 +43,10 @@ public class TurtleDisplay extends StackPane {
         myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(width, height);
         zeroPos = new Point2D(myCanvas.getWidth() / 2, myCanvas.getHeight() / 2);
+        myPen = new SLogoPen(PEN_COLOR);
         myGC = myCanvas.getGraphicsContext2D();
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
-        penColor = PEN_COLOR;
-        prevPenColor = PREVIOUS_PEN_COLOR;
         myTurtle = new TurtleView();
         myBackground.setLayoutX(200);
         myBackground.setY(200);
@@ -89,7 +86,7 @@ public class TurtleDisplay extends StackPane {
             double size = MOUSE_SIZE;
             double x = e.getX() - size / 2;
             double y = e.getY() - size / 2;
-            myGC.setFill(penColor);
+            myGC.setFill(myPen.getPenColor());
             myGC.setEffect(new DropShadow());
             myGC.fillOval(x, y, size, size);
         }
@@ -98,11 +95,6 @@ public class TurtleDisplay extends StackPane {
 
     public GraphicsContext getGraphicsContext() {
         return myGC;
-    }
-
-    public void setPenColor(Color c) {
-        penColor = c;
-        prevPenColor = c;
     }
 
     public void setBgColor(Color c) {
@@ -122,14 +114,6 @@ public class TurtleDisplay extends StackPane {
         myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
     }
 
-    public void showPen() {
-        penColor = prevPenColor;
-    }
-
-    public void hidePen() {
-        penColor = (Color) myBackground.getFill();
-    }
-
     public void resetToHomePosition() {
         returnValue = myTurtle.setNewCoordinates(0, 0);
         myTurtle.getView().setX(zeroPos.getX());
@@ -143,7 +127,7 @@ public class TurtleDisplay extends StackPane {
     }
 
     public void createNewAnimation(Point2D next) {
-        Animate animation = new Animate(myCanvas, myGC, penColor, Duration.seconds(myDuration.getDuration()), myTurtle);
+        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
@@ -151,5 +135,16 @@ public class TurtleDisplay extends StackPane {
 
     public void getReturnValue() {
         System.out.println(returnValue);
+    }
+
+    public void updatePen(double bool) {
+        if((!myPen.isVisible() && bool == 0) || (myPen.isVisible() && bool == 1)) {
+            myPen.changePenVisibilty();
+        }
+        returnValue = bool;
+    }
+
+    public SLogoPen getPen() {
+        return myPen;
     }
 }

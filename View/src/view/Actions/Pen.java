@@ -12,12 +12,6 @@ public class Pen extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        if(getArgsDouble(0) == 0.0){
-            turtleDisplay.hidePen();
-
-        }
-        else if(getArgsDouble(0) == 1.0){
-            turtleDisplay.showPen();
-        }
+        turtleDisplay.updatePen(getArgsDouble(0));
     }
 }
