@@ -118,6 +118,7 @@ public class TurtleDisplay extends StackPane{
 
     public void clearScreen(){
         myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
+        resetToHomePosition();
 
     }
 

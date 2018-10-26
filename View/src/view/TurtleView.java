@@ -78,8 +78,10 @@ public class TurtleView {
     }
 
 
-    public void rotate(double angle){
+    public void rotate(double angle)
+    {
         myView.setRotate(angle);
+        setHeading(angle);
     }
 
     public double getDefaultX(){
