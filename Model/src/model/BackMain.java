@@ -100,8 +100,6 @@ public class BackMain {
         commandArgs.add(text[1]);
         var com = fac.makeCommand(text[0],commandArgs);
         com.execute(myTurtleActions,myTurtleActionsArgs,myTurtleParameters);
-        myTurtleActions = com.getMyTurtleActions();
-        myTurtleActionsArgs = com.getMyTurtleArgs();
         for(int i = 0; i<myTurtleActions.size(); i++){
             System.out.println(myTurtleActions.get(i));
         }

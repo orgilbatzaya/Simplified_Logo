@@ -2,8 +2,6 @@ package model.commands;
 
 import model.Command;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +30,12 @@ public abstract class TurtleCommand extends Command {
     public static final Double ZERO_DOUBLE = (double) 0;
     public static final Double ONE_DOUBLE = (double) 1;
 
-    private List<String> myArgs;
 
     public TurtleCommand(List<String> args) {
         super(args);
 
     }
-
-    public Map<List<String>,List<Double>> move(double distance,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public void move(double distance,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams) {
         turtleActions.add(MOVE_ACTION);
         turtleArgs.add(distance);
         double newX = turtleParams.get(X_KEY)+distance*Math.cos(Math.toRadians(turtleParams.get(HEADING_KEY)));
@@ -47,20 +43,16 @@ public abstract class TurtleCommand extends Command {
         turtleParams.put(X_KEY,newX);
         turtleParams.put(Y_KEY,newY);
         turtleParams.put(DISTANCE_MOVED_KEY,turtleParams.get(DISTANCE_MOVED_KEY)+distance);
-        ArrayList<List<String>> out = new ArrayList<List<String>>();
-        Map<List<String>,List<Double>> outMap = new HashMap<List<String>,List<Double>>();
-        outMap.put(turtleActions,turtleArgs);
-        return outMap;
     }
 
-    public void rotate(double angle,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public  void rotate(double angle,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
         turtleActions.add(ROTATE_ACTION);
         turtleArgs.add(angle);
         double finalAngle = angle+turtleParams.get(HEADING_KEY);
         turtleParams.put(HEADING_KEY,finalAngle);
     }
 
-    public void clear(List<String> turtleActions){
+    public void clear(List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
         turtleActions.add(CLEAR_ACTION);
     }
 
@@ -78,17 +70,20 @@ public abstract class TurtleCommand extends Command {
         turtleActions.add(SET_PEN);
         turtleArgs.add(isPenDown);
     }
-    public void position(double x, double y, List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public double position(double x, double y, List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
         turtleActions.add(SET_POSITION);
         turtleArgs.add(x);
         turtleArgs.add(y);
+        double distanceMoved = Math.sqrt(Math.pow(x-turtleParams.get(X_KEY),2)+Math.pow(y-turtleParams.get(Y_KEY),2));
+        turtleParams.put(DISTANCE_MOVED_KEY, turtleParams.get(DISTANCE_MOVED_KEY)+distanceMoved);
+        turtleParams.put(Y_KEY,y);
+        return distanceMoved;
+
     }
-    public double heading(double angle, List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public void heading(double angle, List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
         turtleActions.add(SET_HEADING);
         turtleArgs.add(angle);
-        double oldHeading = turtleParams.get(HEADING_KEY);
         turtleParams.put(HEADING_KEY,angle);
-        return angle-oldHeading;
     }
 
 

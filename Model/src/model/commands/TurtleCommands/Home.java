@@ -13,6 +13,8 @@ public class Home extends TurtleCommand {
     @Override
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         home(turtleAction,turtleActionArgs,turtleParams);
-        return 0;
+        double distanceMoved = turtleParams.get(DISTANCE_MOVED_KEY);
+        turtleParams.put(DISTANCE_MOVED_KEY,ZERO_DOUBLE);
+        return distanceMoved;
     }
 }
