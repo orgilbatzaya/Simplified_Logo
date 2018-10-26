@@ -21,6 +21,6 @@ public class Forward extends TurtleCommand {
         setMyTurtleArgs(actionArgs);
 
 
-        return 0;
+        return valueForward;
     }
 }
