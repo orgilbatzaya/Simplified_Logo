@@ -64,6 +64,9 @@ public class TurtleView {
     public void moveBy(double x, double y){
         xPos += x;
         yPos += y;
+        myView.setX(myView.getX() + x);
+        myView.setY(myView.getY() + y);
+
     }
 
     public Boolean isVisible(){

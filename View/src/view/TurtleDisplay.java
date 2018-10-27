@@ -63,12 +63,12 @@ public class TurtleDisplay extends StackPane {
         myBackground.setY(200);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane(myTurtle.getView());
+        //displayPane = new Pane(myTurtle.getView());
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
         this.getChildren().add(myTurtle.getView());
         //makeTurtles(displayPane);
-        this.getChildren().add(displayPane);
+        //this.getChildren().add(displayPane);
 
 
 //        Animate animate = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
