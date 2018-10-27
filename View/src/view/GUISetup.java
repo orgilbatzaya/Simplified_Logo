@@ -11,6 +11,7 @@ import view.button.PlayPauseButton;
 import view.colorpicker.BackgroundColor;
 import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
+import view.dropdown.TurtleSelector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ public class GUISetup {
     private TurtleDisplay currentDisplay;
     private ArrayList<TurtleDisplay> myDisplays;
     private LanguageMenu myLanguageMenu;
+    private TurtleSelector mySelector;
 
     //for turtle parameter map
     private static final String HEADING_KEY = "heading";
@@ -65,12 +67,13 @@ public class GUISetup {
         PenColor penColor = new PenColor(Color.RED, "Pen Color:", currentDisplay);
         BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", currentDisplay);
         myLanguageMenu = new LanguageMenu("Languages:");
+        mySelector = new TurtleSelector("Turtles:",currentDisplay);
         PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);
         ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay.getMyTurtle());
         HelpButton help = new HelpButton("Help");
         //StatusView status = new StatusView(currentDisplay.getMyTurtle());
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
-                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay());
+                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay());
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);
