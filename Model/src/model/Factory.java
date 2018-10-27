@@ -12,8 +12,8 @@ public class Factory {
     private final Set<String> TURTLE_QUERIES = new HashSet<>(Arrays.asList("Heading","IsPenDown","IsShowing","XCoordinate","YCoordinate"));
     public Command makeCommand(String commandName, List<String> args){
         try{
-
-            String name = "model.commands.TurtleCommands."+commandName;
+            String commandType = getCommandType(commandName);
+            String name = "model.commands."+commandType+"."+commandName;
             Class cls = Class.forName(name);
             var constructor = cls.getConstructor(List.class);
             Object newCommand = constructor.newInstance(args);
@@ -37,7 +37,6 @@ public class Factory {
         if(CONTROL_OPS.contains(commandName)){
             return "OtherCommands";
         }
-
         if(TURTLE_QUERIES.contains(commandName)){
             return "TurtleQueries";
         }
