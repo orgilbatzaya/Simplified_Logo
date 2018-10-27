@@ -11,7 +11,7 @@ import view.button.PlayPauseButton;
 import view.colorpicker.BackgroundColor;
 import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
-import view.environmentdisplays.StatusView;
+import view.environmentdisplays.StatusDisplay;
 import view.dropdown.TurtleSelector;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class GUISetup {
     private TurtleDisplay currentDisplay;
     private ArrayList<TurtleDisplay> myDisplays;
     private LanguageMenu myLanguageMenu;
-    private StatusView turtleInfo;
+    private StatusDisplay turtleInfo;
     private TurtleSelector mySelector;
 
     //for turtle parameter map
@@ -79,7 +79,7 @@ public class GUISetup {
         userOptions.setSpacing(Double.parseDouble(myConstants.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);
-        turtleInfo = new StatusView(100, "Turtle Info:", currentDisplay.getMyTurtle());
+        turtleInfo = new StatusDisplay(100, "Turtle Info:", currentDisplay.getMyTurtle());
         turtleInfo.getDisplay().setLayoutX(700);
         turtleInfo.getDisplay().setLayoutY(50);
         root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
