@@ -4,11 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
 public class VariableDisplay implements EnvironmentDisplay{
     private TableView<String> currentDisplay;
+    private TableColumn currentVariables;
+    private TableColumn currentValues;
     private ObservableList<String> currentItems;
     private VBox myBox;
 

@@ -54,7 +54,7 @@ public class GUISetup {
 
     public GUISetup() {
         myConstants = ResourceBundle.getBundle(DEFAULT_RESOURCE);
-        myScene = createGUI(1000,800, Color.AZURE);
+        myScene = createGUI(1200,800, Color.AZURE);
     }
 
     public Scene createGUI(int width, int height, Paint background) {

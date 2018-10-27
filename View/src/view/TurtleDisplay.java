@@ -1,5 +1,6 @@
 package view;
 
+import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -18,6 +19,7 @@ import view.fields.DurationField;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * @author Orgil Batzaya
@@ -37,13 +39,14 @@ public class TurtleDisplay extends StackPane {
     private TurtleView myTurtle;
     private TurtleView myCurrentTurtle;
     private Point2D myPos;
-    private SequentialTransition myCurrentAnimation;
+    private Animation myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
     private DurationField myDuration;
     private double returnValue;
     private VBox myBox; //May or may not use
     private Pane displayPane;
+    private PriorityQueue<Animation> myAnimations;
 
     //private StatusView statusView;
 
@@ -68,20 +71,7 @@ public class TurtleDisplay extends StackPane {
         myTurtle.getView().setY(zeroPos.getY());
         makeTurtles(displayPane);
         this.getChildren().add(displayPane);
-
-
-        //Animate animate = new Animate(myCanvas, myGC, penColor, Duration.seconds(myDuration.getDuration()), myTurtle);
-        /*myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
-                                                            animate.move(new Point2D(50,30)),
-                                                            animate.move(new Point2D(100,-100)),
-                                                            animate.move(new Point2D(-40,60)),
-                                                            animate.move(new Point2D(-60,200)));
-
-        myCurrentAnimation.setCycleCount(2);
-        myCurrentAnimation.setAutoReverse(true);
-        myCurrentAnimation.play();
-        */
-
+        myAnimations = new PriorityQueue<>();
     }
 
     public Canvas getCanvas() {
@@ -132,7 +122,7 @@ public class TurtleDisplay extends StackPane {
     }
 
 
-    public SequentialTransition getCurrentAnimation() {
+    public Animation getCurrentAnimation() {
         return myCurrentAnimation;
     }
 
@@ -160,7 +150,7 @@ public class TurtleDisplay extends StackPane {
         System.out.println(next.getX());
         System.out.println(next.getY());
         myCurrentAnimation = new SequentialTransition(animation.move(next));
-        myCurrentAnimation.play();
+        myAnimations.add(myCurrentAnimation);
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
         myTurtle.getView().setX(zeroPos.getX() + next.getX());
         myTurtle.getView().setY(zeroPos.getY() + next.getY());
@@ -180,5 +170,11 @@ public class TurtleDisplay extends StackPane {
 
     public Pane getDisplayPane() {
         return displayPane;
+    }
+
+    public void playAnimations() {
+        myCurrentAnimation = myAnimations.peek();
+        myCurrentAnimation.play();
+
     }
 }

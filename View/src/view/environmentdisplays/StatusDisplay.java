@@ -3,6 +3,7 @@ package view.environmentdisplays;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,7 +21,7 @@ public class StatusDisplay implements EnvironmentDisplay {
     private double xPos;
     private double yPos;
     private TurtleView myTurtle;
-    private TableView<String> currentDisplay;
+    private TableView<String[]> currentDisplay;
     private TableColumn currentTurtles;
     private TableColumn currentXPositions;
     private TableColumn currentYPositions;
@@ -43,12 +44,14 @@ public class StatusDisplay implements EnvironmentDisplay {
         turtleStatus.add(Double.toString(turtle.getX()));
         turtleStatus.add(Double.toString(turtle.getY()));
         turtleStatus.add(Double.toString(turtle.getHeading()));
-        //currentItems.add(turtleStatus.toArray(new String[0]));
+        currentItems = FXCollections.observableArrayList();
+        currentItems.add(turtleStatus.toArray(new String[0]));
         currentTurtles = new TableColumn("Turtles");
         currentXPositions = new TableColumn("X Position");
         currentYPositions = new TableColumn("Y Position");
         currentHeadings = new TableColumn("Heading");
         currentDisplay.getColumns().addAll(currentTurtles, currentXPositions, currentYPositions, currentHeadings);
+        currentDisplay.setItems(currentItems);
         myBox = new VBox(displayLabel, currentDisplay);
     }
 
