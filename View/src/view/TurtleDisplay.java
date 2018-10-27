@@ -137,6 +137,7 @@ public class TurtleDisplay extends StackPane {
 
     public void setToNewPosition(double x, double y) {
         returnValue = myTurtle.setNewCoordinates(x, y);
+        System.out.println(zeroPos.getX()+" , "+zeroPos.getY());
         myTurtle.getView().setX(zeroPos.getX() + x);
         myTurtle.getView().setY(zeroPos.getY() + y);
 
@@ -147,6 +148,7 @@ public class TurtleDisplay extends StackPane {
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
+
     }
 
     public void getReturnValue() {
