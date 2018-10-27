@@ -12,6 +12,6 @@ public class Home extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setToNewPosition((0), (0));
+        turtleDisplay.setToNewPosition(0, 0);
     }
 }

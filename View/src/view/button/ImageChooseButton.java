@@ -2,7 +2,7 @@ package view.button;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import view.ErrorAlert;
+import model.ErrorAlert;
 import view.TurtleView;
 
 import java.io.File;

@@ -53,10 +53,10 @@ public class Animate {
         myPos = new Point2D(myTurtle.getX(),myTurtle.getY());
         Point2D next = myPos.add(translate);
         pathAnimate(myPos,next,duration);
-        TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
-        translateTurt.setByX(translate.getX());
-        translateTurt.setByY(translate.getY());
-        myAnimation = new ParallelTransition(myPathTans,translateTurt);
+        //TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
+        //translateTurt.setByX(translate.getX());
+        //translateTurt.setByY(translate.getY());
+        myAnimation = new ParallelTransition(myPathTans);
         myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
 
         return myAnimation;

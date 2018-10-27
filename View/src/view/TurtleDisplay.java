@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -117,7 +118,6 @@ public class TurtleDisplay extends StackPane {
         return myTurtles;
     }
 
-
     private void addTurtle(){
 
     }
@@ -142,28 +142,28 @@ public class TurtleDisplay extends StackPane {
 
     public void clearScreen() {
         myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
-    }
-
-    public void resetToHomePosition() {
-        returnValue = myTurtle.setNewCoordinates(0, 0);
-        myTurtle.getView().setX(zeroPos.getX());
-        myTurtle.getView().setY(zeroPos.getY());
-        System.out.println(returnValue);
+        setToNewPosition( 0, 0);
+        myTurtle.getView().setRotate(0);
     }
 
     public void setToNewPosition(double x, double y) {
         returnValue = myTurtle.setNewCoordinates(x, y);
-        System.out.println(zeroPos.getX()+" , "+zeroPos.getY());
         myTurtle.getView().setX(zeroPos.getX() + x);
         myTurtle.getView().setY(zeroPos.getY() + y);
-        System.out.println(returnValue);
+        if(x == 0 && y == 0) {
+            myTurtle.getView().setRotate(0);
+        }
     }
 
     public void createNewAnimation(Point2D next) {
         Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
+        System.out.println(next.getX());
+        System.out.println(next.getY());
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
+        myTurtle.getView().setX(zeroPos.getX() + next.getX());
+        myTurtle.getView().setY(zeroPos.getY() + next.getY());
     }
 
     public void updatePen(double bool) {
@@ -176,5 +176,9 @@ public class TurtleDisplay extends StackPane {
 
     public SLogoPen getPen() {
         return myPen;
+    }
+
+    public Pane getDisplayPane() {
+        return displayPane;
     }
 }
