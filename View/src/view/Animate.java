@@ -15,6 +15,10 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
+/**
+ * @author Orgil Batzaya
+ */
+
 public class Animate {
     private Point2D zeroPos;
     private GraphicsContext myGC;

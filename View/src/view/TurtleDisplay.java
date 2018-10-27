@@ -3,7 +3,6 @@ package view;
 import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
@@ -16,16 +15,28 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author Orgil Batzaya
+ */
+
 public class TurtleDisplay extends StackPane {
     private static final int FRAMES_PER_SECOND = 60;
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
+    private static final int NUM_STARTING_TURTLES = 3;
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
     private SLogoPen myPen;
+    private Map<Integer,TurtleView> myTurtles;
     private TurtleView myTurtle;
+    private TurtleView myCurrentTurtle;
     private Point2D myPos;
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
@@ -47,6 +58,7 @@ public class TurtleDisplay extends StackPane {
         myGC = myCanvas.getGraphicsContext2D();
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
+        myTurtles = new HashMap<Integer, TurtleView>();
         myTurtle = new TurtleView();
         myBackground.setLayoutX(200);
         myBackground.setY(200);
@@ -55,6 +67,7 @@ public class TurtleDisplay extends StackPane {
         displayPane = new Pane(myTurtle.getView());
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
+        makeTurtles(displayPane);
         this.getChildren().add(displayPane);
 
 
@@ -92,6 +105,25 @@ public class TurtleDisplay extends StackPane {
         }
     };
 
+    private void makeTurtles(Pane displayPane){
+        for(int i = 0; i < NUM_STARTING_TURTLES; i++){
+            TurtleView t = new TurtleView();
+            t.getView().setX(zeroPos.getX() + i*30);
+            t.getView().setY(zeroPos.getY());
+            displayPane.getChildren().add(t.getView());
+            myTurtles.put(i,t);
+        }
+    }
+
+    public Map<Integer, TurtleView> getTurtles(){
+        return myTurtles;
+    }
+
+
+    private void addTurtle(){
+
+    }
+
 
     public GraphicsContext getGraphicsContext() {
         return myGC;
@@ -122,8 +154,10 @@ public class TurtleDisplay extends StackPane {
 
     public void setToNewPosition(double x, double y) {
         returnValue = myTurtle.setNewCoordinates(x, y);
+        System.out.println(zeroPos.getX()+" , "+zeroPos.getY());
         myTurtle.getView().setX(zeroPos.getX() + x);
         myTurtle.getView().setY(zeroPos.getY() + y);
+
     }
 
     public void createNewAnimation(Point2D next) {
@@ -131,6 +165,7 @@ public class TurtleDisplay extends StackPane {
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
+
     }
 
     public void getReturnValue() {

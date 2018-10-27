@@ -107,9 +107,10 @@ public class BackMain {
         for(int i = 0; i<myTurtleActionsArgs.size(); i++){
             System.out.println(myTurtleActionsArgs.get(i));
         }
-        for (Map.Entry entry : myTurtleParameters.entrySet()) {
-            System.out.println(entry.getKey() + ", " + entry.getValue());
-        }
+//        for (Map.Entry entry : myTurtleParameters.entrySet()) {
+//            System.out.println(entry.getKey() + ", " + entry.getValue());
+//        }
+        //end of Russell Testing Commands
 
     }
 

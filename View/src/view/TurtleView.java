@@ -1,9 +1,7 @@
 package view;
 
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 public class TurtleView {
     private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
@@ -46,6 +44,7 @@ public class TurtleView {
 
     public double rotate(double angle){
         myView.setRotate(angle);
+        setHeading(angle);
         return angle;
     }
 
@@ -61,9 +60,6 @@ public class TurtleView {
         return myDistanceTraveled;
     }
 
-    public void move(Point2D point){
-        moveBy(point.getX(),point.getY());
-    }
 
     public void moveBy(double x, double y){
         xPos += x;
@@ -100,5 +96,13 @@ public class TurtleView {
         yPos = y;
         myDistanceTraveled = Math.sqrt(Math.pow(xPos, 2) + Math.pow(yPos, 2));
         return myDistanceTraveled;
+    }
+
+    public void deactivate(){
+
+    }
+
+    public void activate(){
+
     }
 }

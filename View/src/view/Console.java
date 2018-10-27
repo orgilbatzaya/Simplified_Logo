@@ -57,9 +57,7 @@ public class Console implements FrontExternal {
 
         BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
         back.performCommands(currentCommand);
-        System.out.println(1);
         List<String> actionList = back.getMyTurtleActions();
-        System.out.println(2);
         for(int i=0; i<actionList.size(); i++){
             System.out.print(actionList.get(i)+" ");
         }
@@ -69,12 +67,9 @@ public class Console implements FrontExternal {
             System.out.print(actionArgs.get(i)+" ");
         }
         System.out.println();
-        System.out.println(4);
         ActionRunner actRun = new ActionRunner();
-
         actRun.performActions(actionList,actionArgs, parentGUI.getCurrentDisplay());
 
-        System.out.println(5);
     }
 
     public String getNextCommand(){
