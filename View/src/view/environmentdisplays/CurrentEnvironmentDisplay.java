@@ -38,9 +38,7 @@ public class CurrentEnvironmentDisplay implements EnvironmentDisplay{
     }
 
     public void addItem(String newItem) {
-        if(!currentItems.contains(newItem)) {
-            currentItems.add(0, newItem);
-        }
+        currentItems.add(0, newItem);
         if(maxSize >= 0 && currentItems.size() > maxSize) {
             currentItems.remove(maxSize - 1);
         }

@@ -1,4 +1,4 @@
-package view;
+package model;
 
 import javafx.scene.control.Alert;
 
@@ -8,10 +8,13 @@ import javafx.scene.control.Alert;
  */
 
 public class ErrorAlert {
+    private static final String ERROR_STRING = "Error";
+    private static final String ERROR_HEADER = "The following error occurred:";
+
     public ErrorAlert(Exception ex) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("The following error occurred:");
+        alert.setTitle(ERROR_STRING);
+        alert.setHeaderText(ERROR_HEADER);
         alert.setContentText(ex.getMessage());
         alert.showAndWait();
     }
