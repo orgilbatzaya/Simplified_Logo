@@ -7,7 +7,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -29,6 +28,11 @@ public class TurtleDisplay extends StackPane {
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
+
+    //parameters for display actions
+    private static final Color[] BACKGROUND_COLORS = {Color.GRAY,Color.PURPLE, Color.AZURE,Color.BEIGE};
+    private static final Color[] PEN_COLORS = {Color.BLUE,Color.VIOLET, Color.GREEN,Color.PALEGOLDENROD};
+
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -180,5 +184,13 @@ public class TurtleDisplay extends StackPane {
 
     public Pane getDisplayPane() {
         return displayPane;
+    }
+
+    public void setBackgroundColorAction(int index){
+        myBackground.setFill(BACKGROUND_COLORS[index]);
+    }
+
+    public void setPenColorAction(int index){
+        myPen.setPenColor(PEN_COLORS[index]);
     }
 }
