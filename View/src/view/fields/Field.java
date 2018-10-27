@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
  * Extend this class to create the desired fields.
  * @author Austin Kao
  */
-public class Field {
+public abstract class Field {
     private TextField myField;
     private VBox myBox;
 
