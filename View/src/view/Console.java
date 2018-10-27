@@ -5,7 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.BackMain;
-import view.environmentdisplays.CurrentEnvironmentDisplay;
+import view.environmentdisplays.PastCommandDisplay;
 
 import java.util.List;
 import java.util.Map;
@@ -23,9 +23,9 @@ public class Console implements FrontExternal {
     private String currentCommand;
     private HBox consoleBox;
     private ResourceBundle currentLang;
-    private CurrentEnvironmentDisplay pastCommands;
-    private CurrentEnvironmentDisplay currentVariables;
-    private CurrentEnvironmentDisplay currentFunctions;
+    private PastCommandDisplay pastCommands;
+    private PastCommandDisplay currentVariables;
+    private PastCommandDisplay currentFunctions;
     private GUISetup parentGUI;
 
     public Console(GUISetup gui) {
@@ -35,9 +35,9 @@ public class Console implements FrontExternal {
         Button submitButton = new Button("Go!");
         HBox commandBox = new HBox(myCommandLine.getDisplay(), submitButton);
         commandBox.setSpacing(10);
-        pastCommands = new CurrentEnvironmentDisplay(200, "Past commands:");
-        currentVariables = new CurrentEnvironmentDisplay(100, "Current variables in environment:");
-        currentFunctions = new CurrentEnvironmentDisplay(100, "Current user-defined commands in environment:");
+        pastCommands = new PastCommandDisplay(200, "Past commands:");
+        currentVariables = new PastCommandDisplay(100, "Current variables in environment:");
+        currentFunctions = new PastCommandDisplay(100, "Current user-defined commands in environment:");
         VBox rightColumn = new VBox(currentVariables.getDisplay(), currentFunctions.getDisplay());
         rightColumn.setSpacing(10);
         submitButton.setOnAction(event -> processCommand());

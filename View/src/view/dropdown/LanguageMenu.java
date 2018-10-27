@@ -36,8 +36,7 @@ public class LanguageMenu extends DropdownMenu {
 
     @Override
     public void processChoice(String choice) {
-        myLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+choice);
-    }
+        myLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+choice);    }
 
     public ResourceBundle getLanguage() {
         return myLanguage;
