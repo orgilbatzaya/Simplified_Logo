@@ -16,9 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
