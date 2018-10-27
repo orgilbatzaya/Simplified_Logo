@@ -8,8 +8,7 @@ public class CommandStack {
     private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
     private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
     private final Set<String> TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Backward", "ClearScreen", "Forward", "HideTurtle", "Home", "Left", "PenDown", "PenUp", "Right", "SetHeading", "SetPosition", "SetTowards", "Showturtle"));
-    public static final String NUM_ARGS_PATH = "model/commands/NumArgsCommands";
-
+    private final Set<String> DISPLAY_COMMANDS = new HashSet<>(Arrays.asList("GetPenColor","GetPenShape","SetBackground","SetPalette","SetPenColor","SetPenSize","SetShape"));
     private Factory myFactory;
     private Map<String,Set<String>> myCommandTypeMap;
     private Map<String,Integer> myNumArgsMap;
@@ -40,7 +39,7 @@ public class CommandStack {
         }
         while(!toDo.isEmpty()) {
             String s = toDo.pop();
-            if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || TURTLE_COMMANDS.contains(s)) {
+            if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || TURTLE_COMMANDS.contains(s) || DISPLAY_COMMANDS.contains(s)) {
                 int numArgs = myNumArgsMap.get(s);
                 LinkedList<String> tempArgs = new LinkedList<>();
                 for(int i = 0; i < numArgs; i++) {
@@ -63,24 +62,8 @@ public class CommandStack {
                     loopCounter++;
                     Stack<String> brackets = new Stack<String>();
                     String tempBracket;
-                    while(true) {
-                        tempBracket = done.pop();
-                        if(tempBracket.equals("[")) {
-                            brackets.push("[");
-                            toDo.push("[");
-                            break;
-                        }
-                    }
-                    while(!brackets.isEmpty()) {
-                        tempBracket = done.pop();
-                        if(tempBracket.equals("[")) {
-                            brackets.push(tempBracket);
-                        }
-                        if(tempBracket.equals("]")) {
-                            brackets.pop();
-                        }
-                        toDo.push(tempBracket);
-                    }
+                    stackProcessing(toDo, done, brackets);
+                    StackProcessing2(toDo, done, brackets);
                 }
             }
             else if(s.matches("DoTimes\\d+")) {
@@ -95,24 +78,8 @@ public class CommandStack {
 
                 Stack<String> brackets = new Stack<String>();
                 String tempBracket;
-                while(true) {
-                    tempBracket = done.pop();
-                    if(tempBracket.equals("[")) {
-                        brackets.push("[");
-                        toDo.push("[");
-                        break;
-                    }
-                }
-                while(!brackets.isEmpty()) {
-                    tempBracket = done.pop();
-                    if(tempBracket.equals("[")) {
-                        brackets.push(tempBracket);
-                    }
-                    if(tempBracket.equals("]")) {
-                        brackets.pop();
-                    }
-                    toDo.push(tempBracket);
-                }
+                stackProcessing(toDo, done, brackets);
+                StackProcessing2(toDo, done, brackets);
             }
             else if(isDouble(s) || s.equals("[") || s.equals("]")){
                 args.push(s);
@@ -120,6 +87,32 @@ public class CommandStack {
             }
         }
         return args.pop();
+    }
+
+    private void StackProcessing2(Stack<String> toDo, Stack<String> done, Stack<String> brackets) {
+        String tempBracket;
+        while(!brackets.isEmpty()) {
+            tempBracket = done.pop();
+            if(tempBracket.equals("[")) {
+                brackets.push(tempBracket);
+            }
+            if(tempBracket.equals("]")) {
+                brackets.pop();
+            }
+            toDo.push(tempBracket);
+        }
+    }
+
+    private void stackProcessing(Stack<String> toDo, Stack<String> done, Stack<String> brackets) {
+        String tempBracket;
+        while(true) {
+            tempBracket = done.pop();
+            if(tempBracket.equals("[")) {
+                brackets.push("[");
+                toDo.push("[");
+                break;
+            }
+        }
     }
 
     private boolean isOperator(String s) {
