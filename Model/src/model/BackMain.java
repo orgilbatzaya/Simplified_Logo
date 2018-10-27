@@ -122,6 +122,7 @@ public class BackMain {
         }
         CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters);
         result.execute();
+        /*
         //Russell testing commands
         Factory fac = new Factory();
         ArrayList<String> commandArgs = new ArrayList<String>();
@@ -139,7 +140,7 @@ public class BackMain {
 //            System.out.println(entry.getKey() + ", " + entry.getValue());
 //        }
         //end of Russell Testing Commands
-
+        */
     }
 
     private boolean isDouble(String str) {
