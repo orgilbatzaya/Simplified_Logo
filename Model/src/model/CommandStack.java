@@ -1,8 +1,5 @@
 package model;
 
-import model.commands.MathOps.Argument;
-import model.commands.MathOps.Variable;
-
 import java.util.*;
 
 public class CommandStack {
@@ -27,8 +24,6 @@ public class CommandStack {
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myFactory = new Factory();
         myText = text;
-
-
     }
 
     public String execute() {
