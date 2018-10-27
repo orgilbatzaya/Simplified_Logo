@@ -11,18 +11,20 @@ public class CommandStack {
     public static final String NUM_ARGS_PATH = "model/commands/NumArgsCommands";
 
     private Factory myFactory;
+    private Map<String,Set<String>> myCommandTypeMap;
     private Map<String,Integer> myNumArgsMap;
     private List<String> myText;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
     private Map<String,Double> myTurtleParameters;
 
-    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters) {
+    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandType) {
         this.myTurtleActions = myTurtleActions;
         this.myTurtleActionsArgs = myTurtleActionArgs;
         this.myTurtleParameters = myTurtleParameters;
-        myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
-        myFactory = new Factory();
+        myNumArgsMap = numArgs;
+        myCommandTypeMap = commandType;
+        myFactory = new Factory(myCommandTypeMap);
         myText = text;
     }
 
@@ -38,7 +40,6 @@ public class CommandStack {
         }
         while(!toDo.isEmpty()) {
             String s = toDo.pop();
-            System.out.println(s);
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || TURTLE_COMMANDS.contains(s)) {
                 int numArgs = myNumArgsMap.get(s);
                 LinkedList<String> tempArgs = new LinkedList<>();

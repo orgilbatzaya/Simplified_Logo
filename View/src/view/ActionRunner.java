@@ -15,10 +15,8 @@ public class ActionRunner {
 
     public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display){
         int argIndex = 0;
-        System.out.println("HIIIIIIIIIIIIII");
 
         for(String a: actions){
-            System.out.println(a);
             int numArgs = numArgsActions.get(a);
             List<Double> args = getArgs(totalArgs,numArgs,argIndex);
             argIndex+=(numArgs-1);//because one indexed

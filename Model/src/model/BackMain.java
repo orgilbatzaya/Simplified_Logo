@@ -8,13 +8,12 @@ import java.util.*;
 public class BackMain {
 
     public static final String NUM_ARGS_PATH = "model/commands/NumArgsCommands";
-    private final Set<String> BOOLEAN_OPS = new HashSet<>(Arrays.asList("And", "Equal", "GreaterThan", "LessThan", "Not", "NotEqual", "Or"));
-    private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
-    private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
-    private final Set<String> TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Backward", "ClearScreen", "Forward", "HideTurtle", "Home", "Left", "PenDown", "PenUp", "Right", "SetHeading", "SetPosition", "SetTowards", "Showturtle"));
+    public static final String COMMAND_TYPE_PATH = "model/CommandType";
+
 
     private Boolean isCommand;
     private Map<String,Integer> myNumArgsMap;
+    private Map<String,Set<String>> myCommandTypeMap;
     private ProgramParser myProgParser;
     private ResourceBundle myLanguage;
     private HashMap<String, Double> variables;
@@ -22,12 +21,11 @@ public class BackMain {
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
 
-
-
     public BackMain(ResourceBundle lang, Map<String,Double> turtleParams){
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
+        myCommandTypeMap = getMyCommandTypeMap(COMMAND_TYPE_PATH);
         myTurtleParameters = turtleParams;
         variables = new HashMap<>();
         myTurtleActions = new ArrayList<>();
@@ -53,30 +51,11 @@ public class BackMain {
 
     }
 
-    public List<String> getArgs(String[] inputs, int numArgs, int index){
-        var args = new ArrayList<String>();
-        for(int i =index+1; i<index+numArgs+1; i++){
-            if(checkValidInput(inputs[i])){
-                args.add(inputs[i]);
-            }
-        }
-        return args;
-    }
 
     public ProgramParser createProgramParser(ResourceBundle lang){
         var language = new ProgramParser();
         language.addPatterns(lang);
         return language;
-    }
-
-    public Map<String,Integer> getNumArgsMap(String path){
-        ResourceBundle properties = ResourceBundle.getBundle(path);
-        var outMap = new HashMap<String,Integer>();
-        for (String key : properties.keySet()) {
-            String value = properties.getString(key);
-            outMap.put(key, Integer.parseInt(value));
-        }
-        return outMap;
     }
 
     public void performCommands (String rawText) {
@@ -97,38 +76,30 @@ public class BackMain {
                 outIndex++;
             }
         }
-        CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters);
+        CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters,myNumArgsMap,myCommandTypeMap);
         result.execute();
-        /*
-        //Russell testing commands
-        Factory fac = new Factory();
-        ArrayList<String> commandArgs = new ArrayList<String>();
-        commandArgs.add(text[1]);
-        commandArgs.add(text[2]);
-        var com = fac.makeCommand(text[0],commandArgs);
-        com.execute(myTurtleActions,myTurtleActionsArgs,myTurtleParameters);
-        for(int i = 0; i<myTurtleActions.size(); i++){
-            System.out.println(myTurtleActions.get(i));
-        }
-        for(int i = 0; i<myTurtleActionsArgs.size(); i++){
-            System.out.println(myTurtleActionsArgs.get(i));
-        }
-//        for (Map.Entry entry : myTurtleParameters.entrySet()) {
-//            System.out.println(entry.getKey() + ", " + entry.getValue());
-//        }
-        //end of Russell Testing Commands
-        */
+
     }
 
-    private boolean isDouble(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
+    public Map<String,Set<String>> getMyCommandTypeMap(String path){
+        ResourceBundle properties = ResourceBundle.getBundle(path);
+        var outMap = new HashMap<String,Set<String>>();
+        for (String key : properties.keySet()) {
+            Set<String> mySet = new HashSet<String>(Arrays.asList(properties.getString(key).split(",")));
+            outMap.put(key, mySet);
         }
-        catch(NumberFormatException e) {
-            return false;
-        }
+        return outMap;
 
+    }
+
+    public Map<String,Integer> getNumArgsMap(String path){
+        ResourceBundle properties = ResourceBundle.getBundle(path);
+        var outMap = new HashMap<String,Integer>();
+        for (String key : properties.keySet()) {
+            String value = properties.getString(key);
+            outMap.put(key, Integer.parseInt(value));
+        }
+        return outMap;
     }
 
     public List<String> getMyTurtleActions(){
