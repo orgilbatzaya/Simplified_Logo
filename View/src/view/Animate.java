@@ -25,7 +25,7 @@ public class Animate {
     private PathTransition myPathTans;
     private ParallelTransition myAnimation;
 
-    private Color myPenColor;
+    private SLogoPen myPen;
     private Canvas myCanvas;
 
     private TurtleView myTurtle;
@@ -34,14 +34,14 @@ public class Animate {
 
 
 
-    public Animate(Canvas myCanvas, GraphicsContext gc, Color penColor, Duration duration, TurtleView turtle){
+    public Animate(Canvas myCanvas, GraphicsContext gc, SLogoPen pen, Duration duration, TurtleView turtle){
 
         myTurtle = turtle;
         zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
         this.duration = duration;
         this.myCanvas = myCanvas;
         myGC = gc;
-        myPenColor = penColor;
+        myPen = pen;
 
     }
 
@@ -53,11 +53,10 @@ public class Animate {
         myPos = new Point2D(myTurtle.getX(),myTurtle.getY());
         Point2D next = myPos.add(translate);
         pathAnimate(myPos,next,duration);
-        TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
-        translateTurt.setByX(translate.getX());
-        translateTurt.setByY(translate.getY());
-
-        myAnimation = new ParallelTransition(myPathTans,translateTurt);
+        //TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
+        //translateTurt.setByX(translate.getX());
+        //translateTurt.setByY(translate.getY());
+        myAnimation = new ParallelTransition(myPathTans);
         myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
 
         return myAnimation;
@@ -98,9 +97,11 @@ public class Animate {
                 }
 
                 // draw line
-                myGC.setStroke(myPenColor);
-                myGC.setLineWidth(2);
-                myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
+                if(myPen.isVisible()) {
+                    myGC.setStroke(myPen.getPenColor());
+                    myGC.setLineWidth(2);
+                    myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
+                }
 
                 // update old location with current one
                 oldLocation = newLocation;

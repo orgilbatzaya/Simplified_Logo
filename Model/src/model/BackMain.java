@@ -91,31 +91,8 @@ public class BackMain {
         int outIndex = 0;
         while(outIndex < commandList.size()) {
             String s = commandList.get(outIndex);
-            if(CONTROL_OPS.contains(s)) {
-                Stack<String> brackets = new Stack<>();
-                List<String> expr = new ArrayList<>();
-                int times;
-                if(s.equals("DOTIMES")) {
-                    int index = outIndex + 1;
-                    while(true) {
-                        if (commandList.get(index).equals("[")) {
-                            CommandStack tempExpr = new CommandStack(expr, myTurtleActions, myTurtleActionsArgs, myTurtleParameters);
-                            times = Integer.parseInt(tempExpr.execute());
-                            break;
-                        }
-                        expr.add(commandList.get(index));
-                        index++;
-                    }
-                    while(true) {
-                        if(commandList.get(index).equals("]")) {
-                            outIndex = index + 1;
-                            break;
-                        }
-                        newCommands.add(commandList.get(index));
-                    }
-                }
-            }
-            else {
+
+            {
                 newCommands.add(commandList.get(outIndex));
                 outIndex++;
             }

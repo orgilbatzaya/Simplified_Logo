@@ -1,8 +1,5 @@
 package model;
 
-import model.commands.MathOps.Argument;
-import model.commands.MathOps.Variable;
-
 import java.util.*;
 
 public class CommandStack {
@@ -27,18 +24,21 @@ public class CommandStack {
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myFactory = new Factory();
         myText = text;
-
-
     }
 
     public String execute() {
         Stack<String> toDo = new Stack<>();
         Stack<String> args = new Stack<>();
+        Stack<String> done = new Stack<>();
+        HashMap<Integer, Integer> times = new HashMap<>();
+        HashMap<Integer, Integer> originalTimes = new HashMap<>();
+        int loopCounter = 1;
         for(String temp : myText) {
             toDo.push(temp);
         }
         while(!toDo.isEmpty()) {
             String s = toDo.pop();
+            System.out.println(s);
             if(BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || TURTLE_COMMANDS.contains(s)) {
                 int numArgs = myNumArgsMap.get(s);
                 LinkedList<String> tempArgs = new LinkedList<>();
@@ -47,9 +47,75 @@ public class CommandStack {
                 }
                 Command temp = myFactory.makeCommand(s, tempArgs);
                 args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
+                done.push(s);
             }
-            else {
+            else if (CONTROL_OPS.contains(s)) {
+                if(s.equals("DoTimes")) {
+                    int time = Integer.parseInt(args.pop());
+                    if(time == 1) {
+                        done.push(s);
+                        continue;
+                    }
+                    toDo.push("DoTimes" + loopCounter);
+                    times.put(loopCounter, time - 1);
+                    originalTimes.put(loopCounter, time);
+                    loopCounter++;
+                    Stack<String> brackets = new Stack<String>();
+                    String tempBracket;
+                    while(true) {
+                        tempBracket = done.pop();
+                        if(tempBracket.equals("[")) {
+                            brackets.push("[");
+                            toDo.push("[");
+                            break;
+                        }
+                    }
+                    while(!brackets.isEmpty()) {
+                        tempBracket = done.pop();
+                        if(tempBracket.equals("[")) {
+                            brackets.push(tempBracket);
+                        }
+                        if(tempBracket.equals("]")) {
+                            brackets.pop();
+                        }
+                        toDo.push(tempBracket);
+                    }
+                }
+            }
+            else if(s.matches("DoTimes\\d+")) {
+                int loopId = Integer.parseInt(s.substring(7));
+                if(times.get(loopId) == 1) {
+                    done.push(s);
+                    times.put(loopId, originalTimes.get(loopId));
+                    continue;
+                }
+                toDo.push(s);
+                times.put(loopId, times.get(loopId) - 1);
+
+                Stack<String> brackets = new Stack<String>();
+                String tempBracket;
+                while(true) {
+                    tempBracket = done.pop();
+                    if(tempBracket.equals("[")) {
+                        brackets.push("[");
+                        toDo.push("[");
+                        break;
+                    }
+                }
+                while(!brackets.isEmpty()) {
+                    tempBracket = done.pop();
+                    if(tempBracket.equals("[")) {
+                        brackets.push(tempBracket);
+                    }
+                    if(tempBracket.equals("]")) {
+                        brackets.pop();
+                    }
+                    toDo.push(tempBracket);
+                }
+            }
+            else if(isDouble(s) || s.equals("[") || s.equals("]")){
                 args.push(s);
+                done.push(s);
             }
         }
         return args.pop();
