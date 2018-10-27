@@ -97,4 +97,12 @@ public class TurtleView {
         myDistanceTraveled = Math.sqrt(Math.pow(xPos, 2) + Math.pow(yPos, 2));
         return myDistanceTraveled;
     }
+
+    public void deactivate(){
+
+    }
+
+    public void activate(){
+
+    }
 }
