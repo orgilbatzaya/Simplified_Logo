@@ -11,7 +11,6 @@ public class SetBackground extends DisplayCommand {
     @Override
     public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
         double newIndex = getArgsDouble(0);
-        System.out.println("HIIIIII");
         setDoubleForKey(newIndex,SET_BACKGROUND,BACKGROUND_INDEX_KEY,turtleAction,turtleActionArgs,turtleParams);
         return newIndex;
     }

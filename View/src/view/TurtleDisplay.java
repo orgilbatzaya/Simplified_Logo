@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,9 +31,9 @@ public class TurtleDisplay extends StackPane {
     private static final int NUM_STARTING_TURTLES = 3;
 
     //parameters for display actions
-    private static final Color[] BACKGROUND_COLORS = {Color.GRAY,Color.PURPLE, Color.AZURE,Color.BEIGE};
-    private static final Color[] PEN_COLORS = {Color.BLUE,Color.VIOLET, Color.GREEN,Color.PALEGOLDENROD};
+    private static final Color[] COLORS = {Color.GRAY,Color.PURPLE, Color.AZURE,Color.BEIGE,Color.BLUE,Color.VIOLET, Color.GREEN,Color.PALEGOLDENROD};
 
+    private static final String[] SHAPES = {"/images/turtle2.jpg","/images/turtle-basic.png"};
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -187,10 +188,23 @@ public class TurtleDisplay extends StackPane {
     }
 
     public void setBackgroundColorAction(int index){
-        myBackground.setFill(BACKGROUND_COLORS[index]);
+        myBackground.setFill(COLORS[index]);
     }
 
     public void setPenColorAction(int index){
-        myPen.setPenColor(PEN_COLORS[index]);
+        myPen.setPenColor(COLORS[index]);
+    }
+
+    public void setPenWidthAction(double width){
+
+    }
+
+    public void setShapeAction(int index){
+        myTurtle.setView(SHAPES[index]);
+    }
+
+    public void setPalette(int r, int g, int b, int index){
+        Color newColor = Color.rgb(r, g, b); // Color white
+        COLORS[index] = newColor;
     }
 }
