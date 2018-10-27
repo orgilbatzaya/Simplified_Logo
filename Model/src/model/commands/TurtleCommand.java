@@ -26,6 +26,8 @@ public abstract class TurtleCommand extends Command {
     public static final String VISIBLE_KEY= "visible";
 
 
+
+
     //convenient doubles
     public static final Double ZERO_DOUBLE = (double) 0;
     public static final Double ONE_DOUBLE = (double) 1;

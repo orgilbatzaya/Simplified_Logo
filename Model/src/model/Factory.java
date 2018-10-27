@@ -10,6 +10,9 @@ public class Factory {
     private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
     private final Set<String> TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Backward", "ClearScreen", "Forward", "HideTurtle", "Home", "Left", "PenDown", "PenUp", "Right", "SetHeading", "SetPosition", "SetTowards", "ShowTurtle"));
     private final Set<String> TURTLE_QUERIES = new HashSet<>(Arrays.asList("Heading","IsPenDown","IsShowing","XCoordinate","YCoordinate"));
+    private final Set<String> DISPLAY_COMMANDS = new HashSet<>(Arrays.asList("ClearStamps","GetPenColor","GetShape","SetBackground","SetPalette","SetPenColor","SetPenSize","SetShape","Stamp"));
+    private final Set<String> MULTIPLE_TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Ask","AskWith","ID","Tell","Turtles"));
+
     public Command makeCommand(String commandName, List<String> args){
         try{
             String commandType = getCommandType(commandName);
@@ -39,6 +42,12 @@ public class Factory {
         }
         if(TURTLE_QUERIES.contains(commandName)){
             return "TurtleQueries";
+        }
+        if(DISPLAY_COMMANDS.contains(commandName)){
+            return "DisplayCommands";
+        }
+        if(MULTIPLE_TURTLE_COMMANDS.contains(commandName)){
+            return "MultipleTurtleCommands";
         }
         return null;
 
