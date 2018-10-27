@@ -69,9 +69,7 @@ public class Console implements FrontExternal {
         System.out.println();
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList,actionArgs, parentGUI.getCurrentDisplay());
-        for (Map.Entry entry : commandParams.entrySet()) {
-            System.out.println(entry.getKey() + ", " + entry.getValue());
-        }
+
     }
 
     public String getNextCommand(){
