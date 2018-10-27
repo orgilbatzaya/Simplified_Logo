@@ -12,6 +12,8 @@ public class Clear extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
+
         turtleDisplay.clearScreen();
+
     }
 }

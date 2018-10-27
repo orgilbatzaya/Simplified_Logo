@@ -12,6 +12,7 @@ public class Rotate extends Action{
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.getMyTurtle().getView().setRotate(turtleDisplay.getMyTurtle().getView().getRotate() + getArgsDouble(0));
+        turtleDisplay.getMyTurtle().rotate(turtleDisplay.getMyTurtle().getView().getRotate() + getArgsDouble(0));
+
     }
 }

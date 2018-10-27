@@ -3,7 +3,6 @@ package view;
 import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
@@ -138,8 +137,10 @@ public class TurtleDisplay extends StackPane {
 
     public void setToNewPosition(double x, double y) {
         returnValue = myTurtle.setNewCoordinates(x, y);
+        System.out.println(zeroPos.getX()+" , "+zeroPos.getY());
         myTurtle.getView().setX(zeroPos.getX() + x);
         myTurtle.getView().setY(zeroPos.getY() + y);
+
     }
 
     public void createNewAnimation(Point2D next) {
@@ -147,6 +148,7 @@ public class TurtleDisplay extends StackPane {
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
+
     }
 
     public void getReturnValue() {

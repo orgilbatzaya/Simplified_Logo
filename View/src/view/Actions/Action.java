@@ -14,7 +14,7 @@ public abstract class Action {
 
     public abstract void execute(TurtleDisplay turtleDisplay);
 
-    public Double getArgsDouble(int index){
+    public double getArgsDouble(int index){
         return myArgs.get(index);
     }
 }
