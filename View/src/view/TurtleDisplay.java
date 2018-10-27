@@ -58,7 +58,7 @@ public class TurtleDisplay extends StackPane {
         myGC = myCanvas.getGraphicsContext2D();
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
-        myTurtles = new HashMap<Integer, TurtleView>();
+        myTurtles = new HashMap<>();
         myTurtle = new TurtleView();
         myBackground.setLayoutX(200);
         myBackground.setY(200);
@@ -150,6 +150,7 @@ public class TurtleDisplay extends StackPane {
         returnValue = myTurtle.setNewCoordinates(0, 0);
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
+        System.out.println(returnValue);
     }
 
     public void setToNewPosition(double x, double y) {
@@ -157,7 +158,7 @@ public class TurtleDisplay extends StackPane {
         System.out.println(zeroPos.getX()+" , "+zeroPos.getY());
         myTurtle.getView().setX(zeroPos.getX() + x);
         myTurtle.getView().setY(zeroPos.getY() + y);
-
+        System.out.println(returnValue);
     }
 
     public void createNewAnimation(Point2D next) {
@@ -165,18 +166,15 @@ public class TurtleDisplay extends StackPane {
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
-
-    }
-
-    public void getReturnValue() {
         System.out.println(returnValue);
     }
 
     public void updatePen(double bool) {
-        if((!myPen.isVisible() && bool == 0) || (myPen.isVisible() && bool == 1)) {
+        if((!myPen.isVisible() && bool == 1) || (myPen.isVisible() && bool == 0)) {
             myPen.changePenVisibilty();
         }
         returnValue = bool;
+        System.out.println(returnValue);
     }
 
     public SLogoPen getPen() {

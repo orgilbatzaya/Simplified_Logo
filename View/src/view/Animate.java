@@ -97,9 +97,11 @@ public class Animate {
                 }
 
                 // draw line
-                myGC.setStroke(myPen.getPenColor());
-                myGC.setLineWidth(2);
-                myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
+                if(myPen.isVisible()) {
+                    myGC.setStroke(myPen.getPenColor());
+                    myGC.setLineWidth(2);
+                    myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
+                }
 
                 // update old location with current one
                 oldLocation = newLocation;
