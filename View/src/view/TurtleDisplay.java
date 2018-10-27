@@ -66,21 +66,22 @@ public class TurtleDisplay extends StackPane {
         displayPane = new Pane(myTurtle.getView());
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
-        makeTurtles(displayPane);
+        this.getChildren().add(myTurtle.getView());
+        //makeTurtles(displayPane);
         this.getChildren().add(displayPane);
 
 
-        //Animate animate = new Animate(myCanvas, myGC, penColor, Duration.seconds(myDuration.getDuration()), myTurtle);
-        /*myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
-                                                            animate.move(new Point2D(50,30)),
-                                                            animate.move(new Point2D(100,-100)),
-                                                            animate.move(new Point2D(-40,60)),
-                                                            animate.move(new Point2D(-60,200)));
+//        Animate animate = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
+//        myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
+//                                                            animate.move(new Point2D(50,30)),
+//                                                            animate.move(new Point2D(100,-100)),
+//                                                            animate.move(new Point2D(-40,60)),
+//                                                            animate.move(new Point2D(-60,200)));
+//
+//        myCurrentAnimation.setCycleCount(2);
+//        myCurrentAnimation.setAutoReverse(true);
+//        myCurrentAnimation.play();
 
-        myCurrentAnimation.setCycleCount(2);
-        myCurrentAnimation.setAutoReverse(true);
-        myCurrentAnimation.play();
-        */
 
     }
 
