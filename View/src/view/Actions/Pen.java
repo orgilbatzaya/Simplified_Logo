@@ -15,5 +15,6 @@ public class Pen extends Action {
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
         turtleDisplay.updatePen(getArgsDouble(FIRST_INDEX));
+        
     }
 }
