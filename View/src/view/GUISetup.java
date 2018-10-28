@@ -65,7 +65,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay);
         HelpButton help = new HelpButton("Help");
         HBox directions = new HBox(new DirectionButton("Up",myConsole).getDisplay(),new DirectionButton("Down", myConsole).getDisplay(),
-                                    new DirectionButton("left", myConsole).getDisplay(), new DirectionButton("Right", myConsole).getDisplay());
+                                    new DirectionButton("Left", myConsole).getDisplay(), new DirectionButton("Right", myConsole).getDisplay());
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), directions);
         userOptions.setSpacing(Double.parseDouble(myDefaults.getString("defaultSpacing")));
