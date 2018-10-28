@@ -54,7 +54,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
         //myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
         myTurtles = new HashMap<>();
-        myTurtle = new TurtleView();
+        myTurtle = new TurtleView(0);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         displayPane = new Pane();
@@ -87,7 +87,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
 
     private void makeTurtles(Pane displayPane){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
-            TurtleView t = new TurtleView();
+            TurtleView t = new TurtleView(i);
             t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
             t.getView().setY(zeroPos.getY() - midPoint(0, t.getView().getFitHeight()));
             t.setNewCoordinates(0 + i*30,0);

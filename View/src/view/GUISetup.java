@@ -71,10 +71,10 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         userOptions.setSpacing(Double.parseDouble(myDefaults.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);
-        turtleInfo = new StatusDisplay(100, "Turtle Info:", currentDisplay.getMyTurtle());
+        turtleInfo = new StatusDisplay(100, "Turtle Info:", currentDisplay);
         turtleInfo.getDisplay().setLayoutX(700);
         turtleInfo.getDisplay().setLayoutY(50);
-        root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions);
+        root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
         return scene;
     }
 
