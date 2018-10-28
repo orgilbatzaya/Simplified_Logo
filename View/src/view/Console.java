@@ -114,5 +114,6 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
+        parentGUI.getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
     }
 }

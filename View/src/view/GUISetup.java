@@ -134,4 +134,8 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public TurtleDisplay getCurrentDisplay() {
         return currentDisplay;
     }
+
+    public StatusDisplay getTurtleInfoDisplay() {
+        return turtleInfo;
+    }
 }

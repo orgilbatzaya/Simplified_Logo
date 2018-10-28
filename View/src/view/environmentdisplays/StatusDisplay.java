@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * @author Orgil Batzaya, Austin Kao
  */
-public class StatusDisplay implements EnvironmentDisplay {
+public class StatusDisplay {
     private static final String NAME_TITLE = "Turtles";
     private static final String X_POSITION_TITLE = "X Position";
     private static final String Y_POSITION_TITLE = "Y Position";
@@ -29,7 +29,6 @@ public class StatusDisplay implements EnvironmentDisplay {
     private static final String Y_POSITION_PROPERTY = "yPos";
     private static final String HEADING_PROPERTY = "heading";
 
-    private TurtleDisplay myDisplay;
     private TableView<TurtleView> currentDisplay;
     private TableColumn currentTurtles;
     private TableColumn currentXPositions;
@@ -48,7 +47,6 @@ public class StatusDisplay implements EnvironmentDisplay {
         currentXPositions = createTableColumn(X_POSITION_TITLE, X_POSITION_PROPERTY);
         currentYPositions = createTableColumn(Y_POSITION_TITLE, Y_POSITION_PROPERTY);
         currentHeadings = createTableColumn(HEADING_TITLE, HEADING_PROPERTY);
-        myDisplay = display;
         for(TurtleView turtle : display.getTurtles().values()) {
             currentItems.add(turtle);
         }
@@ -56,21 +54,6 @@ public class StatusDisplay implements EnvironmentDisplay {
         currentDisplay.setItems(currentItems);
         currentDisplay.setEditable(true);
         myBox = new VBox(displayLabel, currentDisplay);
-    }
-
-    @Override
-    public void addItem(String item) {
-        return;
-    }
-
-    @Override
-    public void removeItem(String item) {
-        return;
-    }
-
-    @Override
-    public void editItem(String item) {
-        return;
     }
 
     public VBox getDisplay() {
@@ -81,5 +64,13 @@ public class StatusDisplay implements EnvironmentDisplay {
         TableColumn column = new TableColumn(title);
         column.setCellValueFactory(new PropertyValueFactory<TurtleView, Double>(property));
         return column;
+    }
+
+    public void update(TurtleDisplay display) {
+        currentItems.clear();
+        for(TurtleView turtle : display.getTurtles().values()) {
+            currentItems.add(turtle);
+        }
+        currentDisplay.setItems(currentItems);
     }
 }
