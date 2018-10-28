@@ -63,13 +63,12 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         myTurtle = new TurtleView();
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane(myTurtle.getView());
+        displayPane = new Pane();
         myTurtle.getView().setX(zeroPos.getX() - midPoint(0, myTurtle.getView().getFitWidth()));
         myTurtle.getView().setY(zeroPos.getY() - midPoint(0, myTurtle.getView().getFitHeight()));
         myCurrentAnimation = new SequentialTransition();
         this.getChildren().add(displayPane);
-        //makeTurtles(displayPane);
-        //this.getChildren().add(displayPane);
+        makeTurtles(displayPane);
         colorMap = new HashMap<>();
     }
 

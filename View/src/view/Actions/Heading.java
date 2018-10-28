@@ -1,6 +1,7 @@
 package view.Actions;
 
 import view.TurtleDisplay;
+import view.TurtleView;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class Heading extends Action {
     }
 
     @Override
-    public void execute(TurtleDisplay turtleDisplay)
+    public void execute(TurtleView turtle, TurtleDisplay display)
     {
-        turtleDisplay.getMyTurtle().rotate(getArgsDouble(FIRST_INDEX));
+        display.getMyTurtle().rotate(getArgsDouble(FIRST_INDEX));
     }
 }

@@ -1,6 +1,7 @@
 package view.Actions;
 
 import view.TurtleDisplay;
+import view.TurtleView;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ public abstract class Action {
     }
 
 
-    public abstract void execute(TurtleDisplay turtleDisplay);
+    public abstract void execute(TurtleView turtle, TurtleDisplay turtleDisplay);
+
 
     public double getArgsDouble(int index){
         return myArgs.get(index);
