@@ -16,7 +16,7 @@ public class Visible extends Action{
         super(args);
     }
 
-    public void execute(TurtleDisplay turtleDisplay){
+    public void execute(TurtleView turtle, TurtleDisplay turtleDisplay){
         if(getArgsDouble(FIRST_INDEX) == ZERO){
             turtleDisplay.getMyTurtle().getView().setFitHeight(HIDE_TURTLE_HEIGHT);
             turtleDisplay.getMyTurtle().getView().setFitWidth(HIDE_TURTLE_WIDTH);

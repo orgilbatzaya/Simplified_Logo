@@ -16,18 +16,16 @@ public class Move extends Action{
         super(args);
     }
 
-    public void execute(TurtleDisplay turtleDisplay){
+    public void execute(TurtleView turtle, TurtleDisplay turtleDisplay){
         Map<Integer,TurtleView> turtleMap = turtleDisplay.getTurtles();
 
-        for(int i = 0; i < turtleMap.size(); i++){
-            if(turtleMap.get(i).isActive()){
-                TurtleView t = turtleMap.get(i);
-                Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(t.getView().getRotate()-DEFAULT_ROTATION)),
-                        getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(t.getView().getRotate()-DEFAULT_ROTATION)));
-                turtleDisplay.createNewAnimation(next,t);
 
-            }
-        }
+            Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(turtle.getView().getRotate()-DEFAULT_ROTATION)),
+                    getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(turtle.getView().getRotate()-DEFAULT_ROTATION)));
+            turtleDisplay.createNewAnimation(next,turtle);
+
+
+
 
 
     }
