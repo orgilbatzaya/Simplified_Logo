@@ -168,13 +168,4 @@ public class CommandStack {
         }
     }
 
-    private Map<String, Integer> getNumArgsMap(String path) {
-        ResourceBundle properties = ResourceBundle.getBundle(path);
-        var outMap = new HashMap<String, Integer>();
-        for (String key : properties.keySet()) {
-            String value = properties.getString(key);
-            outMap.put(key, Integer.parseInt(value));
-        }
-        return outMap;
-    }
 }

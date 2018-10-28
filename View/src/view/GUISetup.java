@@ -90,9 +90,13 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         Double[] valueElements = {currentDisplay.getMyTurtle().getHeading(),
                 currentDisplay.getMyTurtle().getX(),
                 currentDisplay.getMyTurtle().getY(),
-                DEFAULT_PEN,DEFAULT_VISIBLE,INITIAL_DISTANCE_MOVED};
+                DEFAULT_PEN,DEFAULT_VISIBLE,INITIAL_DISTANCE_MOVED,
+                currentDisplay.getColorIndex(),
+                currentDisplay.getShapeIndex()};
+
         for(int i = 0; i<keyElements.length;i++){
             mapOut.put(keyElements[i],valueElements[i]);
+            System.out.println(keyElements[i]);
         }
         return mapOut;
     }
