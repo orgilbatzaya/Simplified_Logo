@@ -2,9 +2,11 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import view.button.DirectionButton;
 import view.button.HelpButton;
 import view.button.ImageChooseButton;
 import view.button.PlayPauseButton;
@@ -62,8 +64,10 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);
         ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay);
         HelpButton help = new HelpButton("Help");
+        HBox directions = new HBox(new DirectionButton("Up",myConsole).getDisplay(),new DirectionButton("Down", myConsole).getDisplay(),
+                                    new DirectionButton("left", myConsole).getDisplay(), new DirectionButton("Right", myConsole).getDisplay());
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
-                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay());
+                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), directions);
         userOptions.setSpacing(Double.parseDouble(myDefaults.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);

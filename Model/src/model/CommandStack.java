@@ -22,6 +22,7 @@ public class CommandStack {
     private HashMap<Integer, Integer> times;
     private HashMap<Integer, Integer> originalTimes;
     private int doCounter;
+    private String myCommandType;
 
     public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
