@@ -5,6 +5,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import view.ViewResourceBundles;
 
 import java.util.ResourceBundle;
 
@@ -14,15 +15,12 @@ import java.util.ResourceBundle;
  * @author Austin Kao
  */
 
-public abstract class SLogoColor {
-    private static final String DEFAULT_COLOR_RESOURCE = "resources/Color";
+public abstract class SLogoColor implements ViewResourceBundles {
 
     private VBox parentBox;
     private ColorPicker myColorPicker;
-    private ResourceBundle myColors;
 
     public SLogoColor(Color defaultColor, String label) {
-        myColors = ResourceBundle.getBundle(DEFAULT_COLOR_RESOURCE);
         myColorPicker = new ColorPicker(defaultColor);
         myColorPicker.setOnAction(e -> update());
         Label colorLabel = new Label(label);
