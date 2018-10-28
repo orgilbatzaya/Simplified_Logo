@@ -54,6 +54,7 @@ public class TurtleDisplay extends StackPane {
     private Queue<String> myAnimations;
     private ResourceBundle myImages;
     private ResourceBundle myColors;
+    private Map<Integer, Color> colorMap;
 
     //private StatusView statusView;
 
@@ -71,15 +72,16 @@ public class TurtleDisplay extends StackPane {
         myTurtle = new TurtleView();
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        //displayPane = new Pane(myTurtle.getView());
+        displayPane = new Pane(myTurtle.getView());
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
         myCurrentAnimation = new SequentialTransition();
         this.getChildren().add(myTurtle.getView());
-        //makeTurtles(displayPane);
-        //this.getChildren().add(displayPane);
         myImages = ResourceBundle.getBundle(TURTLE_IMAGE_PATH);
         myColors = ResourceBundle.getBundle(COLOR_PATH);
+        //makeTurtles(displayPane);
+        //this.getChildren().add(displayPane);
+        colorMap = new HashMap<>();
     }
 
     public Canvas getCanvas() {
@@ -130,7 +132,7 @@ public class TurtleDisplay extends StackPane {
     }
 
     public void setBgColor(Integer index) {
-        Color c = Color.valueOf(myColors.getString(index.toString()));
+        Color c = determineColor(index);
         setBgColor(c);
     }
 
@@ -208,7 +210,22 @@ public class TurtleDisplay extends StackPane {
     }
 
     public void changePenColor(Integer index) {
-        Color c = Color.valueOf(myColors.getString(index.toString()));
+        Color c = determineColor(index);
         myPen.setPenColor(c);
+    }
+
+    public void makeNewColor(int index, int r, int g, int b) {
+        Color c = Color.rgb(r, g, b);
+        colorMap.put(index, c);
+    }
+
+    private Color determineColor(Integer index) {
+        Color c;
+        if(colorMap.containsKey(index)) {
+            c = colorMap.get(index);
+        } else {
+            c = Color.valueOf(myColors.getString(index.toString()));
+        }
+        return c;
     }
 }
