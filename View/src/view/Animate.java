@@ -1,5 +1,6 @@
 package view;
 
+import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.TranslateTransition;
@@ -20,6 +21,11 @@ import javafx.util.Duration;
  */
 
 public class Animate {
+    private static final int TWO = 2;
+    private static final int PEN_RAD = 3;
+    private static final int ZERO = 0;
+
+
     private Point2D zeroPos;
     private GraphicsContext myGC;
     private PathTransition myPathTans;
@@ -37,7 +43,7 @@ public class Animate {
     public Animate(Canvas myCanvas, GraphicsContext gc, SLogoPen pen, Duration duration, TurtleView turtle){
 
         myTurtle = turtle;
-        zeroPos = new Point2D(myCanvas.getWidth() /2, myCanvas.getHeight() / 2);
+        zeroPos = new Point2D(myCanvas.getWidth() /TWO, myCanvas.getHeight() / TWO);
         this.duration = duration;
         this.myCanvas = myCanvas;
         myGC = gc;
@@ -70,7 +76,7 @@ public class Animate {
         myPath.getElements().add(initialPosition);
         myPath.getElements().add(lineTo);
 
-        Circle pen = new Circle(0, 0, 3);
+        Circle pen = new Circle(ZERO, ZERO, PEN_RAD);
 
         myPathTans = new PathTransition(duration, myPath, pen);
         myPathTans.currentTimeProperty().addListener(new ChangeListener<>() {
@@ -99,7 +105,7 @@ public class Animate {
                 // draw line
                 if(myPen.isVisible()) {
                     myGC.setStroke(myPen.getPenColor());
-                    myGC.setLineWidth(2);
+                    myGC.setLineWidth(myPen.getWidth());
                     myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
                 }
 

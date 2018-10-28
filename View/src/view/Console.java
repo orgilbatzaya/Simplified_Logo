@@ -73,7 +73,6 @@ public class Console implements FrontExternal {
 
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList,actionArgs, parentGUI.getCurrentDisplay());
-
     }
 
     public String getNextCommand(){

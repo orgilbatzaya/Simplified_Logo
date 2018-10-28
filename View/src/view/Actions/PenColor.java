@@ -1,10 +1,14 @@
 package view.Actions;
 
+import javafx.scene.paint.Color;
 import view.TurtleDisplay;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class PenColor extends Action {
+    private static final int FIRST_INDEX = 0;
+
 
     public PenColor(List<Double> args){
         super(args);
@@ -12,7 +16,8 @@ public class PenColor extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setPenColorAction((int) getArgsDouble(0));
+        Integer index = (int) getArgsDouble(0);
+        turtleDisplay.changePenColor(index);
     }
 }
 

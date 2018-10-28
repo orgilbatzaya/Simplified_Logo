@@ -7,13 +7,14 @@ import java.util.List;
 
 public class Home extends Action {
 
+    private static final int ORIGIN = 0;
     public Home(List<Double> args){
         super(args);
     }
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setToNewPosition(0, 0);
+        turtleDisplay.setToNewPosition(ORIGIN, ORIGIN);
 
     }
 }

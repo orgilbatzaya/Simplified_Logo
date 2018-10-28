@@ -16,13 +16,16 @@ import java.util.ArrayList;
 public abstract class DropdownMenu {
     private VBox myDisplayBox;
     private ChoiceBox myChoiceBox;
+    private static final int FIRST_INDEX = 0;
+    private static final int NONE = 0;
+
 
     public DropdownMenu(ArrayList<String> items, String label) {
         myChoiceBox = new ChoiceBox<>();
         Label dropdownLabel = new Label(label);
         myChoiceBox.setItems(FXCollections.observableArrayList(items));
-        if(items.size() > 0) {
-            myChoiceBox.setValue(items.get(0));
+        if(items.size() > NONE) {
+            myChoiceBox.setValue(items.get(FIRST_INDEX));
         }
         myChoiceBox.setOnAction(e -> processChoice(myChoiceBox.getValue().toString()));
         myDisplayBox = new VBox(dropdownLabel, myChoiceBox);
