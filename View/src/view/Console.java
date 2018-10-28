@@ -13,6 +13,7 @@ import model.BackMain;
 import view.environmentdisplays.PastCommandDisplay;
 import view.environmentdisplays.VariableDisplay;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +100,8 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
     public void runCommand(String command) {
         Map<String, Double> commandParams = parentGUI.getTurtleParams();
-        BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
+        HashMap<String, String> vars = parentGUI.getVariables();
+        BackMain back = new BackMain(parentGUI.getLanguage(), commandParams,vars);
         back.performCommands(command);
         List<String> actionList = back.getMyTurtleActions();
         for(int i=0; i<actionList.size(); i++){
@@ -115,5 +117,6 @@ public class Console implements FrontExternal, ViewResourceBundles {
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
         parentGUI.getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
+        parentGUI.setMyVariables(back.getVariables());
     }
 }

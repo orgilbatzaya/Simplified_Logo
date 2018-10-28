@@ -60,6 +60,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private LanguageMenu myLanguageMenu;
     private StatusDisplay turtleInfo;
     private TurtleSelector mySelector;
+    private HashMap<String,String> myVariables;
 
     private static final double DEFAULT_PEN = 1;
     private static final double DEFAULT_VISIBLE = 1;
@@ -99,6 +100,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         turtleInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
         turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
         root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
+        myVariables = new HashMap<>();
         return scene;
     }
 
@@ -122,9 +124,15 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         for(int i = 0; i<keyElements.length;i++){
             mapOut.put(keyElements[i],valueElements[i]);
         }
-
-
         return mapOut;
+    }
+
+    public HashMap<String,String> getVariables(){
+        return myVariables;
+    }
+
+    public void setMyVariables(HashMap<String,String> newVars){
+        myVariables = newVars;
     }
 
     public ResourceBundle getLanguage() {

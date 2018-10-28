@@ -16,25 +16,23 @@ public class BackMain {
     private Map<String, Set<String>> myCommandTypeMap;
     private ProgramParser myProgParser;
     private ProgramParser mySyntaxParser;
-    private ResourceBundle myLanguage;
     private HashMap<String, String> variables;
+    private HashMap<String,String[]> functions;
     private Map<String, Double> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
 
 
-    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams) {
+    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams, HashMap<String,String> vars) {
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
         mySyntaxParser = createProgramParser(ResourceBundle.getBundle("model/Syntax"));
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myCommandTypeMap = getMyCommandTypeMap(COMMAND_TYPE_PATH);
         myTurtleParameters = turtleParams;
-        variables = new HashMap<>();
         myTurtleActions = new ArrayList<>();
         myTurtleActionsArgs = new ArrayList<>();
-        myLanguage = lang;
-        variables = new HashMap<>();
+        variables = vars;
     }
 
 
@@ -163,5 +161,8 @@ public class BackMain {
         return myTurtleActionsArgs;
     }
 
+    public HashMap<String,String> getVariables(){ return variables;}
+
+    public Set<String> getFunctionNames(){ return functions.keySet();};
 
 }

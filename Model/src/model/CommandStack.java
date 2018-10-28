@@ -208,6 +208,9 @@ public class CommandStack {
         while(i<list.size()){
             String s = list.get(i);
             System.out.println(s);
+            if(myCommandTypeMap.get("OtherCommands").contains(getCommandType(s))){
+                return Boolean.TRUE;
+            }
             if(getCommandType((s))!=null){
                 int numArgs = myNumArgsMap.get(s);
                 int num = 0;
