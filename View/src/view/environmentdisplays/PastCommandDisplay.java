@@ -7,9 +7,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 /**
- * This class stores a list of items as well as the display of that list.
- * This is handy for displaying past commands the user has typed, current variables in the environment, and current user-defined commands in the environment.
- * There is also a maximum size that the list can be before the oldest elements of the list start disappearing. When the maximum size is -1, the maximum size of the list is infinite.
+ * This class stores a list of past commands as well as the display of that list.
+ * It will also communicate to the back end the current command and execute the command.
  * @author Austin Kao
  */
 public class PastCommandDisplay implements EnvironmentDisplay {

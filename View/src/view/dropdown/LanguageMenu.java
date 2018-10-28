@@ -1,6 +1,7 @@
 package view.dropdown;
 
 import javafx.collections.FXCollections;
+import view.ViewResourceBundles;
 import view.dropdown.DropdownMenu;
 
 import java.util.ArrayList;
@@ -12,33 +13,31 @@ import java.util.ResourceBundle;
  * @author Austin Kao
  */
 
-public class LanguageMenu extends DropdownMenu {
+public class LanguageMenu extends DropdownMenu implements ViewResourceBundles {
     private static final String DEFAULT_LANGUAGE_PACKAGE = "resources/languages/";
-    private static final String DEFAULT_LANGUAGE_LIST = "resources/LanguageList";
     private static final String DEFAULT_LANGUAGE = "ENG";
 
-    private ResourceBundle myLanguage;
+    private ResourceBundle language;
 
     public LanguageMenu(String label) {
         super(new ArrayList<>(), label);
         ArrayList<String> languages = new ArrayList<>();
-        ResourceBundle languageList = ResourceBundle.getBundle(DEFAULT_LANGUAGE_LIST);
-        for(String key : languageList.keySet()) {
-            languages.add(languageList.getString(key));
+        for(String key : myLanguages.keySet()) {
+            languages.add(myLanguages.getString(key));
         }
         getChoiceBox().setItems(FXCollections.observableArrayList(languages));
-        if(languageList.containsKey(DEFAULT_LANGUAGE)) {
-            String defaultLang = languageList.getString(DEFAULT_LANGUAGE);
+        if(myLanguages.containsKey(DEFAULT_LANGUAGE)) {
+            String defaultLang = myLanguages.getString(DEFAULT_LANGUAGE);
             getChoiceBox().setValue(defaultLang);
-            myLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+defaultLang);
+            language = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+defaultLang);
         }
     }
 
     @Override
     public void processChoice(String choice) {
-        myLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+choice);    }
+        language = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE+choice);    }
 
     public ResourceBundle getLanguage() {
-        return myLanguage;
+        return language;
     }
 }

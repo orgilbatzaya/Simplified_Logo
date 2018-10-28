@@ -8,25 +8,29 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import view.TurtleView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class StatusDisplay implements EnvironmentDisplay {
+    private static final String NAME_PROPERTY = "Turtles";
+    private static final String X_POSITION_PROPERTY = "X Position";
+    private static final String Y_POSITION_PROPERTY = "Y Position";
+    private static final String HEADING_PROPERTY = "Heading";
+
     private DoubleProperty xProperty = new SimpleDoubleProperty();
     private DoubleProperty yProperty = new SimpleDoubleProperty();
     private double xPos;
     private double yPos;
     private TurtleView myTurtle;
-    private TableView<String[]> currentDisplay;
+    private TableView<String> currentDisplay;
     private TableColumn currentTurtles;
     private TableColumn currentXPositions;
     private TableColumn currentYPositions;
     private TableColumn currentHeadings;
-    private ObservableList<String[]> currentItems;
+    private ObservableList<String> currentItems;
     private VBox myBox;
 
 
@@ -39,19 +43,15 @@ public class StatusDisplay implements EnvironmentDisplay {
         myTurtle = turtle;
         xProperty.setValue(xPos);
         xProperty.addListener(updater);
-        ArrayList<String> turtleStatus = new ArrayList<>();
-        turtleStatus.add("0");
-        turtleStatus.add(Double.toString(turtle.getX()));
-        turtleStatus.add(Double.toString(turtle.getY()));
-        turtleStatus.add(Double.toString(turtle.getHeading()));
         currentItems = FXCollections.observableArrayList();
-        currentItems.add(turtleStatus.toArray(new String[0]));
-        currentTurtles = new TableColumn("Turtles");
-        currentXPositions = new TableColumn("X Position");
-        currentYPositions = new TableColumn("Y Position");
-        currentHeadings = new TableColumn("Heading");
+        currentItems.add("Zero");
+        createTableColumn(currentTurtles, NAME_PROPERTY);
+        createTableColumn(currentXPositions, X_POSITION_PROPERTY);
+        createTableColumn(currentYPositions, Y_POSITION_PROPERTY);
+        createTableColumn(currentTurtles, HEADING_PROPERTY);
         currentDisplay.getColumns().addAll(currentTurtles, currentXPositions, currentYPositions, currentHeadings);
         currentDisplay.setItems(currentItems);
+        currentDisplay.setEditable(true);
         myBox = new VBox(displayLabel, currentDisplay);
     }
 
@@ -78,4 +78,8 @@ public class StatusDisplay implements EnvironmentDisplay {
         return myBox;
     }
 
+    private void createTableColumn(TableColumn column, String property) {
+        column = new TableColumn(property);
+        column.setCellValueFactory(new PropertyValueFactory<TurtleView, String>(property));
+    }
 }
