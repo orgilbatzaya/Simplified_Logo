@@ -67,14 +67,15 @@ public class BackMain {
         int index = 0;
         while (index < commandList.size()) {
             String s = commandList.get(index);
-            if(s.equals("IF")) {
+            if(s.equals("If")) {
+                index++;
                 ArrayList<String> ifExp = new ArrayList<>();
                 while(!commandList.get(index).equals("[")) {
                     ifExp.add(commandList.get(index));
                     index++;
                 }
                 CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-                if(Integer.parseInt(ifExpEval.execute()) != 1) {
+                if(Double.parseDouble(ifExpEval.execute()) != 1) {
                     Stack<String> brackets = new Stack<>();
                     brackets.push(commandList.get(index));
                     index++;
@@ -87,13 +88,14 @@ public class BackMain {
                 }
             }
             else if(s.equals("IfElse")) {
+                index++;
                 ArrayList<String> ifExp = new ArrayList<>();
                 while(!commandList.get(index).equals("[")) {
                     ifExp.add(commandList.get(index));
                     index++;
                 }
                 CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-                if(Integer.parseInt(ifExpEval.execute()) == 1) {
+                if(Double.parseDouble(ifExpEval.execute()) == 1) {
                     newCommands.add(commandList.get(index));
                     Stack<String> brackets = new Stack<>();
                     brackets.push(commandList.get(index));
@@ -132,6 +134,9 @@ public class BackMain {
             }
 
 
+        }
+        if(newCommands.isEmpty()) {
+            return;
         }
         CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
         result.execute();
