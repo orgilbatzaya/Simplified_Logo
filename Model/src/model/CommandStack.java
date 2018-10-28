@@ -22,6 +22,7 @@ public class CommandStack {
     private HashMap<Integer, Integer> times;
     private HashMap<Integer, Integer> originalTimes;
     private int doCounter;
+    private String myCommandType;
 
     public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
@@ -45,7 +46,6 @@ public class CommandStack {
         }
         while (!toDo.isEmpty()) {
             String s = toDo.pop();
-            System.out.println(s);
             myCommandType = getCommandType(s);
             if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) ||myCommandTypeMap.get("TurtleQueries").contains(s) ||
                 myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
@@ -70,8 +70,7 @@ public class CommandStack {
             } else if (s.equals("MakeVariable")){
                 variables.put(done.peek().substring(1), args.peek());
                 done.push(s);
-            } else if (s.matches(":[a-zA-Z]+")){
-                System.out.println(s);
+            } else if (s.matches(":[a-zA-Z]+")) {
                 String temp = s.substring(1);
                 if(!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
                     variables.put(temp, args.peek());
