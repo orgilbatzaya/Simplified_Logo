@@ -40,11 +40,15 @@ public abstract class TurtleCommand extends Command {
     public void move(double distance,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams) {
         turtleActions.add(MOVE_ACTION);
         turtleArgs.add(distance);
-        double newX = turtleParams.get(X_KEY)+distance*Math.cos(Math.toRadians(turtleParams.get(HEADING_KEY)));
-        double newY = turtleParams.get(Y_KEY)+distance*Math.sin(Math.toRadians(turtleParams.get(HEADING_KEY)));
+
+
+
+        double newX = turtleParams.get(X_KEY)+distance*Math.cos(Math.toRadians(turtleParams.get(HEADING_KEY))-90);
+        double newY = turtleParams.get(Y_KEY)+distance*Math.sin(Math.toRadians(turtleParams.get(HEADING_KEY))-90);
         turtleParams.put(X_KEY,newX);
         turtleParams.put(Y_KEY,newY);
         turtleParams.put(DISTANCE_MOVED_KEY,turtleParams.get(DISTANCE_MOVED_KEY)+distance);
+
     }
 
     public  void rotate(double angle,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
@@ -52,6 +56,7 @@ public abstract class TurtleCommand extends Command {
         turtleArgs.add(angle);
         double finalAngle = angle+turtleParams.get(HEADING_KEY);
         turtleParams.put(HEADING_KEY,finalAngle);
+
     }
 
     public void clear(List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){

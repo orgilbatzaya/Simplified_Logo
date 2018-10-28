@@ -18,15 +18,14 @@ public class Visible extends Action{
 
     public void execute(TurtleView turtle, TurtleDisplay turtleDisplay){
         if(getArgsDouble(FIRST_INDEX) == ZERO){
-            turtleDisplay.getMyTurtle().getView().setFitHeight(HIDE_TURTLE_HEIGHT);
-            turtleDisplay.getMyTurtle().getView().setFitWidth(HIDE_TURTLE_WIDTH);
+            turtle.getView().setFitHeight(HIDE_TURTLE_HEIGHT);
+            turtle.getView().setFitWidth(HIDE_TURTLE_WIDTH);
         }
         else if(getArgsDouble(FIRST_INDEX) == ONE){
-            TurtleView turt = turtleDisplay.getMyTurtle();
-            double h = turt.getDefaultTurtleHeight();
-            double w = turt.getDefaultTurtleWidth();
-            turtleDisplay.getMyTurtle().getView().setFitHeight(h);
-            turtleDisplay.getMyTurtle().getView().setFitWidth(w);
+            double h = turtle.getDefaultTurtleHeight();
+            double w = turtle.getDefaultTurtleWidth();
+            turtle.getView().setFitHeight(h);
+            turtle.getView().setFitWidth(w);
         }
 
     }
