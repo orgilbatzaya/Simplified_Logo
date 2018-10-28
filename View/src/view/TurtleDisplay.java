@@ -2,9 +2,12 @@ package view;
 
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,7 +24,6 @@ import java.util.Map;
  */
 
 public class TurtleDisplay extends StackPane implements ViewResourceBundles{
-    private static final int FRAMES_PER_SECOND = 60;
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
@@ -32,17 +34,14 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private GraphicsContext myGC;
     private SLogoPen myPen;
     private Map<Integer,TurtleView> myTurtles;
-    private TurtleView myCurrentTurtle;
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
     private DurationField myDuration;
-    private VBox myBox; //May or may not use
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
     private TurtleView myTurtle;
 
-    //private StatusView statusView;
 
     public TurtleDisplay(double width, double height) {
         myDuration = new DurationField(myDefaults.getString(DURATION_LABEL));
@@ -73,18 +72,18 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         return myDuration.getDisplay();
     }
 
-/*
-    EventHandler<MouseEvent> handler = new EventHandler<>() {
-        public void handle(MouseEvent e) {
-            double size = MOUSE_SIZE;
-            double x = e.getX() - midPoint(0, size);
-            double y = e.getY() - midPoint(0, size);
-            myGC.setFill(myPen.getPenColor());
-            myGC.setEffect(new DropShadow());
-            myGC.fillOval(x, y, size, size);
-        }
-    };
-    */
+
+//    EventHandler<MouseEvent> handler = new EventHandler<>() {
+//        public void handle(MouseEvent e) {
+//            double size = MOUSE_SIZE;
+//            double x = e.getX() - midPoint(0, size);
+//            double y = e.getY() - midPoint(0, size);
+//            myGC.setFill(myPen.getPenColor());
+//            myGC.setEffect(new DropShadow());
+//            myGC.fillOval(x, y, size, size);
+//        }
+//    };
+
 
     private void makeTurtles(Pane displayPane){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
