@@ -15,6 +15,6 @@ public class Position extends Action {
 
     @Override
     public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
-        turtleDisplay.setToNewPosition(getArgsDouble(FIRST_INDEX), -getArgsDouble(SECOND_INDEX));
+        turtleDisplay.setToNewPosition(getArgsDouble(FIRST_INDEX), -getArgsDouble(SECOND_INDEX),turtle);
     }
 }

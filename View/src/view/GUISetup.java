@@ -95,8 +95,9 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
         for(int i = 0; i<keyElements.length;i++){
             mapOut.put(keyElements[i],valueElements[i]);
-            System.out.println(keyElements[i]);
         }
+
+
         return mapOut;
     }
 
