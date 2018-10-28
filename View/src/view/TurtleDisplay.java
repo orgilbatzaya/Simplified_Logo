@@ -94,8 +94,8 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private void makeTurtles(Pane displayPane){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
             TurtleView t = new TurtleView();
-            t.getView().setX(zeroPos.getX() + i*30);
-            t.getView().setY(zeroPos.getY());
+            t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
+            t.getView().setY(zeroPos.getY() - midPoint(0, t.getView().getFitHeight()));
             t.setNewCoordinates(0 + i*30,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
