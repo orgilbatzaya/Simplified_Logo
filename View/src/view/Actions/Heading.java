@@ -15,6 +15,6 @@ public class Heading extends Action {
     @Override
     public void execute(TurtleView turtle, TurtleDisplay display)
     {
-        display.getMyTurtle().rotate(getArgsDouble(FIRST_INDEX));
+        turtle.rotate(getArgsDouble(FIRST_INDEX));
     }
 }
