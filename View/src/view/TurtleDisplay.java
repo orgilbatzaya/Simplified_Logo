@@ -172,10 +172,10 @@ public class TurtleDisplay extends StackPane {
         }
     }
 
-    public void createNewAnimation(Point2D next, TurtleView t) {
-        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), t);
-        System.out.println(next.getX());
-        System.out.println(next.getY());
+    public void createNewAnimation(Point2D next) {
+        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
+         //System.out.println(next.getX());
+         //System.out.println(next.getY());
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         //returnValue = t.setNewCoordinates(next.getX(), next.getY());

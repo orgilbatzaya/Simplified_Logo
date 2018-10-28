@@ -58,15 +58,19 @@ public class Console implements FrontExternal {
         BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
         back.performCommands(currentCommand);
         List<String> actionList = back.getMyTurtleActions();
+
         for(int i=0; i<actionList.size(); i++){
             System.out.print(actionList.get(i)+" ");
         }
         System.out.println();
+
         List<Double> actionArgs = back.getMyTurtleActionsArgs();
+
         for(int i=0; i<actionArgs.size(); i++){
             System.out.print(actionArgs.get(i)+" ");
         }
         System.out.println();
+
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList,actionArgs, parentGUI.getCurrentDisplay());
     }
