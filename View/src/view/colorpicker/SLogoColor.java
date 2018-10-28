@@ -36,7 +36,7 @@ public abstract class SLogoColor {
     }
 
     public void update() {
-        //System.out.println(myColorPicker.getValue().toString());
+        System.out.println(myColorPicker.getValue().toString());
         if(myColors.containsKey(myColorPicker.getValue().toString())) {
             String color = myColors.getString(myColorPicker.getValue().toString());
             myColorPicker.setValue(Color.valueOf(color));

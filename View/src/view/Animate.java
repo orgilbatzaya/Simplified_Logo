@@ -1,5 +1,6 @@
 package view;
 
+import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.TranslateTransition;
@@ -104,7 +105,7 @@ public class Animate {
                 // draw line
                 if(myPen.isVisible()) {
                     myGC.setStroke(myPen.getPenColor());
-                    myGC.setLineWidth(myPen.getPenWidth());
+                    myGC.setLineWidth(myPen.getWidth());
                     myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
                 }
 
