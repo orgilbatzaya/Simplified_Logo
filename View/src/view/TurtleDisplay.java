@@ -72,16 +72,26 @@ public class TurtleDisplay extends StackPane {
         myTurtle = new TurtleView();
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane(myTurtle.getView());
-        myTurtle.getView().setX(zeroPos.getX());
-        myTurtle.getView().setY(zeroPos.getY());
-        myCurrentAnimation = new SequentialTransition();
-        this.getChildren().add(myTurtle.getView());
-        myImages = ResourceBundle.getBundle(TURTLE_IMAGE_PATH);
-        myColors = ResourceBundle.getBundle(COLOR_PATH);
-        //makeTurtles(displayPane);
-        //this.getChildren().add(displayPane);
-        colorMap = new HashMap<>();
+        displayPane = new Pane();
+        //myTurtle.getView().setX(zeroPos.getX());
+        //myTurtle.getView().setY(zeroPos.getY());
+
+        makeTurtles(displayPane);
+        this.getChildren().add(displayPane);
+
+
+//        Animate animate = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
+//        myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
+//                                                            animate.move(new Point2D(50,30)),
+//                                                            animate.move(new Point2D(100,-100)),
+//                                                            animate.move(new Point2D(-40,60)),
+//                                                            animate.move(new Point2D(-60,200)));
+//
+//        myCurrentAnimation.setCycleCount(2);
+//        myCurrentAnimation.setAutoReverse(true);
+//        myCurrentAnimation.play();
+
+
     }
 
     public Canvas getCanvas() {
@@ -109,8 +119,10 @@ public class TurtleDisplay extends StackPane {
             TurtleView t = new TurtleView();
             t.getView().setX(zeroPos.getX() + i*30);
             t.getView().setY(zeroPos.getY());
+            t.setNewCoordinates(0 + i*30,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
+            System.out.println(t.getX());
         }
     }
 
@@ -160,18 +172,15 @@ public class TurtleDisplay extends StackPane {
         }
     }
 
-    public void createNewAnimation(Point2D next) {
-        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
-        //System.out.println(next.getX());
-        //System.out.println(next.getY());
-        myCurrentAnimation.getChildren().add(animation.move(next));
-        System.out.println(myCurrentAnimation.getChildren().size());
-
-        myCurrentAnimation.playFromStart();
-        myCurrentAnimation.setOnFinished(e -> resetAnimation());
-        returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
-        myTurtle.getView().setX(zeroPos.getX() + next.getX());
-        myTurtle.getView().setY(zeroPos.getY() + next.getY());
+    public void createNewAnimation(Point2D next, TurtleView t) {
+        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), t);
+        System.out.println(next.getX());
+        System.out.println(next.getY());
+        myCurrentAnimation = new SequentialTransition(animation.move(next));
+        myCurrentAnimation.play();
+        //returnValue = t.setNewCoordinates(next.getX(), next.getY());
+        //t.getView().setX(zeroPos.getX() + next.getX());
+        //t.getView().setY(zeroPos.getY() + next.getY());
     }
 
     public void updatePen(double bool) {
