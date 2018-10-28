@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
  * @author Austin Kao
  */
 public class DurationField extends Field{
-    private static final double DEFAULT_DURATION = 4;
+    private static final double DEFAULT_DURATION = 1;
 
     public DurationField(String label) {
         super(label);

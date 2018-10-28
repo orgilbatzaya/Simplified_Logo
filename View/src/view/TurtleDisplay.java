@@ -36,7 +36,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private GraphicsContext myGC;
     private SLogoPen myPen;
     private Map<Integer,TurtleView> myTurtles;
-    private TurtleView myTurtle;
     private TurtleView myCurrentTurtle;
     private Point2D myPos;
     private SequentialTransition myCurrentAnimation;
@@ -46,6 +45,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private VBox myBox; //May or may not use
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
+    private TurtleView myTurtle;
 
     //private StatusView statusView;
 
@@ -63,13 +63,10 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         myTurtle = new TurtleView();
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane(myTurtle.getView());
-        myTurtle.getView().setX(zeroPos.getX() - midPoint(0, myTurtle.getView().getFitWidth()));
-        myTurtle.getView().setY(zeroPos.getY() - midPoint(0, myTurtle.getView().getFitHeight()));
+        displayPane = new Pane();
         myCurrentAnimation = new SequentialTransition();
         this.getChildren().add(displayPane);
-        //makeTurtles(displayPane);
-        //this.getChildren().add(displayPane);
+        makeTurtles(displayPane);
         colorMap = new HashMap<>();
     }
 
@@ -153,8 +150,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
 
     public void createNewAnimation(Point2D next, TurtleView t) {
         Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), t);
-        System.out.println(next.getX());
-        System.out.println(next.getY());
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         
