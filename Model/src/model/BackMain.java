@@ -12,16 +12,16 @@ public class BackMain {
 
 
     private Boolean isCommand;
-    private Map<String,Integer> myNumArgsMap;
-    private Map<String,Set<String>> myCommandTypeMap;
+    private Map<String, Integer> myNumArgsMap;
+    private Map<String, Set<String>> myCommandTypeMap;
     private ProgramParser myProgParser;
     private ResourceBundle myLanguage;
     private HashMap<String, Double> variables;
-    private Map<String,Double> myTurtleParameters;
+    private Map<String, Double> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
 
-    public BackMain(ResourceBundle lang, Map<String,Double> turtleParams){
+    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams) {
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
@@ -33,57 +33,114 @@ public class BackMain {
         myLanguage = lang;
     }
 
-    public Boolean checkValidInput(String s){
+    public Boolean checkValidInput(String s) {
         try {
             String command = myProgParser.getSymbol(s);
             return Boolean.TRUE;
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
         }
         try {
             double argument = Double.parseDouble(s);
-            isCommand=Boolean.FALSE;
+            isCommand = Boolean.FALSE;
             return Boolean.TRUE;
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
         }
         throw new RuntimeException("Invalid Command");
 
     }
 
 
-    public ProgramParser createProgramParser(ResourceBundle lang){
+    public ProgramParser createProgramParser(ResourceBundle lang) {
         var language = new ProgramParser();
         language.addPatterns(lang);
         return language;
     }
 
-    public void performCommands (String rawText) {
+    public void performCommands(String rawText) {
         String[] text = rawText.split("\\s+");
-        for(int i =0; i<text.length; i++){
+        for (int i = 0; i < text.length; i++) {
             text[i] = myProgParser.getSymbol(text[i]);
         }
-
         ArrayList<String> commandList = new ArrayList<>(Arrays.asList(text));
         ArrayList<String> newCommands = new ArrayList<>();
 
-        int outIndex = 0;
-        while(outIndex < commandList.size()) {
-            String s = commandList.get(outIndex);
-
-            {
-                newCommands.add(commandList.get(outIndex));
-                outIndex++;
+        int index = 0;
+        while (index < commandList.size()) {
+            String s = commandList.get(index);
+            if(s.equals("IF")) {
+                ArrayList<String> ifExp = new ArrayList<>();
+                while(!commandList.get(index).equals("[")) {
+                    ifExp.add(commandList.get(index));
+                    index++;
+                }
+                CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
+                if(Integer.parseInt(ifExpEval.execute()) != 1) {
+                    Stack<String> brackets = new Stack<>();
+                    brackets.push(commandList.get(index));
+                    index++;
+                    while(!brackets.isEmpty()) {
+                        if(commandList.get(index).equals("]")) {
+                            brackets.pop();
+                        }
+                        index++;
+                    }
+                }
             }
+            else if(s.equals("IfElse")) {
+                ArrayList<String> ifExp = new ArrayList<>();
+                while(!commandList.get(index).equals("[")) {
+                    ifExp.add(commandList.get(index));
+                    index++;
+                }
+                CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
+                if(Integer.parseInt(ifExpEval.execute()) == 1) {
+                    newCommands.add(commandList.get(index));
+                    Stack<String> brackets = new Stack<>();
+                    brackets.push(commandList.get(index));
+                    index++;
+                    while(!brackets.isEmpty()) {
+                        if(commandList.get(index).equals("]")) {
+                            brackets.pop();
+                        }
+                        newCommands.add(commandList.get(index));
+                        index++;
+                    }
+                    brackets.push(commandList.get(index));
+                    index++;
+                    while(!brackets.isEmpty()) {
+                        if(commandList.get(index).equals("]")) {
+                            brackets.pop();
+                        }
+                        index++;
+                    }
+                }
+                else {
+                    Stack<String> brackets = new Stack<>();
+                    brackets.push(commandList.get(index));
+                    index++;
+                    while(!brackets.isEmpty()) {
+                        if(commandList.get(index).equals("]")) {
+                            brackets.pop();
+                        }
+                        index++;
+                    }
+                }
+            }
+            else {
+                newCommands.add(commandList.get(index));
+                index++;
+            }
+
+
         }
-        CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters,myNumArgsMap,myCommandTypeMap);
+        CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
         result.execute();
 
     }
 
-    public Map<String,Set<String>> getMyCommandTypeMap(String path){
+    public Map<String, Set<String>> getMyCommandTypeMap(String path) {
         ResourceBundle properties = ResourceBundle.getBundle(path);
-        var outMap = new HashMap<String,Set<String>>();
+        var outMap = new HashMap<String, Set<String>>();
         for (String key : properties.keySet()) {
             Set<String> mySet = new HashSet<String>(Arrays.asList(properties.getString(key).split(",")));
             outMap.put(key, mySet);
@@ -92,9 +149,9 @@ public class BackMain {
 
     }
 
-    public Map<String,Integer> getNumArgsMap(String path){
+    public Map<String, Integer> getNumArgsMap(String path) {
         ResourceBundle properties = ResourceBundle.getBundle(path);
-        var outMap = new HashMap<String,Integer>();
+        var outMap = new HashMap<String, Integer>();
         for (String key : properties.keySet()) {
             String value = properties.getString(key);
             outMap.put(key, Integer.parseInt(value));
@@ -102,11 +159,11 @@ public class BackMain {
         return outMap;
     }
 
-    public List<String> getMyTurtleActions(){
+    public List<String> getMyTurtleActions() {
         return myTurtleActions;
     }
 
-    public List<Double> getMyTurtleActionsArgs(){
+    public List<Double> getMyTurtleActionsArgs() {
         return myTurtleActionsArgs;
     }
 

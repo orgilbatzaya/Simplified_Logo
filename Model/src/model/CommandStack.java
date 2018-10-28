@@ -121,7 +121,6 @@ public class CommandStack {
     }
 
     private void forLoop() {
-
         Stack<String> brackets = new Stack<String>();
         brackets.push("[");
         done.pop();
