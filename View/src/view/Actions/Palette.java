@@ -18,7 +18,7 @@ public class Palette extends Action {
         double r = (rawValue-index)%1000000/1000;
         double g = ((rawValue-index-r)%1000000000)/1000000;
         double b = (rawValue-index-r-g)/1000000000;
-        turtleDisplay.setPalette((int) r,(int) g,(int) b,(int) index);
+        //turtleDisplay.setPalette((int) r,(int) g,(int) b,(int) index);
     }
 }
 

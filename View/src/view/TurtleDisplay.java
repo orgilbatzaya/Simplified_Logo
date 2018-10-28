@@ -19,10 +19,7 @@ import javafx.util.Duration;
 import view.fields.DurationField;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author Orgil Batzaya
@@ -34,11 +31,11 @@ public class TurtleDisplay extends StackPane {
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
+    private static final String TURTLE_IMAGE_PATH = "/resources/TurtleImage";
+    private static final String COLOR_PATH = "/resources/Color";
 
     //parameters for display actions
     private static final Color[] COLORS = {Color.GRAY,Color.PURPLE, Color.AZURE,Color.BEIGE,Color.BLUE,Color.VIOLET, Color.GREEN,Color.PALEGOLDENROD};
-
-    private static final String[] SHAPES = {"/images/turtle2.jpg","/images/turtle-basic.png"};
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -55,6 +52,8 @@ public class TurtleDisplay extends StackPane {
     private VBox myBox; //May or may not use
     private Pane displayPane;
     private Queue<String> myAnimations;
+    private ResourceBundle myImages;
+    private ResourceBundle myColors;
 
     //private StatusView statusView;
 
@@ -79,6 +78,8 @@ public class TurtleDisplay extends StackPane {
         this.getChildren().add(myTurtle.getView());
         //makeTurtles(displayPane);
         //this.getChildren().add(displayPane);
+        myImages = ResourceBundle.getBundle(TURTLE_IMAGE_PATH);
+        myColors = ResourceBundle.getBundle(COLOR_PATH);
     }
 
     public Canvas getCanvas() {
@@ -126,6 +127,11 @@ public class TurtleDisplay extends StackPane {
 
     public void setBgColor(Color c) {
         myBackground.setFill(c);
+    }
+
+    public void setBgColor(Integer index) {
+        Color c = Color.valueOf(myColors.getString(index.toString()));
+        setBgColor(c);
     }
 
 
@@ -193,5 +199,16 @@ public class TurtleDisplay extends StackPane {
 
     public void resetAnimation() {
         myCurrentAnimation.getChildren().clear();
+    }
+
+    public void changeTurtleImage(int i) {
+        for(TurtleView turtle : myTurtles.values()) {
+            turtle.setView(myImages.getString(Integer.toString(i)));
+        }
+    }
+
+    public void changePenColor(Integer index) {
+        Color c = Color.valueOf(myColors.getString(index.toString()));
+        myPen.setPenColor(c);
     }
 }

@@ -12,7 +12,7 @@ public class Shape extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setShapeAction((int) getArgsDouble(0));
+        turtleDisplay.changeTurtleImage((int) getArgsDouble(0));
     }
 }
 

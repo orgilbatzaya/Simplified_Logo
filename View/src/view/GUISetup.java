@@ -67,7 +67,7 @@ public class GUISetup {
         currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
         myDisplays.add(currentDisplay);
         PenColor penColor = new PenColor(Color.RED, "Pen Color:", currentDisplay);
-        BackgroundColor backgroundColor = new BackgroundColor(Color.WHITE, "Background Color:", currentDisplay);
+        BackgroundColor backgroundColor = new BackgroundColor(Color.PURPLE, "Background Color:", currentDisplay);
         myLanguageMenu = new LanguageMenu("Languages:");
         mySelector = new TurtleSelector("Turtles:",currentDisplay);
         PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);

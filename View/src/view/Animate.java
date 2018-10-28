@@ -100,7 +100,7 @@ public class Animate {
                 // draw line
                 if(myPen.isVisible()) {
                     myGC.setStroke(myPen.getPenColor());
-                    myGC.setLineWidth(2);
+                    myGC.setLineWidth(myPen.getWidth());
                     myGC.strokeLine(oldLocation.getX(), oldLocation.getY(), newLocation.getX(), newLocation.getY());
                 }
 

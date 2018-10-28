@@ -12,7 +12,7 @@ public class PenSize extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setPenWidthAction(getArgsDouble(0));
+        turtleDisplay.getPen().setPenWidth(getArgsDouble(0));
     }
 }
 
