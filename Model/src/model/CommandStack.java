@@ -41,7 +41,6 @@ public class CommandStack {
         }
         while (!toDo.isEmpty()) {
             String s = toDo.pop();
-            System.out.println(s);
             myCommandType = getCommandType(s);
             if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) ||myCommandTypeMap.get("TurtleQueries").contains(s) ||
                 myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
@@ -52,6 +51,7 @@ public class CommandStack {
                 }
                 Command temp = myFactory.makeCommand(s, tempArgs,myCommandType);
                 args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
+                System.out.println(s + " " + args.peek());
                 done.push(s);
             } else if (s.matches("DoTimes\\d*")) {
                 doTimes(s, variables);
@@ -63,15 +63,15 @@ public class CommandStack {
             } else if (s.equals("[") || s.equals("]")){
                 done.push(s);
             } else if (s.equals("MakeVariable")){
-                variables.put(done.peek(), args.peek());
-                System.out.println(variables.get(done.peek()));
+                variables.put(done.peek().substring(1), args.peek());
                 done.push(s);
-            } else {
-                if(!variables.containsKey(s) && toDo.peek().equals("DoTimes")) {
-                    variables.put(s, args.peek());
+            } else if (s.matches(":[a-zA-Z]+")) {
+                String temp = s.substring(1);
+                if(!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
+                    variables.put(temp, args.peek());
                 }
-                else if (variables.containsKey(s)){
-                    args.push(variables.get(s));
+                else if (variables.containsKey(temp)){
+                    args.push(variables.get(temp));
                 }
                 done.push(s);
             }
@@ -83,7 +83,7 @@ public class CommandStack {
     private void doTimes(String s, HashMap<String, String> variables) {
         if (s.equals("DoTimes")) {
             int time = Integer.parseInt(args.pop());
-            variables.put(done.peek(), "" + time);
+            variables.put(done.peek().substring(1), "" + time);
             if (time == 1) {
                 done.push(s);
                 return;
@@ -132,14 +132,14 @@ public class CommandStack {
         String variable = done.pop();
         int end = Integer.parseInt(args.pop());
         int increment = Integer.parseInt(args.pop());
-        if(!variables.containsKey(variable)) {
-            variables.put(variable, "" + (Integer.parseInt(start) + increment));
+        if(!variables.containsKey(variable.substring(1))) {
+            variables.put(variable.substring(1), "" + (Integer.parseInt(start) + increment));
         }
-        int curNum = Integer.parseInt(variables.get(variable));
+        int curNum = Integer.parseInt(variables.get(variable.substring(1)));
         if(curNum + increment > end) {
-            variables.put(variable, start);
+            variables.put(variable.substring(1), start);
         } else {
-            variables.put(variable, "" + (curNum + increment));
+            variables.put(variable.substring(1), "" + (curNum + increment));
             toDo.push("For");
             toDo.push("[");
             toDo.push(variable);
