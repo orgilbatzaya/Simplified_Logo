@@ -15,7 +15,6 @@ import view.environmentdisplays.VariableDisplay;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * This class represents the console of SLogo.
@@ -103,15 +102,16 @@ public class Console implements FrontExternal, ViewResourceBundles {
         BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
         back.performCommands(command);
         List<String> actionList = back.getMyTurtleActions();
-        /*for(int i=0; i<actionList.size(); i++){
+        for(int i=0; i<actionList.size(); i++){
             System.out.print(actionList.get(i)+" ");
         }
-        System.out.println();*/
+        System.out.println();
         List<Double> actionArgs = back.getMyTurtleActionsArgs();
-        /*for(int i=0; i<actionArgs.size(); i++){
+        for(int i=0; i<actionArgs.size(); i++){
             System.out.print(actionArgs.get(i)+" ");
         }
-        System.out.println();*/
+        System.out.println();
+
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
     }
