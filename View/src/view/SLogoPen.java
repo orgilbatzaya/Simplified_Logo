@@ -23,11 +23,11 @@ public class SLogoPen {
     }
 
     public void setPenWidth(double x){
-        penWidth = x;
+        width = x;
     }
 
     public double getPenWidth(){
-        return penWidth;
+        return width;
     }
 
     public void changePenVisibilty(){
@@ -39,9 +39,6 @@ public class SLogoPen {
         return penVisible;
     }
 
-    public void setPenWidth(double value) {
-        width = value;
-    }
     public double getWidth() {
         return width;
     }

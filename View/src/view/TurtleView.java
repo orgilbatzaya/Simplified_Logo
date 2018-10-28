@@ -1,5 +1,6 @@
 package view;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,6 +17,9 @@ public class TurtleView {
     private double yPos;
     private double myHeading;
     private double myDistanceTraveled;
+    private SimpleStringProperty name;
+    private SimpleStringProperty xPosition;
+    private SimpleStringProperty yPosition;
 
     public TurtleView(){
         myView = new ImageView();
@@ -68,7 +72,6 @@ public class TurtleView {
         yPos += y;
         myView.setX(myView.getX() + x);
         myView.setY(myView.getY() + y);
-
     }
 
     public Boolean isVisible(){
