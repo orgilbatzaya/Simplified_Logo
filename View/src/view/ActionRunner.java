@@ -19,7 +19,7 @@ public class ActionRunner implements ViewResourceBundles {
                 if (display.getTurtles().get(i).isActive()) {
                     int numArgs = numArgsActions.get(a);
                     List<Double> args = getArgs(totalArgs, numArgs, argIndex);
-                    argIndex += (numArgs);//because one indexed
+                    argIndex += (numArgs);
                     interpretCommand(a, args, display, i);
 
                 }

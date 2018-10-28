@@ -18,7 +18,8 @@ public class CommandStack {
     private HashMap<Integer, Integer> originalTimes;
     private int doCounter;
     private String myCommandType;
-    private Stack<String> temp;
+    private LinkedList<String> all;
+    private boolean commandFinished;
 
 
     public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
@@ -30,60 +31,70 @@ public class CommandStack {
         myFactory = new Factory();
         myText = text;
         doCounter = 1;
+        commandFinished = Boolean.FALSE;
     }
 
     public String execute(HashMap<String, String> variables){
         toDo = new Stack<>();
         args = new Stack<>();
         done = new Stack<>();
-        temp = new Stack<>();
+        all = new LinkedList<>();
         times = new HashMap<>();
         originalTimes = new HashMap<>();
         for (String temp : myText) {
-            toDo.push(temp);
+            all.add(temp);
+
         }
-        while (!toDo.isEmpty()) {
-            String s = toDo.pop();
-            myCommandType = getCommandType(s);
-            if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) ||myCommandTypeMap.get("TurtleQueries").contains(s) ||
-                myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
-                int numArgs = myNumArgsMap.get(s);
-                LinkedList<String> tempArgs = new LinkedList<>();
-                for (int i = 0; i < numArgs; i++) {
-                    tempArgs.add(args.pop());
-                }
-                Command temp = myFactory.makeCommand(s, tempArgs,myCommandType);
-                args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
-                System.out.println(s + " " + args.peek());
-                done.push(s);
-            } else if (s.matches("DoTimes\\d*")) {
-                doTimes(s, variables);
-            } else if (s.matches("For")) {
-                forLoop(variables);
-            } else if (isDouble(s)) {
-                args.push(s);
-                done.push(s);
-            } else if (s.equals("[") || s.equals("]")){
-                done.push(s);
-            } else if (s.equals("MakeVariable")){
-                if(done.peek().matches(":[a-zA-Z]+")) {
+
+        while (!all.isEmpty()) {
+//            for(int i = 0; i<all.size(); i++){
+//                System.out.println(all.get(i));
+//            }
+            while (!commandFinished) {
+                String temp = all.removeFirst();
+                toDo.push(temp);
+                commandFinished = isCommandFinished(toDo);
+            }
+
+            commandFinished = Boolean.FALSE;
+
+
+            while (!toDo.isEmpty()) {
+                String s = toDo.pop();
+
+                myCommandType = getCommandType(s);
+                if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) || myCommandTypeMap.get("TurtleQueries").contains(s) ||
+                        myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
+                    int numArgs = myNumArgsMap.get(s);
+                    LinkedList<String> tempArgs = new LinkedList<>();
+                    for (int i = 0; i < numArgs; i++) {
+                        tempArgs.add(args.pop());
+                    }
+                    Command temp = myFactory.makeCommand(s, tempArgs, myCommandType);
+                    args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
+                    //System.out.println(s + " " + args.peek());
+                    done.push(s);
+                } else if (s.matches("DoTimes\\d*")) {
+                    doTimes(s, variables);
+                } else if (s.matches("For")) {
+                    forLoop(variables);
+                } else if (isDouble(s)) {
+                    args.push(s);
+                    done.push(s);
+                } else if (s.equals("[") || s.equals("]")) {
+                    done.push(s);
+                } else if (s.equals("MakeVariable")) {
                     variables.put(done.peek().substring(1), args.peek());
-                    System.out.println(done.peek());
+                    done.push(s);
+                } else if (s.matches(":[a-zA-Z]+")) {
+                    String temp = s.substring(1);
+                    if (!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
+                        variables.put(temp, args.peek());
+                    } else if (variables.containsKey(temp)) {
+                        args.push(variables.get(temp));
+                    }
                     done.push(s);
                 }
-                else {
-                    System.out.println("Incorrect Syntax");
-                    return null;
-                }
-            } else if (s.matches(":[a-zA-Z]+")) {
-                String temp = s.substring(1);
-                if(!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
-                    variables.put(temp, args.peek());
-                }
-                else if (variables.containsKey(temp)){
-                    args.push(variables.get(temp));
-                }
-                done.push(s);
             }
         }
 
@@ -188,6 +199,32 @@ public class CommandStack {
             }
         }
         return null;
+    }
+
+    private Boolean isCommandFinished(Stack<String> sta){
+
+        List<String> list = new ArrayList(sta);
+        int i = 0;
+        while(i<list.size()){
+            String s = list.get(i);
+            System.out.println(s);
+            if(getCommandType((s))!=null){
+                int numArgs = myNumArgsMap.get(s);
+                int num = 0;
+                for(int j = i+1; j<=(i+numArgs);j++){
+                    try{
+                        Double.parseDouble(list.get(j));
+                        num++;
+                    }catch (Exception e){
+                    }
+                }
+                if(num==numArgs){
+                    return Boolean.TRUE;
+                }
+            }
+            i++;
+        }
+        return Boolean.FALSE;
     }
 
 }
