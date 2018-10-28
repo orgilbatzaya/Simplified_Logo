@@ -151,13 +151,13 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         }
     }
 
-    public void createNewAnimation(Point2D next) {
-        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
-        myCurrentAnimation.getChildren().add(animation.move(next));
-        myCurrentAnimation.playFromStart();
-        myCurrentAnimation.setOnFinished(e -> resetAnimation());
-        myTurtle.getView().setX(zeroPos.getX() + next.getX() - midPoint(0, myTurtle.getView().getFitWidth()));
-        myTurtle.getView().setY(zeroPos.getY() + next.getY() - midPoint(0, myTurtle.getView().getFitHeight()));
+    public void createNewAnimation(Point2D next, TurtleView t) {
+        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), t);
+        System.out.println(next.getX());
+        System.out.println(next.getY());
+        myCurrentAnimation = new SequentialTransition(animation.move(next));
+        myCurrentAnimation.play();
+        
     }
 
     public void updatePen(double bool) {
