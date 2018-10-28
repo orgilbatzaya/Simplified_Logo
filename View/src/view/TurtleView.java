@@ -56,7 +56,6 @@ public class TurtleView {
     public double rotate(double angle){
         myView.setRotate(angle);
         setHeading(angle);
-        System.out.println(myHeading);
         return angle;
     }
 
