@@ -157,8 +157,8 @@ public class TurtleDisplay extends StackPane {
 
     public void createNewAnimation(Point2D next) {
         Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
-        System.out.println(next.getX());
-        System.out.println(next.getY());
+         //System.out.println(next.getX());
+         //System.out.println(next.getY());
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
@@ -171,7 +171,7 @@ public class TurtleDisplay extends StackPane {
             myPen.changePenVisibilty();
         }
         returnValue = bool;
-        System.out.println(returnValue);
+        //System.out.println(returnValue);
     }
 
     public SLogoPen getPen() {
