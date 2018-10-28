@@ -45,10 +45,10 @@ public class StatusDisplay implements EnvironmentDisplay {
         xProperty.addListener(updater);
         currentItems = FXCollections.observableArrayList();
         currentItems.add("Zero");
-        createTableColumn(currentTurtles, NAME_PROPERTY);
-        createTableColumn(currentXPositions, X_POSITION_PROPERTY);
-        createTableColumn(currentYPositions, Y_POSITION_PROPERTY);
-        createTableColumn(currentTurtles, HEADING_PROPERTY);
+        currentTurtles = createTableColumn(NAME_PROPERTY);
+        currentXPositions = createTableColumn(X_POSITION_PROPERTY);
+        currentYPositions = createTableColumn(Y_POSITION_PROPERTY);
+        currentHeadings = createTableColumn(HEADING_PROPERTY);
         currentDisplay.getColumns().addAll(currentTurtles, currentXPositions, currentYPositions, currentHeadings);
         currentDisplay.setItems(currentItems);
         currentDisplay.setEditable(true);
@@ -78,8 +78,9 @@ public class StatusDisplay implements EnvironmentDisplay {
         return myBox;
     }
 
-    private void createTableColumn(TableColumn column, String property) {
-        column = new TableColumn(property);
+    private TableColumn createTableColumn(String property) {
+        TableColumn column = new TableColumn(property);
         column.setCellValueFactory(new PropertyValueFactory<TurtleView, String>(property));
+        return column;
     }
 }

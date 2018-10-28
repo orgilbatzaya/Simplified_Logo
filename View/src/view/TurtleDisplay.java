@@ -36,7 +36,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private GraphicsContext myGC;
     private SLogoPen myPen;
     private Map<Integer,TurtleView> myTurtles;
-    private TurtleView myTurtle;
     private TurtleView myCurrentTurtle;
     private Point2D myPos;
     private SequentialTransition myCurrentAnimation;
@@ -46,6 +45,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private VBox myBox; //May or may not use
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
+    private TurtleView myTurtle;
 
     //private StatusView statusView;
 
@@ -64,8 +64,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         displayPane = new Pane();
-        myTurtle.getView().setX(zeroPos.getX() - midPoint(0, myTurtle.getView().getFitWidth()));
-        myTurtle.getView().setY(zeroPos.getY() - midPoint(0, myTurtle.getView().getFitHeight()));
         myCurrentAnimation = new SequentialTransition();
         this.getChildren().add(displayPane);
         makeTurtles(displayPane);
@@ -96,8 +94,8 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private void makeTurtles(Pane displayPane){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
             TurtleView t = new TurtleView();
-            t.getView().setX(zeroPos.getX() + i*30);
-            t.getView().setY(zeroPos.getY());
+            t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
+            t.getView().setY(zeroPos.getY() - midPoint(0, t.getView().getFitHeight()));
             t.setNewCoordinates(0 + i*30,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
@@ -152,11 +150,9 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
 
     public void createNewAnimation(Point2D next, TurtleView t) {
         Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), t);
-        System.out.println(next.getX());
-        System.out.println(next.getY());
-        myCurrentAnimation = new SequentialTransition(animation.move(next));
-        myCurrentAnimation.play();
-        
+        myCurrentAnimation.getChildren().add(animation.move(next));
+        myCurrentAnimation.playFromStart();
+        myCurrentAnimation.setOnFinished(e -> resetAnimation());
     }
 
     public void updatePen(double bool) {

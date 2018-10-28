@@ -72,7 +72,6 @@ public class TurtleView {
         yPos += y;
         myView.setX(myView.getX() + x);
         myView.setY(myView.getY() + y);
-
     }
 
     public Boolean isVisible(){

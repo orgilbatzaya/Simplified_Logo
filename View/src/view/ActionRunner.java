@@ -4,13 +4,12 @@ import view.Actions.Action;
 
 import java.util.*;
 
-public class ActionRunner {
-    private String NUM_ARGS_ACTIONS_MAP_PATH = "view/Actions/NumArgsActions";
+public class ActionRunner implements ViewResourceBundles {
 
     private Map<String,Integer> numArgsActions;
 
     public ActionRunner(){
-        numArgsActions = getNumArgsMap(NUM_ARGS_ACTIONS_MAP_PATH);
+        numArgsActions = getNumArgsMap();
     }
 
     public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display) {
@@ -50,11 +49,10 @@ public class ActionRunner {
         act.execute(display.getTurtles().get(index), display);
     }
 
-    public Map<String,Integer> getNumArgsMap(String path){
-        ResourceBundle properties = ResourceBundle.getBundle(path);
+    public Map<String,Integer> getNumArgsMap(){
         var outMap = new HashMap<String,Integer>();
-        for (String key : properties.keySet()) {
-            String value = properties.getString(key);
+        for (String key : myArgs.keySet()) {
+            String value = myArgs.getString(key);
             outMap.put(key, Integer.valueOf(value));
         }
         return outMap;
