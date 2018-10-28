@@ -13,7 +13,7 @@ public class Home extends Action {
     }
 
     @Override
-    public void execute(TurtleDisplay turtleDisplay) {
+    public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
         turtleDisplay.setToNewPosition(ORIGIN, ORIGIN);
 
     }

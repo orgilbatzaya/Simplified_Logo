@@ -1,15 +1,10 @@
 package view;
 
 import javafx.animation.Animation;
-import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Transition;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -18,8 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Orgil Batzaya, Austin Kao
@@ -68,6 +63,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         this.getChildren().add(displayPane);
         makeTurtles(displayPane);
         colorMap = new HashMap<>();
+
     }
 
     public Canvas getCanvas() {
@@ -197,10 +193,14 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         } else {
             c = Color.valueOf(myColors.getString(index.toString()));
         }
+
         return c;
     }
 
     private double midPoint(double a, double b) {
         return (a + b)/2;
     }
+
+
+
 }

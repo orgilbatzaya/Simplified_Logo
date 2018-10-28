@@ -14,13 +14,14 @@ public class Rotate extends Action{
     }
 
     @Override
-    public void execute(TurtleDisplay turtleDisplay) {
+    public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
         Map<Integer, TurtleView> map = turtleDisplay.getTurtles();
-        for(int i = 0; i < map.size(); i++){
-            if(map.get(i).isActive()){
-                TurtleView t = map.get(i);
-                t.rotate(t.getView().getRotate() + getArgsDouble(FIRST_INDEX));
-            }
-        }
+
+
+        turtle.rotate(turtle.getView().getRotate() + getArgsDouble(FIRST_INDEX));
+
+
+
+
     }
 }

@@ -12,14 +12,19 @@ public class ActionRunner implements ViewResourceBundles {
         numArgsActions = getNumArgsMap();
     }
 
-    public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display){
+    public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display) {
         int argIndex = 0;
+        for (String a : actions) {
+            for (int i = 0; i < display.getTurtles().size(); i++) {
+                if (display.getTurtles().get(i).isActive()) {
+                    int numArgs = numArgsActions.get(a);
+                    List<Double> args = getArgs(totalArgs, numArgs, argIndex);
+                    argIndex += (numArgs - 1);//because one indexed
+                    interpretCommand(a, args, display, i);
+                }
+            }
 
-        for(String a: actions){
-            int numArgs = numArgsActions.get(a);
-            List<Double> args = getArgs(totalArgs,numArgs,argIndex);
-            argIndex+=(numArgs-1);//because one indexed
-            interpretCommand(a,args,display);
+
         }
     }
 
@@ -38,10 +43,10 @@ public class ActionRunner implements ViewResourceBundles {
         return null;
     }
 
-    public void interpretCommand(String actionName,List<Double> args, TurtleDisplay display){
+    public void interpretCommand(String actionName,List<Double> args, TurtleDisplay display, int index){
 
         Action act = makeAction(actionName,args);
-        act.execute(display);
+        act.execute(display.getTurtles().get(index), display);
     }
 
     public Map<String,Integer> getNumArgsMap(){

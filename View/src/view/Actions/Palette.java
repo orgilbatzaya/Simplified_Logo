@@ -1,6 +1,7 @@
 package view.Actions;
 
 import view.TurtleDisplay;
+import view.TurtleView;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Palette extends Action {
     }
 
     @Override
-    public void execute(TurtleDisplay turtleDisplay) {
+    public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
 
         //first 3 values index, next 3 r, next 3 g, next 3 b
         double rawValue = getArgsDouble(FIRST_INDEX);
