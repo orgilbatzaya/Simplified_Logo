@@ -1,7 +1,9 @@
 package view;
 
 import javafx.animation.Animation;
+import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Transition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -20,6 +22,7 @@ import view.fields.DurationField;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * @author Orgil Batzaya
@@ -39,14 +42,14 @@ public class TurtleDisplay extends StackPane {
     private TurtleView myTurtle;
     private TurtleView myCurrentTurtle;
     private Point2D myPos;
-    private Animation myCurrentAnimation;
+    private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
     private DurationField myDuration;
     private double returnValue;
     private VBox myBox; //May or may not use
     private Pane displayPane;
-    private PriorityQueue<Animation> myAnimations;
+    private Queue<String> myAnimations;
 
     //private StatusView statusView;
 
@@ -62,8 +65,6 @@ public class TurtleDisplay extends StackPane {
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
         myTurtles = new HashMap<>();
         myTurtle = new TurtleView();
-        myBackground.setLayoutX(200);
-        myBackground.setY(200);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         displayPane = new Pane(myTurtle.getView());
@@ -71,7 +72,8 @@ public class TurtleDisplay extends StackPane {
         myTurtle.getView().setY(zeroPos.getY());
         makeTurtles(displayPane);
         this.getChildren().add(displayPane);
-        myAnimations = new PriorityQueue<>();
+        myCurrentAnimation = new SequentialTransition();
+        myCurrentAnimation.play();
     }
 
     public Canvas getCanvas() {
@@ -147,10 +149,13 @@ public class TurtleDisplay extends StackPane {
 
     public void createNewAnimation(Point2D next) {
         Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
-        System.out.println(next.getX());
-        System.out.println(next.getY());
-        myCurrentAnimation = new SequentialTransition(animation.move(next));
-        myAnimations.add(myCurrentAnimation);
+        //System.out.println(next.getX());
+        //System.out.println(next.getY());
+        myCurrentAnimation.getChildren().add(animation.move(next));
+        System.out.println(myCurrentAnimation.getChildren().size());
+
+        myCurrentAnimation.playFromStart();
+        myCurrentAnimation.setOnFinished(e -> resetAnimation());
         returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
         myTurtle.getView().setX(zeroPos.getX() + next.getX());
         myTurtle.getView().setY(zeroPos.getY() + next.getY());
@@ -161,7 +166,7 @@ public class TurtleDisplay extends StackPane {
             myPen.changePenVisibilty();
         }
         returnValue = bool;
-        System.out.println(returnValue);
+        //System.out.println(returnValue);
     }
 
     public SLogoPen getPen() {
@@ -173,8 +178,14 @@ public class TurtleDisplay extends StackPane {
     }
 
     public void playAnimations() {
-        myCurrentAnimation = myAnimations.peek();
-        myCurrentAnimation.play();
+        if(myAnimations.size() > 1) {
+            String animation = myAnimations.peek();
+            myCurrentAnimation.play();
+        }
+        myCurrentAnimation.setOnFinished(e -> playAnimations());
+    }
 
+    public void resetAnimation() {
+        myCurrentAnimation.getChildren().clear();
     }
 }

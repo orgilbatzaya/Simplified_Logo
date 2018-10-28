@@ -20,6 +20,9 @@ public class VariableDisplay implements EnvironmentDisplay{
         Label displayLabel = new Label(label);
         currentItems = FXCollections.observableArrayList();
         currentDisplay.setMaxHeight(height);
+        currentVariables = new TableColumn("Variables");
+        currentValues = new TableColumn("Values");
+        currentDisplay.getColumns().addAll(currentVariables, currentValues);
         myBox = new VBox(displayLabel, currentDisplay);
         currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getSelectionModel().getSelectedItem()));
     }
