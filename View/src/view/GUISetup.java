@@ -61,6 +61,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private StatusDisplay turtleInfo;
     private TurtleSelector mySelector;
     private HashMap<String,String> myVariables;
+    private HashMap<String,String[]> myFunctions;
 
     private static final double DEFAULT_PEN = 1;
     private static final double DEFAULT_VISIBLE = 1;
@@ -131,6 +132,10 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         return myVariables;
     }
 
+    public void setMyFunctions(HashMap<String,String[]> func){
+        myFunctions = func;
+    }
+
     public void setMyVariables(HashMap<String,String> newVars){
         myVariables = newVars;
     }
@@ -142,4 +147,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public TurtleDisplay getCurrentDisplay() {
         return currentDisplay;
     }
+
+
 }

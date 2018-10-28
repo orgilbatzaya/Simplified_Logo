@@ -118,5 +118,6 @@ public class Console implements FrontExternal, ViewResourceBundles {
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
 
         parentGUI.setMyVariables(back.getVariables());
+        parentGUI.setMyFunctions(back.getFunctions());
     }
 }
