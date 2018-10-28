@@ -2,16 +2,10 @@ package model;
 import java.util.*;
 
 public class Factory {
-    private final Map<String,Set<String>> myCommandTypeMap;
-
-    public Factory (Map<String,Set<String>> commandMap){
-        myCommandTypeMap = commandMap;
-    }
 
 
-    public Command makeCommand(String commandName, List<String> args){
+    public Command makeCommand(String commandName, List<String> args,String commandType){
         try{
-            String commandType = getCommandType(commandName);
             String name = "model.commands."+commandType+"."+commandName;
             Class cls = Class.forName(name);
             var constructor = cls.getConstructor(List.class);
@@ -24,12 +18,5 @@ public class Factory {
         }
         return null;
     }
-    private String getCommandType(String commandName){
-        for (String key : myCommandTypeMap.keySet()) {
-            if(myCommandTypeMap.get(key).contains(commandName)){
-                return key;
-            }
-        }
-        return null;
-    }
+
 }
