@@ -35,7 +35,7 @@ public class CommandStack {
         doCounter = 1;
     }
 
-    public String execute(HashMap<String, String> variables) {
+    public String execute(HashMap<String, String> variables){
         toDo = new Stack<>();
         args = new Stack<>();
         done = new Stack<>();
@@ -68,8 +68,15 @@ public class CommandStack {
             } else if (s.equals("[") || s.equals("]")){
                 done.push(s);
             } else if (s.equals("MakeVariable")){
-                variables.put(done.peek().substring(1), args.peek());
-                done.push(s);
+                if(done.peek().matches(":[a-zA-Z]+")) {
+                    variables.put(done.peek().substring(1), args.peek());
+                    System.out.println(done.peek());
+                    done.push(s);
+                }
+                else {
+                    System.out.println("Incorrect Syntax");
+                    return null;
+                }
             } else if (s.matches(":[a-zA-Z]+")) {
                 String temp = s.substring(1);
                 if(!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
