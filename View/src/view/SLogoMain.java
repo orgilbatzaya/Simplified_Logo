@@ -8,7 +8,7 @@ import javafx.stage.Stage;
  * @author Austin Kao
  */
 
-public class SLogoMain extends Application {
+public class SLogoMain extends Application implements ViewResourceBundles{
     private static final String SLOGO_TITLE = "slogoTitle";
 
     @Override
@@ -16,7 +16,7 @@ public class SLogoMain extends Application {
         GUISetup gui = new GUISetup();
 
         stage = new Stage();
-        stage.setTitle(gui.getDefaultValues().getString(SLOGO_TITLE));
+        stage.setTitle(myDefaults.getString(SLOGO_TITLE));
         stage.setScene(gui.getScene());
         stage.show();
     }
