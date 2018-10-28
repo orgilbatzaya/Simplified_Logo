@@ -1,9 +1,14 @@
 package view;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.BackMain;
 import view.environmentdisplays.PastCommandDisplay;
 import view.environmentdisplays.VariableDisplay;
@@ -36,6 +41,7 @@ public class Console implements FrontExternal {
         HBox commandBox = new HBox(myCommandLine.getDisplay(), submitButton);
         commandBox.setSpacing(10);
         pastCommands = new PastCommandDisplay(200, "Past commands:");
+        pastCommands.getPastCommandList().setOnMouseClicked(e -> createRunInterface(pastCommands.getPastCommandList().getSelectionModel().getSelectedItem()));
         currentVariables = new VariableDisplay(100, "Current variables in environment:");
         currentFunctions = new PastCommandDisplay(100, "Current user-defined commands in environment:");
         VBox rightColumn = new VBox(currentVariables.getDisplay(), currentFunctions.getDisplay());
@@ -53,9 +59,33 @@ public class Console implements FrontExternal {
     public void processCommand() {
         currentCommand = myCommandLine.getCommand();
         pastCommands.addItem(currentCommand);
+        runCommand(currentCommand);
+    }
+
+    public void createRunInterface(String value) {
+        Stage commandEdit = new Stage();
+        commandEdit.setTitle("Run previous command");
+        Label editLabel = new Label("Enter the command you want to run:");
+        TextField editor = new TextField();
+        editor.setText(value);
+        Button run = new Button("Run");
+        Button cancel = new Button("Cancel");
+        run.setOnAction(e -> runCommand(editor.getText()));
+        cancel.setOnAction(e -> commandEdit.close());
+        HBox buttonBox = new HBox(run, cancel);
+        buttonBox.setSpacing(10);
+        VBox parentBox = new VBox(editLabel, editor, buttonBox);
+        parentBox.setSpacing(5);
+        var root = new Group();
+        root.getChildren().addAll(parentBox);
+        commandEdit.setScene(new Scene(root, 200, 100));
+        commandEdit.show();
+    }
+
+    public void runCommand(String command) {
         Map<String, Double> commandParams = parentGUI.getTurtleParams();
         BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
-        back.performCommands(currentCommand);
+        back.performCommands(command);
         List<String> actionList = back.getMyTurtleActions();
         /*for(int i=0; i<actionList.size(); i++){
             System.out.print(actionList.get(i)+" ");

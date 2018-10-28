@@ -32,7 +32,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private SLogoPen myPen;
     private Map<Integer,TurtleView> myTurtles;
     private TurtleView myCurrentTurtle;
-    private Point2D myPos;
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
@@ -63,8 +62,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         this.getChildren().add(displayPane);
         makeTurtles(displayPane);
         colorMap = new HashMap<>();
-        colorIndex = 0;
-        shapeIndex = 0;
     }
 
     public Canvas getCanvas() {
@@ -156,7 +153,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         if((!myPen.isVisible() && bool == 1) || (myPen.isVisible() && bool == 0)) {
             myPen.changePenVisibilty();
         }
-        //System.out.println(returnValue);
     }
 
     public SLogoPen getPen() {
@@ -174,7 +170,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     public void changeTurtleImage(int i) {
         for(TurtleView turtle : myTurtles.values()) {
             turtle.setView(myImages.getString(Integer.toString(i)));
-            shapeIndex = i;
         }
     }
 
@@ -195,21 +190,10 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         } else {
             c = Color.valueOf(myColors.getString(index.toString()));
         }
-        colorIndex = index;
-
         return c;
     }
 
     private double midPoint(double a, double b) {
         return (a + b)/2;
     }
-
-    public double getColorIndex(){
-        return colorIndex;
-    }
-
-    public double getShapeIndex(){
-        return shapeIndex;
-    }
-
 }

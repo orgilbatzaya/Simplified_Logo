@@ -67,9 +67,9 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         userOptions.setSpacing(Double.parseDouble(myDefaults.getString("defaultSpacing")));
         userOptions.setLayoutX(500);
         userOptions.setLayoutY(50);
-        //turtleInfo = new StatusDisplay(100, "Turtle Info:", currentDisplay.getMyTurtle());
-        //turtleInfo.getDisplay().setLayoutX(700);
-        //turtleInfo.getDisplay().setLayoutY(50);
+        turtleInfo = new StatusDisplay(100, "Turtle Info:", currentDisplay.getMyTurtle());
+        turtleInfo.getDisplay().setLayoutX(700);
+        turtleInfo.getDisplay().setLayoutY(50);
         root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions);
         return scene;
     }
@@ -90,10 +90,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         Double[] valueElements = {currentDisplay.getMyTurtle().getHeading(),
                 currentDisplay.getMyTurtle().getX(),
                 currentDisplay.getMyTurtle().getY(),
-                DEFAULT_PEN,DEFAULT_VISIBLE,INITIAL_DISTANCE_MOVED,
-                currentDisplay.getColorIndex(),
-                currentDisplay.getShapeIndex()};
-
+                DEFAULT_PEN,DEFAULT_VISIBLE,INITIAL_DISTANCE_MOVED};
         for(int i = 0; i<keyElements.length;i++){
             mapOut.put(keyElements[i],valueElements[i]);
             System.out.println(keyElements[i]);
