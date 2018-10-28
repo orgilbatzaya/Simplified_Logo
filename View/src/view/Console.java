@@ -48,8 +48,6 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private PastCommandDisplay currentFunctions;
     private GUISetup parentGUI;
     private HashMap<String,String> myVariables;
-    private StringProperty variableNames;
-    private StringProperty variableValues;
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;
@@ -123,5 +121,6 @@ public class Console implements FrontExternal, ViewResourceBundles {
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
         parentGUI.getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
         myVariables = back.getVariables();
+        currentVariables.update(myVariables);
     }
 }
