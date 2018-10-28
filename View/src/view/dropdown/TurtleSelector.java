@@ -23,12 +23,13 @@ public class TurtleSelector extends DropdownMenu {
             ids.add(key.toString());
         }
         getChoiceBox().setItems(FXCollections.observableArrayList(ids));
+        getChoiceBox().setValue(ids.get(0));
     }
 
     public void processChoice(String choice){
         TurtleView t = turtles.get(Integer.parseInt(choice));
         //turnOthersOff(choice);
-        t.getView().setEffect(new DropShadow());
+        t.getView().setEffect(new Glow(.6));
         t.activate();
     }
 

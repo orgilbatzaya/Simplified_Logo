@@ -13,7 +13,7 @@ public class Clear extends Action {
 
     public void execute(TurtleView view,TurtleDisplay turtleDisplay) {
 
-        turtleDisplay.clearScreen();
+        turtleDisplay.clearScreen(view);
 
     }
 }

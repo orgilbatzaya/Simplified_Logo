@@ -21,7 +21,5 @@ public class Rotate extends Action{
         turtle.rotate(turtle.getView().getRotate() + getArgsDouble(FIRST_INDEX));
 
 
-
-
     }
 }

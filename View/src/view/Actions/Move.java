@@ -20,8 +20,8 @@ public class Move extends Action{
         Map<Integer,TurtleView> turtleMap = turtleDisplay.getTurtles();
 
 
-            Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(turtle.getView().getRotate()-DEFAULT_ROTATION)),
-                    getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(turtle.getView().getRotate()-DEFAULT_ROTATION)));
+            Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(turtle.getHeading()-DEFAULT_ROTATION)),
+                    getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(turtle.getHeading()-DEFAULT_ROTATION)));
             turtleDisplay.createNewAnimation(next,turtle);
 
 

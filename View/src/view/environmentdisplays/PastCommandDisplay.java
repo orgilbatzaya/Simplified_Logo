@@ -21,7 +21,6 @@ public class PastCommandDisplay implements EnvironmentDisplay {
     private ListView<String> currentDisplay;
     private ObservableList<String> currentItems;
     private int maxSize;
-    private Label selectionLabel;
 
     public PastCommandDisplay(double height, String label) {
         this(height, -1, label);
@@ -33,8 +32,7 @@ public class PastCommandDisplay implements EnvironmentDisplay {
         currentItems = FXCollections.observableArrayList();
         currentDisplay.setMaxHeight(height);
         maxSize = max;
-        selectionLabel = new Label("Selection");
-        parentBox = new VBox(displayLabel, currentDisplay, selectionLabel);
+        parentBox = new VBox(displayLabel, currentDisplay);
         currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getSelectionModel().getSelectedItem()));
     }
 

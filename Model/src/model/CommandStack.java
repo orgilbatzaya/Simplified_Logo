@@ -4,11 +4,6 @@ import java.util.*;
 
 public class CommandStack {
 
-    private final Set<String> BOOLEAN_OPS = new HashSet<>(Arrays.asList("And", "Equal", "GreaterThan", "LessThan", "Not", "NotEqual", "Or"));
-    private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
-    private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
-    private final Set<String> TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Backward", "ClearScreen", "Forward", "HideTurtle", "Home", "Left", "PenDown", "PenUp", "Right", "SetHeading", "SetPosition", "SetTowards", "Showturtle"));
-    private final Set<String> DISPLAY_COMMANDS = new HashSet<>(Arrays.asList("GetPenColor","GetPenShape","SetBackground","SetPalette","SetPenColor","SetPenSize","SetShape"));
     private Factory myFactory;
     private Map<String,Integer> myNumArgsMap;
     private List<String> myText;
@@ -23,6 +18,8 @@ public class CommandStack {
     private HashMap<Integer, Integer> originalTimes;
     private int doCounter;
     private String myCommandType;
+    private Stack<String> temp;
+
 
     public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
@@ -39,6 +36,7 @@ public class CommandStack {
         toDo = new Stack<>();
         args = new Stack<>();
         done = new Stack<>();
+        temp = new Stack<>();
         times = new HashMap<>();
         originalTimes = new HashMap<>();
         for (String temp : myText) {

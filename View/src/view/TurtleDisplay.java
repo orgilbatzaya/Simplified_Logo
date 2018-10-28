@@ -26,6 +26,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
+    private static final String DURATION_LABEL = "duration";
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -44,7 +45,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     //private StatusView statusView;
 
     public TurtleDisplay(double width, double height) {
-        myDuration = new DurationField("Duration of Animation: ");
+        myDuration = new DurationField(myDefaults.getString(DURATION_LABEL));
         myBackground = new Rectangle(width, height);
         myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(width, height);
@@ -54,7 +55,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
         //myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
         myTurtles = new HashMap<>();
-        myTurtle = new TurtleView();
+        myTurtle = new TurtleView(0);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         displayPane = new Pane();
@@ -87,13 +88,12 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
 
     private void makeTurtles(Pane displayPane){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
-            TurtleView t = new TurtleView();
+            TurtleView t = new TurtleView(i);
             t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
             t.getView().setY(zeroPos.getY() - midPoint(0, t.getView().getFitHeight()));
             t.setNewCoordinates(0 + i*30,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
-            System.out.println(t.getX());
         }
     }
 
@@ -102,6 +102,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     }
 
     private void addTurtle(){
+
 
     }
 
@@ -128,15 +129,15 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         return myTurtle;
     }
 
-    public void clearScreen() {
+    public void clearScreen(TurtleView t) {
         myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
-        setToNewPosition( 0, 0);
+        setToNewPosition( 0, 0,t);
         myTurtle.getView().setRotate(0);
     }
 
-    public void setToNewPosition(double x, double y) {
-        myTurtle.getView().setX(zeroPos.getX() + x - midPoint(0, myTurtle.getView().getFitWidth()));
-        myTurtle.getView().setY(zeroPos.getY() + y - midPoint(0, myTurtle.getView().getFitHeight()));
+    public void setToNewPosition(double x, double y, TurtleView t) {
+        t.getView().setX(zeroPos.getX() + x - midPoint(0, myTurtle.getView().getFitWidth()));
+        t.getView().setY(zeroPos.getY() + y - midPoint(0, myTurtle.getView().getFitHeight()));
         if(x == 0 && y == 0) {
             myTurtle.getView().setRotate(0);
         }
