@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PenColor extends Action {
+    private static final int FIRST_INDEX = 0;
+
 
     public PenColor(List<Double> args){
         super(args);

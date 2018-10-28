@@ -8,6 +8,8 @@ import java.util.List;
 
 
 public class Move extends Action{
+    private static final int DEFAULT_ROTATION = 90;
+    private static final int FIRST_INDEX = 0;
 
     public Move(List<Double> args){
         super(args);
@@ -15,8 +17,8 @@ public class Move extends Action{
 
     public void execute(TurtleDisplay turtleDisplay){
         TurtleView turtleView = turtleDisplay.getMyTurtle();
-        Point2D next = new Point2D(getArgsDouble(0)*Math.cos(Math.toRadians(turtleView.getView().getRotate()-90)),
-                                getArgsDouble(0)*Math.sin(Math.toRadians(turtleView.getView().getRotate()-90)));
+        Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(turtleView.getView().getRotate()-DEFAULT_ROTATION)),
+                                getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(turtleView.getView().getRotate()-DEFAULT_ROTATION)));
         turtleDisplay.createNewAnimation(next);
     }
 }

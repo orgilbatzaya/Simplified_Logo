@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Background extends Action {
 
+    private static final int FIRST_INDEX = 0;
+
     public Background(List<Double> args){
         super(args);
     }

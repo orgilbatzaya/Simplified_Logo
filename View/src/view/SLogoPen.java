@@ -22,6 +22,14 @@ public class SLogoPen {
         penColor = c;
     }
 
+    public void setPenWidth(double x){
+        penWidth = x;
+    }
+
+    public double getPenWidth(){
+        return penWidth;
+    }
+
     public void changePenVisibilty(){
         penVisible = !penVisible;
         System.out.println(penVisible);

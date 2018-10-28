@@ -5,6 +5,7 @@ import view.TurtleDisplay;
 import java.util.List;
 
 public class Heading extends Action {
+    private static final int FIRST_INDEX = 0;
 
     public Heading(List<Double> args){
         super(args);
@@ -13,6 +14,6 @@ public class Heading extends Action {
     @Override
     public void execute(TurtleDisplay turtleDisplay)
     {
-        turtleDisplay.getMyTurtle().rotate(getArgsDouble(0));
+        turtleDisplay.getMyTurtle().rotate(getArgsDouble(FIRST_INDEX));
     }
 }

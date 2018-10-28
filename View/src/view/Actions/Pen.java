@@ -5,6 +5,8 @@ import view.TurtleDisplay;
 import java.util.List;
 
 public class Pen extends Action {
+    private static final int FIRST_INDEX = 0;
+
 
     public Pen(List<Double> args){
         super(args);
@@ -12,6 +14,6 @@ public class Pen extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.updatePen(getArgsDouble(0));
+        turtleDisplay.updatePen(getArgsDouble(FIRST_INDEX));
     }
 }
