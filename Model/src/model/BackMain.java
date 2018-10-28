@@ -16,7 +16,7 @@ public class BackMain {
     private Map<String, Set<String>> myCommandTypeMap;
     private ProgramParser myProgParser;
     private ResourceBundle myLanguage;
-    private HashMap<String, Double> variables;
+    private HashMap<String, String> variables;
     private Map<String, Double> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
@@ -31,6 +31,7 @@ public class BackMain {
         myTurtleActions = new ArrayList<>();
         myTurtleActionsArgs = new ArrayList<>();
         myLanguage = lang;
+        variables = new HashMap<>();
     }
 
     public Boolean checkValidInput(String s) {
@@ -75,7 +76,7 @@ public class BackMain {
                     index++;
                 }
                 CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-                if(Double.parseDouble(ifExpEval.execute()) != 1) {
+                if(Double.parseDouble(ifExpEval.execute(variables)) != 1) {
                     Stack<String> brackets = new Stack<>();
                     brackets.push(commandList.get(index));
                     index++;
@@ -95,7 +96,7 @@ public class BackMain {
                     index++;
                 }
                 CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-                if(Double.parseDouble(ifExpEval.execute()) == 1) {
+                if(Double.parseDouble(ifExpEval.execute(variables)) == 1) {
                     newCommands.add(commandList.get(index));
                     Stack<String> brackets = new Stack<>();
                     brackets.push(commandList.get(index));
@@ -139,7 +140,7 @@ public class BackMain {
             return;
         }
         CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-        result.execute();
+        result.execute(variables);
 
     }
 

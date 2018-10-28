@@ -22,8 +22,6 @@ public class CommandStack {
     private HashMap<Integer, Integer> times;
     private HashMap<Integer, Integer> originalTimes;
     private int doCounter;
-    private HashMap<String, String> variables;
-    private String myCommandType;
 
     public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
@@ -34,10 +32,9 @@ public class CommandStack {
         myFactory = new Factory();
         myText = text;
         doCounter = 1;
-        variables = new HashMap<>();
     }
 
-    public String execute() {
+    public String execute(HashMap<String, String> variables) {
         toDo = new Stack<>();
         args = new Stack<>();
         done = new Stack<>();
@@ -59,32 +56,38 @@ public class CommandStack {
                 }
                 Command temp = myFactory.makeCommand(s, tempArgs,myCommandType);
                 args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
-                System.out.println(s);
-                System.out.println(args.peek());
                 done.push(s);
             } else if (s.matches("DoTimes\\d*")) {
-                doTimes(s);
+                doTimes(s, variables);
             } else if (s.matches("For")) {
-                forLoop();
+                forLoop(variables);
             } else if (isDouble(s)) {
                 args.push(s);
                 done.push(s);
             } else if (s.equals("[") || s.equals("]")){
                 done.push(s);
+            } else if (s.equals("MakeVariable")){
+                variables.put(done.peek(), args.peek());
+                System.out.println(variables.get(done.peek()));
+                done.push(s);
             } else {
-                if(!variables.containsKey(s) && !toDo.peek().equals("FOR")) {
+                if(!variables.containsKey(s) && toDo.peek().equals("DoTimes")) {
                     variables.put(s, args.peek());
-                    done.push(s);
                 }
+                else if (variables.containsKey(s)){
+                    args.push(variables.get(s));
+                }
+                done.push(s);
             }
         }
 
         return args.pop();
     }
 
-    private void doTimes(String s) {
+    private void doTimes(String s, HashMap<String, String> variables) {
         if (s.equals("DoTimes")) {
             int time = Integer.parseInt(args.pop());
+            variables.put(done.peek(), "" + time);
             if (time == 1) {
                 done.push(s);
                 return;
@@ -125,7 +128,7 @@ public class CommandStack {
         }
     }
 
-    private void forLoop() {
+    private void forLoop(HashMap<String, String> variables) {
         Stack<String> brackets = new Stack<String>();
         brackets.push("[");
         done.pop();
