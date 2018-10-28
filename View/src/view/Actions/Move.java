@@ -5,6 +5,7 @@ import view.TurtleDisplay;
 import view.TurtleView;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class Move extends Action{
@@ -16,9 +17,18 @@ public class Move extends Action{
     }
 
     public void execute(TurtleDisplay turtleDisplay){
-        TurtleView turtleView = turtleDisplay.getMyTurtle();
-        Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(turtleView.getView().getRotate()-DEFAULT_ROTATION)),
-                                getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(turtleView.getView().getRotate()-DEFAULT_ROTATION)));
-        turtleDisplay.createNewAnimation(next);
+        Map<Integer,TurtleView> turtleMap = turtleDisplay.getTurtles();
+
+        for(int i = 0; i < turtleMap.size(); i++){
+            if(turtleMap.get(i).isActive()){
+                TurtleView t = turtleMap.get(i);
+                Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(t.getView().getRotate()-DEFAULT_ROTATION)),
+                        getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(t.getView().getRotate()-DEFAULT_ROTATION)));
+                turtleDisplay.createNewAnimation(next,t);
+
+            }
+        }
+
+
     }
 }

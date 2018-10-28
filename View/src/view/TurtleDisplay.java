@@ -68,10 +68,10 @@ public class TurtleDisplay extends StackPane {
         myBackground.setY(200);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane(myTurtle.getView());
-        myTurtle.getView().setX(zeroPos.getX());
-        myTurtle.getView().setY(zeroPos.getY());
-        //his.getChildren().add(myTurtle.getView());
+        displayPane = new Pane();
+        //myTurtle.getView().setX(zeroPos.getX());
+        //myTurtle.getView().setY(zeroPos.getY());
+
         makeTurtles(displayPane);
         this.getChildren().add(displayPane);
 
@@ -115,8 +115,10 @@ public class TurtleDisplay extends StackPane {
             TurtleView t = new TurtleView();
             t.getView().setX(zeroPos.getX() + i*30);
             t.getView().setY(zeroPos.getY());
+            t.setNewCoordinates(0 + i*30,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
+            System.out.println(t.getX());
         }
     }
 
@@ -161,15 +163,15 @@ public class TurtleDisplay extends StackPane {
         }
     }
 
-    public void createNewAnimation(Point2D next) {
-        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
+    public void createNewAnimation(Point2D next, TurtleView t) {
+        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), t);
         System.out.println(next.getX());
         System.out.println(next.getY());
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
-        returnValue = myTurtle.setNewCoordinates(next.getX(), next.getY());
-        myTurtle.getView().setX(zeroPos.getX() + next.getX());
-        myTurtle.getView().setY(zeroPos.getY() + next.getY());
+        //returnValue = t.setNewCoordinates(next.getX(), next.getY());
+        //t.getView().setX(zeroPos.getX() + next.getX());
+        //t.getView().setY(zeroPos.getY() + next.getY());
     }
 
     public void updatePen(double bool) {
