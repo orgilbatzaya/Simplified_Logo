@@ -6,6 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class is intended to display the different functions created by the user.
+ * @author Austin Kao
+ */
 public class FunctionDisplay implements EnvironmentDisplay {
     private TableView<String> currentDisplay;
     private ObservableList<String> currentItems;

@@ -1,6 +1,7 @@
 package view.environmentdisplays;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -10,54 +11,53 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import view.TurtleDisplay;
 import view.TurtleView;
 
 import java.util.ArrayList;
 
+/**
+ * @author Orgil Batzaya, Austin Kao
+ */
 public class StatusDisplay implements EnvironmentDisplay {
-    private static final String NAME_PROPERTY = "Turtles";
-    private static final String X_POSITION_PROPERTY = "X Position";
-    private static final String Y_POSITION_PROPERTY = "Y Position";
-    private static final String HEADING_PROPERTY = "Heading";
+    private static final String NAME_TITLE = "Turtles";
+    private static final String X_POSITION_TITLE = "X Position";
+    private static final String Y_POSITION_TITLE = "Y Position";
+    private static final String HEADING_TITLE = "Heading";
+    private static final String NAME_PROPERTY = "id";
+    private static final String X_POSITION_PROPERTY = "xPosition";
+    private static final String Y_POSITION_PROPERTY = "yPosition";
+    private static final String HEADING_PROPERTY = "heading";
 
-    private DoubleProperty xProperty = new SimpleDoubleProperty();
-    private DoubleProperty yProperty = new SimpleDoubleProperty();
-    private double xPos;
-    private double yPos;
-    private TurtleView myTurtle;
-    private TableView<String> currentDisplay;
+    private TurtleDisplay myDisplay;
+    private TableView<TurtleView> currentDisplay;
     private TableColumn currentTurtles;
     private TableColumn currentXPositions;
     private TableColumn currentYPositions;
     private TableColumn currentHeadings;
-    private ObservableList<String> currentItems;
+    private ObservableList<TurtleView> currentItems;
     private VBox myBox;
 
 
-    public StatusDisplay(double height, String label,TurtleView turtle) {
+    public StatusDisplay(double height, String label, TurtleDisplay display) {
         currentDisplay = new TableView<>();
         currentDisplay.setMaxHeight(height);
         Label displayLabel = new Label(label);
-        xPos = turtle.getX();
-        yPos = turtle.getY();
-        myTurtle = turtle;
-        xProperty.setValue(xPos);
-        xProperty.addListener(updater);
         currentItems = FXCollections.observableArrayList();
-        currentItems.add("Zero");
-        currentTurtles = createTableColumn(NAME_PROPERTY);
-        currentXPositions = createTableColumn(X_POSITION_PROPERTY);
-        currentYPositions = createTableColumn(Y_POSITION_PROPERTY);
-        currentHeadings = createTableColumn(HEADING_PROPERTY);
-        currentDisplay.getColumns().addAll(currentTurtles, currentXPositions, currentYPositions, currentHeadings);
+        currentTurtles = new TableColumn(NAME_TITLE);
+        currentTurtles.setCellValueFactory(new PropertyValueFactory<TurtleView, String>("id"));
+        currentXPositions = createTableColumn(X_POSITION_TITLE, X_POSITION_PROPERTY);
+        currentYPositions = createTableColumn(Y_POSITION_TITLE, Y_POSITION_PROPERTY);
+        currentHeadings = createTableColumn(HEADING_TITLE, HEADING_PROPERTY);
+        myDisplay = display;
+        for(TurtleView turtle : display.getTurtles().values()) {
+            currentItems.add(turtle);
+        }
+        currentDisplay.getColumns().addAll(currentHeadings);
         currentDisplay.setItems(currentItems);
         currentDisplay.setEditable(true);
         myBox = new VBox(displayLabel, currentDisplay);
     }
-
-    ChangeListener updater = (observable, oldValue, newValue) -> {
-       xPos = myTurtle.getX();
-    };
 
     @Override
     public void addItem(String item) {
@@ -78,9 +78,9 @@ public class StatusDisplay implements EnvironmentDisplay {
         return myBox;
     }
 
-    private TableColumn createTableColumn(String property) {
-        TableColumn column = new TableColumn(property);
-        column.setCellValueFactory(new PropertyValueFactory<TurtleView, String>(property));
+    private TableColumn createTableColumn(String title, String property) {
+        TableColumn column = new TableColumn(title);
+        column.setCellValueFactory(new PropertyValueFactory<TurtleView, Double>(property));
         return column;
     }
 }

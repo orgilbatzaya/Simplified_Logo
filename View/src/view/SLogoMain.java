@@ -21,6 +21,5 @@ public class SLogoMain extends Application implements ViewResourceBundles{
         stage.show();
     }
 
-    public static void main(String[] args) { launch(args);
-    }
+    public static void main(String[] args) { launch(args);}
 }
