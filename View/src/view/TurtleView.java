@@ -1,9 +1,6 @@
 package view;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -59,6 +56,7 @@ public class TurtleView {
     public double rotate(double angle){
         myView.setRotate(angle);
         setHeading(angle);
+        System.out.println(myHeading);
         return angle;
     }
 
