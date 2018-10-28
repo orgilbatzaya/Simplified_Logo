@@ -10,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -18,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +34,11 @@ public class TurtleDisplay extends StackPane {
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
+
+    //parameters for display actions
+    private static final Color[] COLORS = {Color.GRAY,Color.PURPLE, Color.AZURE,Color.BEIGE,Color.BLUE,Color.VIOLET, Color.GREEN,Color.PALEGOLDENROD};
+
+    private static final String[] SHAPES = {"/images/turtle2.jpg","/images/turtle-basic.png"};
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -67,13 +72,13 @@ public class TurtleDisplay extends StackPane {
         myTurtle = new TurtleView();
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane(myTurtle.getView());
+        //displayPane = new Pane(myTurtle.getView());
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
-        makeTurtles(displayPane);
-        this.getChildren().add(displayPane);
         myCurrentAnimation = new SequentialTransition();
-        myCurrentAnimation.play();
+        this.getChildren().add(myTurtle.getView());
+        //makeTurtles(displayPane);
+        //this.getChildren().add(displayPane);
     }
 
     public Canvas getCanvas() {
@@ -177,6 +182,7 @@ public class TurtleDisplay extends StackPane {
         return displayPane;
     }
 
+    //Delete this method most likely
     public void playAnimations() {
         if(myAnimations.size() > 1) {
             String animation = myAnimations.peek();
