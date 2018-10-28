@@ -60,7 +60,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         myLanguageMenu = new LanguageMenu("Languages:");
         mySelector = new TurtleSelector("Turtles:",currentDisplay);
         PlayPauseButton playPause = new PlayPauseButton("Pause", currentDisplay);
-        ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay.getMyTurtle());
+        ImageChooseButton changeTurtle = new ImageChooseButton("Change the turtle", currentDisplay);
         HelpButton help = new HelpButton("Help");
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay());
