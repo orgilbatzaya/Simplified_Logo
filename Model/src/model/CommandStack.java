@@ -8,10 +8,10 @@ public class CommandStack {
     private final Set<String> MATH_OPS = new HashSet<>(Arrays.asList("ArcTangent", "Cosine", "Difference", "Minus", "NaturalLog", "Pi", "Power", "Product", "Quotient", "Random", "Remainder", "Sine", "Sum", "Tangent"));
     private final Set<String> CONTROL_OPS = new HashSet<>(Arrays.asList("DoTimes", "For", "If", "IfElse", "MakeUserInstruction", "MakeVariable", "Repeat"));
     private final Set<String> TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Backward", "ClearScreen", "Forward", "HideTurtle", "Home", "Left", "PenDown", "PenUp", "Right", "SetHeading", "SetPosition", "SetTowards", "Showturtle"));
-    public static final String NUM_ARGS_PATH = "model/commands/NumArgsCommands";
-
+    private final Set<String> DISPLAY_COMMANDS = new HashSet<>(Arrays.asList("GetPenColor","GetPenShape","SetBackground","SetPalette","SetPenColor","SetPenSize","SetShape"));
     private Factory myFactory;
-    private Map<String, Integer> myNumArgsMap;
+    private Map<String,Set<String>> myCommandTypeMap;
+    private Map<String,Integer> myNumArgsMap;
     private List<String> myText;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
@@ -24,12 +24,13 @@ public class CommandStack {
     private int doCounter;
     private HashMap<String, String> variables;
 
-    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters) {
+    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandType) {
         this.myTurtleActions = myTurtleActions;
         this.myTurtleActionsArgs = myTurtleActionArgs;
         this.myTurtleParameters = myTurtleParameters;
-        myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
-        myFactory = new Factory();
+        myNumArgsMap = numArgs;
+        myCommandTypeMap = commandType;
+        myFactory = new Factory(myCommandTypeMap);
         myText = text;
         doCounter = 1;
         variables = new HashMap<>();

@@ -7,7 +7,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -15,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +29,11 @@ public class TurtleDisplay extends StackPane {
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
+
+    //parameters for display actions
+    private static final Color[] COLORS = {Color.GRAY,Color.PURPLE, Color.AZURE,Color.BEIGE,Color.BLUE,Color.VIOLET, Color.GREEN,Color.PALEGOLDENROD};
+
+    private static final String[] SHAPES = {"/images/turtle2.jpg","/images/turtle-basic.png"};
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -66,21 +71,22 @@ public class TurtleDisplay extends StackPane {
         displayPane = new Pane(myTurtle.getView());
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
+        this.getChildren().add(myTurtle.getView());
         makeTurtles(displayPane);
         this.getChildren().add(displayPane);
 
 
-        //Animate animate = new Animate(myCanvas, myGC, penColor, Duration.seconds(myDuration.getDuration()), myTurtle);
-        /*myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
-                                                            animate.move(new Point2D(50,30)),
-                                                            animate.move(new Point2D(100,-100)),
-                                                            animate.move(new Point2D(-40,60)),
-                                                            animate.move(new Point2D(-60,200)));
+//        Animate animate = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), myTurtle);
+//        myCurrentAnimation = new SequentialTransition(animate.move(new Point2D(50,70)),
+//                                                            animate.move(new Point2D(50,30)),
+//                                                            animate.move(new Point2D(100,-100)),
+//                                                            animate.move(new Point2D(-40,60)),
+//                                                            animate.move(new Point2D(-60,200)));
+//
+//        myCurrentAnimation.setCycleCount(2);
+//        myCurrentAnimation.setAutoReverse(true);
+//        myCurrentAnimation.play();
 
-        myCurrentAnimation.setCycleCount(2);
-        myCurrentAnimation.setAutoReverse(true);
-        myCurrentAnimation.play();
-        */
 
     }
 
@@ -180,5 +186,26 @@ public class TurtleDisplay extends StackPane {
 
     public Pane getDisplayPane() {
         return displayPane;
+    }
+
+    public void setBackgroundColorAction(int index){
+        myBackground.setFill(COLORS[index]);
+    }
+
+    public void setPenColorAction(int index){
+        myPen.setPenColor(COLORS[index]);
+    }
+
+    public void setPenWidthAction(double width){
+
+    }
+
+    public void setShapeAction(int index){
+        myTurtle.setView(SHAPES[index]);
+    }
+
+    public void setPalette(int r, int g, int b, int index){
+        Color newColor = Color.rgb(r, g, b); // Color white
+        COLORS[index] = newColor;
     }
 }

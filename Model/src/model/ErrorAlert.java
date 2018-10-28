@@ -11,11 +11,16 @@ public class ErrorAlert {
     private static final String ERROR_STRING = "Error";
     private static final String ERROR_HEADER = "The following error occurred:";
 
+    private Alert myAlert;
     public ErrorAlert(Exception ex) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(ERROR_STRING);
-        alert.setHeaderText(ERROR_HEADER);
-        alert.setContentText(ex.getMessage());
-        alert.showAndWait();
+        myAlert = new Alert(Alert.AlertType.ERROR);
+        myAlert.setTitle(ERROR_STRING);
+        myAlert.setHeaderText(ERROR_HEADER);
+        myAlert.setContentText(ex.getMessage());
     }
+    public void displayAlert(){
+        myAlert.showAndWait();
+    }
+
+
 }

@@ -17,7 +17,6 @@ public class ActionRunner {
         int argIndex = 0;
 
         for(String a: actions){
-            //System.out.println(a);
             int numArgs = numArgsActions.get(a);
             List<Double> args = getArgs(totalArgs,numArgs,argIndex);
             argIndex+=(numArgs-1);//because one indexed
