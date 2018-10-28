@@ -10,6 +10,7 @@ public class TurtleView {
     private static final int DEFAULT_TURTLE_WIDTH = 30;
     private static final int DEFAULT_TURTLE_HEIGHT = 30;
 
+    private boolean active;
     private boolean visible;
     private ImageView myView;
     private double xPos;
@@ -27,6 +28,7 @@ public class TurtleView {
         yPos = DEFAULT_STARTING_POS;
         myView.setFitHeight(DEFAULT_TURTLE_HEIGHT);
         myView.setFitWidth(DEFAULT_TURTLE_WIDTH);
+        active = false;
     }
 
     public void setView(String value){
@@ -106,10 +108,14 @@ public class TurtleView {
     }
 
     public void deactivate(){
-
+        active = false;
     }
 
     public void activate(){
+        active = true;
+    }
 
+    public boolean isActive(){
+        return active;
     }
 }

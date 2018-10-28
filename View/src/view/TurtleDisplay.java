@@ -99,8 +99,10 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
             TurtleView t = new TurtleView();
             t.getView().setX(zeroPos.getX() + i*30);
             t.getView().setY(zeroPos.getY());
+            t.setNewCoordinates(0 + i*30,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
+            System.out.println(t.getX());
         }
     }
 
