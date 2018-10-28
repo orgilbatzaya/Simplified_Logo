@@ -45,7 +45,7 @@ public class StatusDisplay implements EnvironmentDisplay {
         Label displayLabel = new Label(label);
         currentItems = FXCollections.observableArrayList();
         currentTurtles = new TableColumn(NAME_TITLE);
-        currentTurtles.setCellValueFactory(new PropertyValueFactory<TurtleView, String>("id"));
+        currentTurtles.setCellValueFactory(new PropertyValueFactory<TurtleView, String>(NAME_PROPERTY));
         currentXPositions = createTableColumn(X_POSITION_TITLE, X_POSITION_PROPERTY);
         currentYPositions = createTableColumn(Y_POSITION_TITLE, Y_POSITION_PROPERTY);
         currentHeadings = createTableColumn(HEADING_TITLE, HEADING_PROPERTY);
@@ -71,7 +71,7 @@ public class StatusDisplay implements EnvironmentDisplay {
 
     @Override
     public void editItem(String item) {
-        System.out.println("Hi");
+        return;
     }
 
     public VBox getDisplay() {

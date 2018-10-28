@@ -26,6 +26,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
+    private static final String DURATION_LABEL = "duration";
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -44,7 +45,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     //private StatusView statusView;
 
     public TurtleDisplay(double width, double height) {
-        myDuration = new DurationField("Duration of Animation: ");
+        myDuration = new DurationField(myDefaults.getString(DURATION_LABEL));
         myBackground = new Rectangle(width, height);
         myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(width, height);
