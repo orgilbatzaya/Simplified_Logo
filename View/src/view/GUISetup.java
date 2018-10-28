@@ -101,7 +101,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         turtleInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
         turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
         root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
-        myVariables = new HashMap<>();
         return scene;
     }
 
@@ -148,5 +147,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         return currentDisplay;
     }
 
-
+    public StatusDisplay getTurtleInfoDisplay() {
+        return turtleInfo;
+    }
 }

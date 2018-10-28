@@ -1,5 +1,6 @@
 package view;
 
+import javafx.beans.property.StringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -46,6 +47,9 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private VariableDisplay currentVariables;
     private PastCommandDisplay currentFunctions;
     private GUISetup parentGUI;
+    private HashMap<String,String> myVariables;
+    private StringProperty variableNames;
+    private StringProperty variableValues;
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;
@@ -66,6 +70,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
         consoleBox.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
         consoleBox.setLayoutX(x);
         consoleBox.setLayoutY(y);
+        myVariables = new HashMap<>();
     }
 
     public HBox getConsoleBox() {
@@ -100,7 +105,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
     public void runCommand(String command) {
         Map<String, Double> commandParams = parentGUI.getTurtleParams();
-        HashMap<String, String> vars = parentGUI.getVariables();
+        HashMap<String, String> vars = myVariables;
         BackMain back = new BackMain(parentGUI.getLanguage(), commandParams,vars);
         back.performCommands(command);
         List<String> actionList = back.getMyTurtleActions();
