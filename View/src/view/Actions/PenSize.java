@@ -5,6 +5,8 @@ import view.TurtleDisplay;
 import java.util.List;
 
 public class PenSize extends Action {
+    private static final int FIRST_INDEX = 0;
+
 
     public PenSize(List<Double> args){
         super(args);
@@ -12,7 +14,7 @@ public class PenSize extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setPenWidthAction(getArgsDouble(0));
+        turtleDisplay.setPenWidthAction(getArgsDouble(FIRST_INDEX));
     }
 }
 

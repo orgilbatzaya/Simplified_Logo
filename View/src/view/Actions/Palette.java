@@ -5,6 +5,7 @@ import view.TurtleDisplay;
 import java.util.List;
 
 public class Palette extends Action {
+    private static final int FIRST_INDEX = 0;
 
     public Palette(List<Double> args){
         super(args);
@@ -13,7 +14,7 @@ public class Palette extends Action {
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
         //first 3 values index, next 3 r, next 3 g, next 3 b
-        double rawValue = getArgsDouble(0);
+        double rawValue = getArgsDouble(FIRST_INDEX);
         double index = rawValue%1000;
         double r = (rawValue-index)%1000000/1000;
         double g = ((rawValue-index-r)%1000000000)/1000000;

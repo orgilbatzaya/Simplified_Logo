@@ -71,7 +71,7 @@ public class TurtleDisplay extends StackPane {
         displayPane = new Pane(myTurtle.getView());
         myTurtle.getView().setX(zeroPos.getX());
         myTurtle.getView().setY(zeroPos.getY());
-        this.getChildren().add(myTurtle.getView());
+        //his.getChildren().add(myTurtle.getView());
         makeTurtles(displayPane);
         this.getChildren().add(displayPane);
 
@@ -197,7 +197,7 @@ public class TurtleDisplay extends StackPane {
     }
 
     public void setPenWidthAction(double width){
-
+        myPen.setPenWidth(width);
     }
 
     public void setShapeAction(int index){
