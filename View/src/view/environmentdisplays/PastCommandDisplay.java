@@ -2,9 +2,14 @@ package view.environmentdisplays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * This class stores a list of past commands as well as the display of that list.
@@ -59,12 +64,16 @@ public class PastCommandDisplay implements EnvironmentDisplay {
         return parentBox;
     }
 
+    public ListView<String> getPastCommandList() {
+        return currentDisplay;
+    }
+
     /**
      * This method should change depending on the type of PastCommandDisplay?
      * @param oldValue
      */
     @Override
     public void editItem(String oldValue) {
-        selectionLabel.setText("You Selected " + oldValue);
+
     }
 }
