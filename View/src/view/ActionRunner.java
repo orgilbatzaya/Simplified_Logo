@@ -4,23 +4,27 @@ import view.Actions.Action;
 
 import java.util.*;
 
-public class ActionRunner {
-    private String NUM_ARGS_ACTIONS_MAP_PATH = "view/Actions/NumArgsActions";
+public class ActionRunner implements ViewResourceBundles {
 
     private Map<String,Integer> numArgsActions;
 
     public ActionRunner(){
-        numArgsActions = getNumArgsMap(NUM_ARGS_ACTIONS_MAP_PATH);
+        numArgsActions = getNumArgsMap();
     }
 
-    public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display){
+    public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display) {
         int argIndex = 0;
+        for (String a : actions) {
+            for (int i = 0; i < display.getTurtles().size(); i++) {
+                if (display.getTurtles().get(i).isActive()) {
+                    int numArgs = numArgsActions.get(a);
+                    List<Double> args = getArgs(totalArgs, numArgs, argIndex);
+                    argIndex += (numArgs - 1);//because one indexed
+                    interpretCommand(a, args, display, i);
+                }
+            }
 
-        for(String a: actions){
-            int numArgs = numArgsActions.get(a);
-            List<Double> args = getArgs(totalArgs,numArgs,argIndex);
-            argIndex+=(numArgs-1);//because one indexed
-            interpretCommand(a,args,display);
+
         }
     }
 
@@ -39,17 +43,16 @@ public class ActionRunner {
         return null;
     }
 
-    public void interpretCommand(String actionName,List<Double> args, TurtleDisplay display){
+    public void interpretCommand(String actionName,List<Double> args, TurtleDisplay display, int index){
 
         Action act = makeAction(actionName,args);
-        act.execute(display);
+        act.execute(display.getTurtles().get(index), display);
     }
 
-    public Map<String,Integer> getNumArgsMap(String path){
-        ResourceBundle properties = ResourceBundle.getBundle(path);
+    public Map<String,Integer> getNumArgsMap(){
         var outMap = new HashMap<String,Integer>();
-        for (String key : properties.keySet()) {
-            String value = properties.getString(key);
+        for (String key : myArgs.keySet()) {
+            String value = myArgs.getString(key);
             outMap.put(key, Integer.valueOf(value));
         }
         return outMap;

@@ -2,6 +2,7 @@ package view.Actions;
 
 import javafx.scene.paint.Color;
 import view.TurtleDisplay;
+import view.TurtleView;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,7 +16,7 @@ public class PenColor extends Action {
     }
 
     @Override
-    public void execute(TurtleDisplay turtleDisplay) {
+    public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
         Integer index = (int) getArgsDouble(0);
         turtleDisplay.changePenColor(index);
     }

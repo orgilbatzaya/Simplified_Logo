@@ -1,6 +1,7 @@
 package view.Actions;
 
 import view.TurtleDisplay;
+import view.TurtleView;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Background extends Action {
     }
 
     @Override
-    public void execute(TurtleDisplay turtleDisplay) {
+    public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
         turtleDisplay.setBgColor((int) getArgsDouble(0));
     }
 }
