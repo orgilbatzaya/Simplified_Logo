@@ -1,6 +1,9 @@
 package view;
 
+import javafx.animation.Animation;
+import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Transition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -16,8 +19,7 @@ import javafx.util.Duration;
 import view.fields.DurationField;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Orgil Batzaya
@@ -29,11 +31,11 @@ public class TurtleDisplay extends StackPane {
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
+    private static final String TURTLE_IMAGE_PATH = "/resources/TurtleImage";
+    private static final String COLOR_PATH = "/resources/Color";
 
     //parameters for display actions
     private static final Color[] COLORS = {Color.GRAY,Color.PURPLE, Color.AZURE,Color.BEIGE,Color.BLUE,Color.VIOLET, Color.GREEN,Color.PALEGOLDENROD};
-
-    private static final String[] SHAPES = {"/images/turtle2.jpg","/images/turtle-basic.png"};
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -49,6 +51,10 @@ public class TurtleDisplay extends StackPane {
     private double returnValue;
     private VBox myBox; //May or may not use
     private Pane displayPane;
+    private Queue<String> myAnimations;
+    private ResourceBundle myImages;
+    private ResourceBundle myColors;
+    private Map<Integer, Color> colorMap;
 
     //private StatusView statusView;
 
@@ -64,8 +70,6 @@ public class TurtleDisplay extends StackPane {
         myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
         myTurtles = new HashMap<>();
         myTurtle = new TurtleView();
-        myBackground.setLayoutX(200);
-        myBackground.setY(200);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         displayPane = new Pane();
@@ -139,8 +143,13 @@ public class TurtleDisplay extends StackPane {
         myBackground.setFill(c);
     }
 
+    public void setBgColor(Integer index) {
+        Color c = determineColor(index);
+        setBgColor(c);
+    }
 
-    public SequentialTransition getCurrentAnimation() {
+
+    public Animation getCurrentAnimation() {
         return myCurrentAnimation;
     }
 
@@ -179,7 +188,7 @@ public class TurtleDisplay extends StackPane {
             myPen.changePenVisibilty();
         }
         returnValue = bool;
-        System.out.println(returnValue);
+        //System.out.println(returnValue);
     }
 
     public SLogoPen getPen() {
@@ -190,24 +199,42 @@ public class TurtleDisplay extends StackPane {
         return displayPane;
     }
 
-    public void setBackgroundColorAction(int index){
-        myBackground.setFill(COLORS[index]);
+    //Delete this method most likely
+    public void playAnimations() {
+        if(myAnimations.size() > 1) {
+            String animation = myAnimations.peek();
+            myCurrentAnimation.play();
+        }
+        myCurrentAnimation.setOnFinished(e -> playAnimations());
     }
 
-    public void setPenColorAction(int index){
-        myPen.setPenColor(COLORS[index]);
+    public void resetAnimation() {
+        myCurrentAnimation.getChildren().clear();
     }
 
-    public void setPenWidthAction(double width){
-        myPen.setPenWidth(width);
+    public void changeTurtleImage(int i) {
+        for(TurtleView turtle : myTurtles.values()) {
+            turtle.setView(myImages.getString(Integer.toString(i)));
+        }
     }
 
-    public void setShapeAction(int index){
-        myTurtle.setView(SHAPES[index]);
+    public void changePenColor(Integer index) {
+        Color c = determineColor(index);
+        myPen.setPenColor(c);
     }
 
-    public void setPalette(int r, int g, int b, int index){
-        Color newColor = Color.rgb(r, g, b); // Color white
-        COLORS[index] = newColor;
+    public void makeNewColor(int index, int r, int g, int b) {
+        Color c = Color.rgb(r, g, b);
+        colorMap.put(index, c);
+    }
+
+    private Color determineColor(Integer index) {
+        Color c;
+        if(colorMap.containsKey(index)) {
+            c = colorMap.get(index);
+        } else {
+            c = Color.valueOf(myColors.getString(index.toString()));
+        }
+        return c;
     }
 }

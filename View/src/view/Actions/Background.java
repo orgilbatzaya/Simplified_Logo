@@ -14,7 +14,7 @@ public class Background extends Action {
 
     @Override
     public void execute(TurtleDisplay turtleDisplay) {
-        turtleDisplay.setBackgroundColorAction((int) getArgsDouble(FIRST_INDEX));
+        turtleDisplay.setBgColor((int) getArgsDouble(0));
     }
 }
 
