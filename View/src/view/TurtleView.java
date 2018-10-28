@@ -4,6 +4,9 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author Orgil Batzaya
+ */
 public class TurtleView {
     private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
     private static final int DEFAULT_STARTING_POS = 0;

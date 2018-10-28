@@ -12,6 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * @author Orgil Batzaya
+ * Allows users to dynamically select a Turtle to draw with using a dropdown menu.
+ * Allows multiple turtles to be active simultaneously
+ */
+
 public class TurtleSelector extends DropdownMenu {
     Map<Integer, TurtleView> turtles;
 

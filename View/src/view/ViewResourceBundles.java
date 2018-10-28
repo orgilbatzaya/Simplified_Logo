@@ -12,4 +12,5 @@ public interface ViewResourceBundles {
     ResourceBundle myLanguages = ResourceBundle.getBundle("/resources/LanguageList");
     ResourceBundle myDefaults = ResourceBundle.getBundle("/resources/ViewDefaults");
     ResourceBundle myArgs = ResourceBundle.getBundle("/resources/NumArgsActions");
+    ResourceBundle myDirections = ResourceBundle.getBundle("/resources/Directions");
 }

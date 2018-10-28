@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
  * The default constructor calls createGUI() automatically, so myScene is automatically initialized to some scene.
- * @author Austin Kao
+ * @author Austin Kao, Orgil Batzaya
  */
 public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final int GUI_WIDTH = 1200;

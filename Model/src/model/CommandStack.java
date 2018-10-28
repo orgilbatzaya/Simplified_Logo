@@ -34,7 +34,7 @@ public class CommandStack {
         commandFinished = Boolean.FALSE;
     }
 
-    public String execute(HashMap<String, String> variables) {
+    public String execute(HashMap<String, String> variables){
         toDo = new Stack<>();
         args = new Stack<>();
         done = new Stack<>();
