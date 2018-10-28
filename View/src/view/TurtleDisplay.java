@@ -169,9 +169,7 @@ public class TurtleDisplay extends StackPane {
         System.out.println(next.getY());
         myCurrentAnimation = new SequentialTransition(animation.move(next));
         myCurrentAnimation.play();
-        //returnValue = t.setNewCoordinates(next.getX(), next.getY());
-        //t.getView().setX(zeroPos.getX() + next.getX());
-        //t.getView().setY(zeroPos.getY() + next.getY());
+        
     }
 
     public void updatePen(double bool) {
