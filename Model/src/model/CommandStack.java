@@ -10,12 +10,12 @@ public class CommandStack {
     private final Set<String> TURTLE_COMMANDS = new HashSet<>(Arrays.asList("Backward", "ClearScreen", "Forward", "HideTurtle", "Home", "Left", "PenDown", "PenUp", "Right", "SetHeading", "SetPosition", "SetTowards", "Showturtle"));
     private final Set<String> DISPLAY_COMMANDS = new HashSet<>(Arrays.asList("GetPenColor","GetPenShape","SetBackground","SetPalette","SetPenColor","SetPenSize","SetShape"));
     private Factory myFactory;
-    private Map<String,Set<String>> myCommandTypeMap;
     private Map<String,Integer> myNumArgsMap;
     private List<String> myText;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
     private Map<String, Double> myTurtleParameters;
+    private Map<String, Set<String>> myCommandTypeMap;
     private Stack<String> toDo;
     private Stack<String> args;
     private Stack<String> done;
@@ -23,14 +23,15 @@ public class CommandStack {
     private HashMap<Integer, Integer> originalTimes;
     private int doCounter;
     private HashMap<String, String> variables;
+    private String myCommandType;
 
-    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandType) {
+    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
         this.myTurtleActionsArgs = myTurtleActionArgs;
         this.myTurtleParameters = myTurtleParameters;
+        myCommandTypeMap = commandTypeMap;
         myNumArgsMap = numArgs;
-        myCommandTypeMap = commandType;
-        myFactory = new Factory(myCommandTypeMap);
+        myFactory = new Factory();
         myText = text;
         doCounter = 1;
         variables = new HashMap<>();
@@ -47,13 +48,16 @@ public class CommandStack {
         }
         while (!toDo.isEmpty()) {
             String s = toDo.pop();
-            if (BOOLEAN_OPS.contains(s) || MATH_OPS.contains(s) || TURTLE_COMMANDS.contains(s)) {
+            System.out.println(s);
+            myCommandType = getCommandType(s);
+            if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) ||myCommandTypeMap.get("TurtleQueries").contains(s) ||
+                myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
                 int numArgs = myNumArgsMap.get(s);
                 LinkedList<String> tempArgs = new LinkedList<>();
                 for (int i = 0; i < numArgs; i++) {
                     tempArgs.add(args.pop());
                 }
-                Command temp = myFactory.makeCommand(s, tempArgs);
+                Command temp = myFactory.makeCommand(s, tempArgs,myCommandType);
                 args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
                 System.out.println(s);
                 System.out.println(args.peek());
@@ -166,6 +170,15 @@ public class CommandStack {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    private String getCommandType(String commandName){
+        for (String key : myCommandTypeMap.keySet()) {
+            if(myCommandTypeMap.get(key).contains(commandName)){
+                return key;
+            }
+        }
+        return null;
     }
 
 }
