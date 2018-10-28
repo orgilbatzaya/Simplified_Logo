@@ -55,7 +55,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
         //myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
         myTurtles = new HashMap<>();
-        myTurtle = new TurtleView(0);
+        //myTurtle = new TurtleView(0);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
         displayPane = new Pane();

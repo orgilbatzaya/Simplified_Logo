@@ -24,9 +24,9 @@ public class StatusDisplay implements EnvironmentDisplay {
     private static final String X_POSITION_TITLE = "X Position";
     private static final String Y_POSITION_TITLE = "Y Position";
     private static final String HEADING_TITLE = "Heading";
-    private static final String NAME_PROPERTY = "id";
-    private static final String X_POSITION_PROPERTY = "xPosition";
-    private static final String Y_POSITION_PROPERTY = "yPosition";
+    private static final String NAME_PROPERTY = "myID";
+    private static final String X_POSITION_PROPERTY = "xPos";
+    private static final String Y_POSITION_PROPERTY = "yPos";
     private static final String HEADING_PROPERTY = "heading";
 
     private TurtleDisplay myDisplay;
@@ -44,8 +44,7 @@ public class StatusDisplay implements EnvironmentDisplay {
         currentDisplay.setMaxHeight(height);
         Label displayLabel = new Label(label);
         currentItems = FXCollections.observableArrayList();
-        currentTurtles = new TableColumn(NAME_TITLE);
-        currentTurtles.setCellValueFactory(new PropertyValueFactory<TurtleView, String>(NAME_PROPERTY));
+        currentTurtles = createTableColumn(NAME_TITLE, NAME_PROPERTY);
         currentXPositions = createTableColumn(X_POSITION_TITLE, X_POSITION_PROPERTY);
         currentYPositions = createTableColumn(Y_POSITION_TITLE, Y_POSITION_PROPERTY);
         currentHeadings = createTableColumn(HEADING_TITLE, HEADING_PROPERTY);
@@ -53,7 +52,7 @@ public class StatusDisplay implements EnvironmentDisplay {
         for(TurtleView turtle : display.getTurtles().values()) {
             currentItems.add(turtle);
         }
-        currentDisplay.getColumns().addAll(currentHeadings);
+        currentDisplay.getColumns().addAll(currentTurtles, currentXPositions, currentYPositions, currentHeadings);
         currentDisplay.setItems(currentItems);
         currentDisplay.setEditable(true);
         myBox = new VBox(displayLabel, currentDisplay);
