@@ -1,15 +1,10 @@
 package view;
 
 import javafx.animation.Animation;
-import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Transition;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -18,8 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Orgil Batzaya, Austin Kao
@@ -46,6 +41,8 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private VBox myBox; //May or may not use
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
+    private int colorIndex;
+    private int shapeIndex;
 
     //private StatusView statusView;
 
@@ -71,6 +68,8 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         //makeTurtles(displayPane);
         //this.getChildren().add(displayPane);
         colorMap = new HashMap<>();
+        colorIndex = 0;
+        shapeIndex = 0;
     }
 
     public Canvas getCanvas() {
@@ -182,6 +181,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     public void changeTurtleImage(int i) {
         for(TurtleView turtle : myTurtles.values()) {
             turtle.setView(myImages.getString(Integer.toString(i)));
+            shapeIndex = i;
         }
     }
 
@@ -202,10 +202,21 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         } else {
             c = Color.valueOf(myColors.getString(index.toString()));
         }
+        colorIndex = index;
+
         return c;
     }
 
     private double midPoint(double a, double b) {
         return (a + b)/2;
     }
+
+    public double getColorIndex(){
+        return colorIndex;
+    }
+
+    public double getShapeIndex(){
+        return shapeIndex;
+    }
+
 }

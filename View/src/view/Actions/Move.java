@@ -24,7 +24,7 @@ public class Move extends Action{
                 TurtleView t = turtleMap.get(i);
                 Point2D next = new Point2D(getArgsDouble(FIRST_INDEX)*Math.cos(Math.toRadians(t.getView().getRotate()-DEFAULT_ROTATION)),
                         getArgsDouble(FIRST_INDEX)*Math.sin(Math.toRadians(t.getView().getRotate()-DEFAULT_ROTATION)));
-                turtleDisplay.createNewAnimation(next,t);
+                turtleDisplay.createNewAnimation(next);
 
             }
         }
