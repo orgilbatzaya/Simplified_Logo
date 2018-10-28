@@ -15,15 +15,18 @@ public class BackMain {
     private Map<String, Integer> myNumArgsMap;
     private Map<String, Set<String>> myCommandTypeMap;
     private ProgramParser myProgParser;
+    private ProgramParser mySyntaxParser;
     private ResourceBundle myLanguage;
     private HashMap<String, String> variables;
     private Map<String, Double> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
 
+
     public BackMain(ResourceBundle lang, Map<String, Double> turtleParams) {
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
+        mySyntaxParser = createProgramParser(ResourceBundle.getBundle("model/Syntax"));
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myCommandTypeMap = getMyCommandTypeMap(COMMAND_TYPE_PATH);
         myTurtleParameters = turtleParams;
@@ -34,21 +37,7 @@ public class BackMain {
         variables = new HashMap<>();
     }
 
-    public Boolean checkValidInput(String s) {
-        try {
-            String command = myProgParser.getSymbol(s);
-            return Boolean.TRUE;
-        } catch (RuntimeException e) {
-        }
-        try {
-            double argument = Double.parseDouble(s);
-            isCommand = Boolean.FALSE;
-            return Boolean.TRUE;
-        } catch (NumberFormatException e) {
-        }
-        throw new RuntimeException("Invalid Command");
 
-    }
 
 
     public ProgramParser createProgramParser(ResourceBundle lang) {

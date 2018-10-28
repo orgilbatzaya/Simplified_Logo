@@ -18,6 +18,8 @@ public class CommandStack {
     private HashMap<Integer, Integer> originalTimes;
     private int doCounter;
     private String myCommandType;
+    private Stack<String> temp;
+
 
     public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
@@ -34,6 +36,7 @@ public class CommandStack {
         toDo = new Stack<>();
         args = new Stack<>();
         done = new Stack<>();
+        temp = new Stack<>();
         times = new HashMap<>();
         originalTimes = new HashMap<>();
         for (String temp : myText) {
@@ -41,7 +44,6 @@ public class CommandStack {
         }
         while (!toDo.isEmpty()) {
             String s = toDo.pop();
-            System.out.println(s);
             myCommandType = getCommandType(s);
             if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) ||myCommandTypeMap.get("TurtleQueries").contains(s) ||
                 myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
