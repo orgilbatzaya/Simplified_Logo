@@ -43,7 +43,6 @@ public class CommandStack {
         done = new Stack<>();
         times = new HashMap<>();
         originalTimes = new HashMap<>();
-        int loopCounter = 1;
         for (String temp : myText) {
             toDo.push(temp);
         }
@@ -60,6 +59,8 @@ public class CommandStack {
                 }
                 Command temp = myFactory.makeCommand(s, tempArgs,myCommandType);
                 args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
+                System.out.println(s);
+                System.out.println(args.peek());
                 done.push(s);
             } else if (s.matches("DoTimes\\d*")) {
                 doTimes(s);
@@ -77,6 +78,7 @@ public class CommandStack {
                 }
             }
         }
+
         return args.pop();
     }
 
@@ -135,7 +137,6 @@ public class CommandStack {
             variables.put(variable, "" + (Integer.parseInt(start) + increment));
         }
         int curNum = Integer.parseInt(variables.get(variable));
-        System.out.println("CurNum = " + curNum);
         if(curNum + increment > end) {
             variables.put(variable, start);
         } else {
