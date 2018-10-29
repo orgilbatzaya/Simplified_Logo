@@ -1,4 +1,4 @@
-package view.environmentdisplays;
+package view;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
