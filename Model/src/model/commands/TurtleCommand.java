@@ -53,6 +53,7 @@ public abstract class TurtleCommand extends Command {
             turtleParams.get(activeIndexes.get(i)).put(Y_KEY,newY);
             turtleParams.get(activeIndexes.get(i)).put(DISTANCE_MOVED_KEY,turtleParams.get(activeIndexes.get(i)).get(DISTANCE_MOVED_KEY)+distance);
         }
+        System.out.println(activeIndexes.get(0));
 
 
 

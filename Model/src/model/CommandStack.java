@@ -69,7 +69,11 @@ public class CommandStack {
                 }
             }
             commandFinished = Boolean.FALSE;
+            ArrayList toDoList = new ArrayList(toDo);
 
+            for(int i = 0; i<toDoList.size(); i++){
+                System.out.println(toDoList.get(i));
+            }
 
             while (!toDo.isEmpty()) {
                 String s = toDo.pop();
@@ -240,7 +244,6 @@ public class CommandStack {
         int i = 0;
         while(i<list.size()){
             String s = list.get(i);
-//            System.out.println(s);
             if(getCommandType((s))!=null){
                 int numArgs = myNumArgsMap.get(s);
                 int num = 0;
