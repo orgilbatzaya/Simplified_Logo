@@ -14,7 +14,7 @@ public class Shape extends Action {
 
     @Override
     public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
-        turtleDisplay.changeTurtleImage((int) getArgsDouble(0));
+        turtleDisplay.changeTurtleImage((int) getArgsDouble(FIRST_INDEX));
     }
 }
 

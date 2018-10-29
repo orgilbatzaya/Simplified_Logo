@@ -37,7 +37,7 @@ public class TurtleSelector extends DropdownMenu {
         //turnOthersOff(choice);
 
         if(!t.isActive()){
-            t.getView().setEffect(new Glow(.6));
+            t.getView().setEffect(new DropShadow());
             t.activate();
         }
         else if(t.isActive()){
