@@ -16,25 +16,26 @@ public class BackMain {
     private Map<String, Set<String>> myCommandTypeMap;
     private ProgramParser myProgParser;
     private ProgramParser mySyntaxParser;
-    private ResourceBundle myLanguage;
     private HashMap<String, String> variables;
+    private HashMap<String, List<String>> functionMap;
+    private HashMap<String, List<String>> functionParams;
     private Map<String, Double> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
 
 
-    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams) {
+    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams, HashMap<String,String> vars) {
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
         mySyntaxParser = createProgramParser(ResourceBundle.getBundle("model/Syntax"));
         myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
         myCommandTypeMap = getMyCommandTypeMap(COMMAND_TYPE_PATH);
         myTurtleParameters = turtleParams;
-        variables = new HashMap<>();
         myTurtleActions = new ArrayList<>();
         myTurtleActionsArgs = new ArrayList<>();
-        myLanguage = lang;
-        variables = new HashMap<>();
+        variables = vars;
+        functionMap = new HashMap<>();
+        functionParams = new HashMap<>();
     }
 
 
@@ -91,6 +92,9 @@ public class BackMain {
                     brackets.push(commandList.get(index));
                     index++;
                     while(!brackets.isEmpty()) {
+                        if(commandList.get(index).equals("[")) {
+                            brackets.push(commandList.get(index));
+                        }
                         if(commandList.get(index).equals("]")) {
                             brackets.pop();
                         }
@@ -100,6 +104,9 @@ public class BackMain {
                     brackets.push(commandList.get(index));
                     index++;
                     while(!brackets.isEmpty()) {
+                        if(commandList.get(index).equals("[")) {
+                            brackets.push(commandList.get(index));
+                        }
                         if(commandList.get(index).equals("]")) {
                             brackets.pop();
                         }
@@ -111,11 +118,65 @@ public class BackMain {
                     brackets.push(commandList.get(index));
                     index++;
                     while(!brackets.isEmpty()) {
+                        if(commandList.get(index).equals("[")) {
+                            brackets.push(commandList.get(index));
+                        }
                         if(commandList.get(index).equals("]")) {
                             brackets.pop();
                         }
                         index++;
                     }
+                }
+            }
+            else if (s.equals("To")) {
+                index++;
+                String functionName = commandList.get(index);
+                List<String> params = new ArrayList<>();
+                index++;
+                Stack<String> brackets = new Stack<>();
+                brackets.push(commandList.get(index));
+                index++;
+                while(!brackets.isEmpty()) {
+                    String tempBracket = commandList.get(index);
+                    if(commandList.get(index).equals("[")) {
+                        brackets.push(commandList.get(index));
+                    }
+                    else if(tempBracket.equals("]")) {
+                        brackets.pop();
+                    }
+                    else {
+                        params.add(tempBracket);
+                    }
+                    index++;
+                }
+                functionParams.put(functionName, params);
+                List<String> functionCommands = new ArrayList<>();
+                brackets.push(commandList.get(index));
+                while(!brackets.isEmpty()) {
+                    String tempBracket = commandList.get(index);
+                    if(commandList.get(index).equals("[")) {
+                        brackets.push(commandList.get(index));
+                    }
+                    else if(tempBracket.equals("]")) {
+                        brackets.pop();
+                    }
+                    else {
+                        functionCommands.add(tempBracket);
+                    }
+                    index++;
+                }
+                functionMap.put(functionName, functionCommands);
+            }
+            else if (functionMap.containsKey(s)) {
+                index+=2;
+                for(String tempParam : functionParams.get(s)) {
+                    newCommands.add("Set");
+                    newCommands.add(tempParam);
+                    newCommands.add(commandList.get(index));
+                    index++;
+                }
+                for(String tempCommand : functionMap.get(s)) {
+                    newCommands.add(tempCommand);
                 }
             }
             else {
@@ -163,5 +224,8 @@ public class BackMain {
         return myTurtleActionsArgs;
     }
 
+    public HashMap<String,String> getVariables(){ return variables;}
+
+    public HashMap<String, List<String>> getFunctions(){ return functionMap;};
 
 }
