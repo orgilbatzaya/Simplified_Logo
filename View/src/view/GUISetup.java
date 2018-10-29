@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -60,11 +61,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private LanguageMenu myLanguageMenu;
     private StatusDisplay turtleInfo;
     private TurtleSelector mySelector;
-
-    private static final double DEFAULT_PEN = 1;
-    private static final double DEFAULT_VISIBLE = 1;
-    private static final double INITIAL_DISTANCE_MOVED = 0;
-
 
     public GUISetup() {
         myDisplays = new ArrayList<>();
@@ -138,10 +134,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         return directions;
     }
 
-
-
-
-    //External API maybe
     public Scene getScene() {
         return myScene;
     }
@@ -152,8 +144,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     }
 
     public Console getConsole(){return myConsole; }
-
-
 
     public ResourceBundle getLanguage() {
         return myLanguageMenu.getLanguage();
