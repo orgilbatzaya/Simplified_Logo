@@ -19,6 +19,8 @@ public abstract class Action {
     public double getArgsDouble(int index){
         return myArgs.get(index);
     }
+
+    public List<Double> getMyArgs(){return myArgs; }
 }
 
 

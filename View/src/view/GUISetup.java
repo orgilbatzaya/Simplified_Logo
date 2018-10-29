@@ -121,12 +121,16 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
     public Map<String,Double> getTurtleParams(){
         HashMap<String,Double> mapOut = new HashMap<>();
-        Double[] valueElements = {currentDisplay.getMyTurtle().getHeading(),
-                currentDisplay.getMyTurtle().getX(),
-                currentDisplay.getMyTurtle().getY(),
-                DEFAULT_PEN,DEFAULT_VISIBLE,INITIAL_DISTANCE_MOVED};
-        for(int i = 0; i<keyElements.length;i++){
-            mapOut.put(keyElements[i],valueElements[i]);
+        for(int i = 0; i<currentDisplay.getTurtles().size(); i++) {
+            Double[] valueElements = {currentDisplay.getTurtles().get(i).getHeading(),
+                    currentDisplay.getTurtles().get(i).getX(),
+                    currentDisplay.getTurtles().get(i).getY(),
+                    DEFAULT_PEN, DEFAULT_VISIBLE, INITIAL_DISTANCE_MOVED,
+                    (double) currentDisplay.getTurtles().get(i).getMyID(),
+                    (double) (currentDisplay.getTurtles().get(i).isActive()?1:0)};
+            for (int j = 0; j < keyElements.length; j++) {
+                mapOut.put(keyElements[i], valueElements[i]);
+            }
         }
         return mapOut;
     }
