@@ -11,7 +11,7 @@ public class Forward extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         double valueForward = getArgsDouble(0);
 
         move(valueForward,turtleAction, turtleActionArgs, turtleParams);

@@ -17,8 +17,8 @@ import view.button.PlayPauseButton;
 import view.colorpicker.BackgroundColor;
 import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
-import view.environmentdisplays.StatusDisplay;
 import view.dropdown.TurtleSelector;
+import view.environmentdisplays.StatusDisplay;
 
 import java.util.*;
 
@@ -72,7 +72,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        //currentD = new TurtleDisplay(width,height);
+        currentD = new TurtleDisplay(width,height);
         root.getChildren().add(makeTabs());
         return scene;
     }
@@ -114,11 +114,11 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
         Pane p1 = makePane();
         Pane p2 = makePane();
-        currentD = myDisplays.get(0);
+        //currentD = myDisplays.get(0);
         t1.setContent(p1);
-        t1.setOnSelectionChanged(event -> currentD = myDisplays.get(1));
+        t1.setOnSelectionChanged(event -> currentD = myDisplays.get(0));
         t2.setContent(p2);
-        t2.setOnSelectionChanged(event -> currentD = myDisplays.get(0));
+        t2.setOnSelectionChanged(event -> currentD = myDisplays.get(1));
         tabPane.getTabs().addAll(t1,t2);
         return tabPane;
     }
@@ -151,20 +151,22 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
     public Console getConsole(){return myConsole; }
 
-//    public Map<String,Double> getTurtleParams(){
-//        HashMap<String,Double> mapOut = new HashMap<>();
-//        for(int i = 0; i<currentD.getTurtles().size(); i++) {
-//            Double[] valueElements = {currentD.getTurtles().get(i).getHeading(),
-//                    currentD.getTurtles().get(i).getX(),
-//                    currentD.getTurtles().get(i).getY(),
+
+//    public List<Map<String,Double>> getTurtleParams(){
+//        List<Map<String,Double>> outList = new ArrayList<>();
+//        for(int i = 0; i<currentDisplay.getTurtles().size(); i++) {
+//            outList.add(new HashMap<String,Double>());
+//            Double[] valueElements = {currentDisplay.getTurtles().get(i).getHeading(),
+//                    currentDisplay.getTurtles().get(i).getX(),
+//                    currentDisplay.getTurtles().get(i).getY(),
 //                    DEFAULT_PEN, DEFAULT_VISIBLE, INITIAL_DISTANCE_MOVED,
-//                    (double) currentD.getTurtles().get(i).getMyID(),
-//                    (double) (currentD.getTurtles().get(i).isActive()?1:0)};
+//                    (double) currentDisplay.getTurtles().get(i).getMyID(),
+//                    (double) (currentDisplay.getTurtles().get(i).isActive()?1:0)};
 //            for (int j = 0; j < keyElements.length; j++) {
-//                mapOut.put(keyElements[i], valueElements[i]);
+//                outList.get(i).put(keyElements[j], valueElements[j]);
 //            }
 //        }
-//        return mapOut;
+//        return outList;
 //    }
 
     public ResourceBundle getLanguage() {

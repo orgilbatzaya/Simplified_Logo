@@ -11,7 +11,7 @@ public class PenDown extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         pen(ONE_DOUBLE,turtleAction,turtleActionArgs,turtleParams);
         return 1;
     }

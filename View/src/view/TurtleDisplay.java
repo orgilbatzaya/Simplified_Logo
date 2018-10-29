@@ -13,7 +13,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -207,19 +209,20 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
             myTurtles.get(i).deactivate();
         }
     }
-    public Map<String,Double> getTurtleParams() {
-        HashMap<String, Double> mapOut = new HashMap<>();
-        for (int i = 0; i < this.getTurtles().size(); i++) {
+    public List<Map<String,Double>> getTurtleParams(){
+        List<Map<String,Double>> outList = new ArrayList<>();
+        for(int i = 0; i<this.getTurtles().size(); i++) {
+            outList.add(new HashMap<String,Double>());
             Double[] valueElements = {this.getTurtles().get(i).getHeading(),
                     this.getTurtles().get(i).getX(),
                     this.getTurtles().get(i).getY(),
                     DEFAULT_PEN, DEFAULT_VISIBLE, INITIAL_DISTANCE_MOVED,
                     (double) this.getTurtles().get(i).getMyID(),
-                    (double) (this.getTurtles().get(i).isActive() ? 1 : 0)};
+                    (double) (this.getTurtles().get(i).isActive()?1:0)};
             for (int j = 0; j < keyElements.length; j++) {
-                mapOut.put(keyElements[i], valueElements[i]);
+                outList.get(i).put(keyElements[j], valueElements[j]);
             }
         }
-        return mapOut;
+        return outList;
     }
 }

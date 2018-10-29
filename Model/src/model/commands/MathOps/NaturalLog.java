@@ -11,7 +11,7 @@ public class NaturalLog extends Command {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         double inputVal = getArgsDouble(0);
         return Math.log(inputVal);
     }

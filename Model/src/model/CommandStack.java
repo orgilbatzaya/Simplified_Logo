@@ -9,7 +9,7 @@ public class CommandStack {
     private List<String> myText;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
-    private Map<String, Double> myTurtleParameters;
+    private List<Map<String, Double>> myTurtleParameters;
     private Map<String, Set<String>> myCommandTypeMap;
     private Stack<String> toDo;
     private Stack<String> args;
@@ -22,7 +22,7 @@ public class CommandStack {
     private boolean commandFinished;
 
 
-    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
+    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, List<Map<String, Double>> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
         this.myTurtleActionsArgs = myTurtleActionArgs;
         this.myTurtleParameters = myTurtleParameters;
@@ -42,6 +42,7 @@ public class CommandStack {
         times = new HashMap<>();
         originalTimes = new HashMap<>();
         for (String temp : myText) {
+            //toDo.push(temp);
             all.add(temp);
         }
 
@@ -67,14 +68,12 @@ public class CommandStack {
                     commandFinished = Boolean.TRUE;
                 }
             }
-
-
-
             commandFinished = Boolean.FALSE;
 
 
             while (!toDo.isEmpty()) {
                 String s = toDo.pop();
+                System.out.println(s);
                 myCommandType = getCommandType(s);
                 if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) || myCommandTypeMap.get("TurtleQueries").contains(s) ||
                         myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
@@ -97,14 +96,22 @@ public class CommandStack {
                 } else if (s.equals("[") || s.equals("]")) {
                     done.push(s);
                 } else if (s.equals("MakeVariable")) {
+                    //System.out.println(done.peek() + " " + args.peek());
                     variables.put(done.peek().substring(1), args.peek());
                     done.push(s);
+                    /*
+                    while(!args.isEmpty()) {
+                        System.out.println(args.pop());
+                    }
+                    */
                 } else if (s.matches(":[a-zA-Z]+")) {
                     String temp = s.substring(1);
                     if (!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
                         variables.put(temp, args.peek());
-                    } else if (variables.containsKey(temp)) {
-                        args.push(variables.get(temp));
+                    } else if (!toDo.isEmpty()) {
+                        if (variables.containsKey(temp) && !toDo.peek().equals("MakeVariable")) {
+                            args.push(variables.get(temp));
+                        }
                     }
                     done.push(s);
                 } else if (s.matches("tell")){

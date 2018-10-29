@@ -10,7 +10,7 @@ public class SetPosition extends TurtleCommand {
         super(args);
     }
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         double xPos = getArgsDouble(0);
         double yPos = getArgsDouble(1);
         return position(xPos,yPos,turtleAction,turtleActionArgs,turtleParams);

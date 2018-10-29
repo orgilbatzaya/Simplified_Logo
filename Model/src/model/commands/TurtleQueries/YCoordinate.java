@@ -11,8 +11,8 @@ public class YCoordinate extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
-        return turtleParams.get(Y_KEY);
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
+        return turtleParams.get(0).get(Y_KEY);
 
     }
 }
