@@ -108,7 +108,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
     }
 
     public void runCommand(String command) {
-        Map<String, Double> commandParams = parentGUI.getTurtleParams();
+        Map<String, Double> commandParams = parentGUI.getCurrentDisplay().getTurtleParams();
         HashMap<String, String> vars = myVariables;
         BackMain back = new BackMain(parentGUI.getLanguage(), commandParams,vars);
         back.performCommands(command);
