@@ -1,5 +1,7 @@
 package view;
 
+import model.ErrorAlert;
+
 import java.util.ResourceBundle;
 
 /**
@@ -13,4 +15,16 @@ public interface ViewResourceBundles {
     ResourceBundle myDefaults = ResourceBundle.getBundle("/resources/ViewDefaults");
     ResourceBundle myArgs = ResourceBundle.getBundle("/resources/NumArgsActions");
     ResourceBundle myDirections = ResourceBundle.getBundle("/resources/Directions");
+
+    default String getDefault(String key) {
+        return myDefaults.getString(key);
+    }
+    default double getDefaultDouble(String key) {
+        try {
+            return Double.parseDouble(myDefaults.getString(key));
+        } catch (Exception e) {
+            new ErrorAlert(e);
+            return 0;
+        }
+    }
 }

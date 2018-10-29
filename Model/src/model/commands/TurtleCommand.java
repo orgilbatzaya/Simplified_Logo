@@ -53,6 +53,7 @@ public abstract class TurtleCommand extends Command {
             turtleParams.get(activeIndexes.get(i)).put(Y_KEY,newY);
             turtleParams.get(activeIndexes.get(i)).put(DISTANCE_MOVED_KEY,turtleParams.get(activeIndexes.get(i)).get(DISTANCE_MOVED_KEY)+distance);
         }
+        System.out.println(activeIndexes.get(0));
 
 
 
@@ -73,7 +74,7 @@ public abstract class TurtleCommand extends Command {
 
     public double clear(List<String> turtleActions, List<Double> turtleArgs, List<Map<String,Double>> turtleParams){
         turtleActions.add(CLEAR_ACTION);
-
+        getActiveIndexes(turtleParams);
         double distance = turtleParams.get(activeIndexes.get(0)).get(DISTANCE_MOVED_KEY);
         turtleParams.get(activeIndexes.get(0)).put(DISTANCE_MOVED_KEY,ZERO_DOUBLE);
 
