@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import view.Function;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class is intended to display the different functions created by the user.
@@ -64,7 +65,7 @@ public class FunctionDisplay implements EnvironmentDisplay {
         return column;
     }
 
-    public void update(HashMap<String, String[]> functionMap) {
+    public void update(HashMap<String, List<String>> functionMap) {
         currentItems.clear();
         for(String s : functionMap.keySet()) {
             Function f = new Function(s, functionMap.get(s));
