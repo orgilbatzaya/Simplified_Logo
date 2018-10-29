@@ -20,11 +20,4 @@ public class ErrorAlert {
         myAlert.showAndWait();
 
     }
-    public void displayAlert(){
-        myAlert.showAndWait();
-
-    }
-
-
-
 }

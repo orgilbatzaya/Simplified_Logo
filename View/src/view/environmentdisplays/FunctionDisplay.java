@@ -20,7 +20,7 @@ public class FunctionDisplay implements EnvironmentDisplay {
     private static final String NAME_TITLE = "Functions";
     private static final String DEFINITION_TITLE = "Function Definitions";
     private static final String NAME_PROPERTY = "functionName";
-    private static final String DEFINITION_PROPERTY = "variableValue";
+    private static final String DEFINITION_PROPERTY = "functionDefinition";
 
     private TableView<Function> currentDisplay;
     private ObservableList<Function> currentItems;
@@ -37,29 +37,14 @@ public class FunctionDisplay implements EnvironmentDisplay {
         currentDisplay.setMaxHeight(height);
         currentDisplay.getColumns().addAll(currentFunctionNames, currentFunctions);
         myBox = new VBox(displayLabel, currentDisplay);
-        //currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getSelectionModel().getSelectedItem()));
-    }
-
-    @Override
-    public void addItem(String item) {
-
-    }
-
-    @Override
-    public void removeItem(String item) {
-
-    }
-
-    @Override
-    public void editItem(String item) {
-
     }
 
     public VBox getDisplay() {
         return myBox;
     }
 
-    private TableColumn createTableColumn(String title, String property) {
+    @Override
+    public TableColumn createTableColumn(String title, String property) {
         TableColumn column = new TableColumn(title);
         column.setCellValueFactory(new PropertyValueFactory<Function, String>(property));
         return column;
@@ -72,5 +57,9 @@ public class FunctionDisplay implements EnvironmentDisplay {
             currentItems.add(f);
         }
         currentDisplay.setItems(currentItems);
+    }
+
+    public List<Function> getFunctions() {
+        return currentItems;
     }
 }

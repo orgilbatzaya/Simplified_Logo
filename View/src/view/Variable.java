@@ -23,4 +23,12 @@ public class Variable {
     public String getVariableValue() {
         return variableValue.get();
     }
+
+    public void setVariableName(String newName) {
+        variableName.setValue(newName);
+    }
+
+    public void setVariableValue(String newValue) {
+        variableValue.setValue(newValue);
+    }
 }
