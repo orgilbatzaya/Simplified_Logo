@@ -170,15 +170,16 @@ public class BackMain {
             }
             else if (functionMap.containsKey(s)) {
                 index+=2;
+                for(String tempCommand : functionMap.get(s)) {
+                    newCommands.add(tempCommand);
+                }
                 for(String tempParam : functionParams.get(s)) {
                     newCommands.add("Set");
                     newCommands.add(tempParam);
                     newCommands.add(commandList.get(index));
                     index++;
                 }
-                for(String tempCommand : functionMap.get(s)) {
-                    newCommands.add(tempCommand);
-                }
+                index++;
             }
             else {
                 newCommands.add(commandList.get(index));
@@ -188,6 +189,13 @@ public class BackMain {
         if(newCommands.isEmpty()) {
             return;
         }
+        /*
+        for(String temp : newCommands) {
+            System.out.print(temp + " ");
+        }
+        System.out.println();
+        */
+
         CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
         result.execute(variables);
 
