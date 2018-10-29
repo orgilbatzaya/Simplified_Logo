@@ -20,6 +20,7 @@ public class CommandStack {
     private String myCommandType;
     private LinkedList<String> all;
     private boolean commandFinished;
+    private boolean isFor;
 
 
     public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, List<Map<String, Double>> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
@@ -32,6 +33,7 @@ public class CommandStack {
         myText = text;
         doCounter = 1;
         commandFinished = Boolean.FALSE;
+        isFor = false;
     }
 
     public String execute(HashMap<String, String> variables){
@@ -70,11 +72,11 @@ public class CommandStack {
             }
             commandFinished = Boolean.FALSE;
             ArrayList toDoList = new ArrayList(toDo);
-
+/*
             for(int i = 0; i<toDoList.size(); i++){
                 System.out.println(toDoList.get(i));
             }
-
+*/
             while (!toDo.isEmpty()) {
                 String s = toDo.pop();
                 System.out.println(s);
@@ -113,13 +115,11 @@ public class CommandStack {
                     if (!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
                         variables.put(temp, args.peek());
                     } else if (!toDo.isEmpty()) {
-                        if (variables.containsKey(temp) && !toDo.peek().equals("MakeVariable")) {
+                        if (variables.containsKey(temp) && !toDo.peek().equals("MakeVariable") && !isFor) {
                             args.push(variables.get(temp));
                         }
                     }
                     done.push(s);
-                } else if (s.matches("tell")){
-
                 }
             }
         }
@@ -172,6 +172,7 @@ public class CommandStack {
     }
 
     private void forLoop(HashMap<String, String> variables) {
+        isFor = true;
         Stack<String> brackets = new Stack<String>();
         brackets.push("[");
         done.pop();
@@ -182,11 +183,15 @@ public class CommandStack {
         if(!variables.containsKey(variable.substring(1))) {
             variables.put(variable.substring(1), "" + (Integer.parseInt(start) + increment));
         }
+        else {
+            variables.put(variable.substring(1), "" + (Integer.parseInt(variables.get(variable.substring(1))) + increment));
+        }
         int curNum = Integer.parseInt(variables.get(variable.substring(1)));
-        if(curNum + increment > end) {
+        if(curNum >= end) {
             variables.put(variable.substring(1), start);
+            isFor = false;
         } else {
-            variables.put(variable.substring(1), "" + (curNum + increment));
+            //variables.put(variable.substring(1), "" + (curNum + increment));
             toDo.push("For");
             toDo.push("[");
             toDo.push(variable);

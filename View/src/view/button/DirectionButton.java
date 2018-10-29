@@ -3,6 +3,10 @@ package view.button;
 import view.Console;
 import view.ViewResourceBundles;
 
+/**
+ * @author Orgil Batzaya
+ */
+
 public class DirectionButton extends SLogoButton implements ViewResourceBundles {
     private String direction;
     private Console console;

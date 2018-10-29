@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import view.environmentdisplays.StatusDisplay;
 import view.fields.DurationField;
 
 import java.util.ArrayList;
@@ -22,12 +23,14 @@ import java.util.Map;
  * @author Orgil Batzaya, Austin Kao
  */
 
-public class TurtleDisplay extends StackPane implements FrontExternal,ViewResourceBundles{
+public class TurtleDisplay extends StackPane implements FrontExternal, ViewResourceBundles{
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
-    private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
     private static final String DURATION_LABEL = "duration";
+    private static final int OFFSET = 30;
+    private static final int ZERO = 0;
+    private static final int TWO = 2;
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -40,10 +43,16 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
     private TurtleView myTurtle;
+    private StatusDisplay currentInfo;
 
     private static final double DEFAULT_PEN = 1;
     private static final double DEFAULT_VISIBLE = 1;
     private static final double INITIAL_DISTANCE_MOVED = 0;
+
+    private static final double INFO_LAYOUT_X = 800;
+    private static final double INFO_LAYOUT_Y = 50;
+    private static final double TURTLE_INFO_HEIGHT = 100;
+    private static final String TURTLE_INFO_LABEL = "turtleInfo";
 
 
     public TurtleDisplay(double width, double height) {
@@ -58,6 +67,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
         makeTurtles();
         colorMap = new HashMap<>();
         myCurrentAnimation = new SequentialTransition();
+        createTurtleInfo();
     }
 
     private void initializeCanvas(double width, double height) {
@@ -78,12 +88,13 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
         return myDuration.getDisplay();
     }
 
+
     private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
             TurtleView t = new TurtleView(i);
-            t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
+            t.getView().setX(zeroPos.getX() + i*OFFSET - midPoint(0, t.getView().getFitWidth()));
             t.getView().setY(zeroPos.getY() - midPoint(0, t.getView().getFitHeight()));
-            t.setNewCoordinates(0 + i*30,0);
+            t.setNewCoordinates(0 + i*OFFSET,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
         }
@@ -188,7 +199,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
     }
 
     private double midPoint(double a, double b) {
-        return (a + b)/2;
+        return (a + b)/TWO;
     }
 
     public void deactivateAllTurtles(){
@@ -211,5 +222,14 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
             }
         }
         return outList;
+    }
+
+    public void createTurtleInfo(){
+        currentInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, getDefault(TURTLE_INFO_LABEL), this);
+        currentInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
+        currentInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
+    }
+    public StatusDisplay getTurtleInfoDisplay() {
+        return currentInfo;
     }
 }

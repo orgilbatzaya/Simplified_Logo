@@ -9,6 +9,9 @@ import javafx.scene.layout.VBox;
  * @author Austin Kao
  */
 public class CommandLine {
+    private static final int DEFAULT_WIDTH = 300;
+    private static final int DEFAULT_HEIGHT = 20;
+
     private TextArea userInput;
     private double commandLineHeight;
     private String myCommand;
@@ -21,8 +24,8 @@ public class CommandLine {
 
     public TextArea createUserCommandLine() {
         TextArea input = new TextArea();
-        input.setPrefWidth(300);
-        input.setPrefHeight(20);
+        input.setPrefWidth(DEFAULT_WIDTH);
+        input.setPrefHeight(DEFAULT_HEIGHT);
         commandLineHeight = input.getPrefHeight();
         input.setOnKeyPressed(e -> increaseHeight(e.getCode()));
         return input;

@@ -34,12 +34,9 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final double CANVAS_WIDTH = 400;
     private static final double CANVAS_HEIGHT = 400;
     private static final double CONSOLE_LAYOUT_X = 50;
-    private static final double CONSOLE_LAYOUT_Y = 400;
+    private static final double CONSOLE_LAYOUT_Y = 450;
     private static final double OPTIONS_LAYOUT_X = 500;
     private static final double OPTIONS_LAYOUT_Y = 50;
-    private static final double INFO_LAYOUT_X = 800;
-    private static final double INFO_LAYOUT_Y = 50;
-    private static final double TURTLE_INFO_HEIGHT = 100;
     private static final String PEN_LABEL = "pen";
     private static final String LANGUAGE_LABEL = "language";
     private static final String BACKGROUND_LABEL = "background";
@@ -48,10 +45,10 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final String HELP_LABEL = "help";
     private static final String CHANGE_TURTLE_LABEL = "turtleChange";
     private static final String[] DIRECTIONS = {"Up","Down","Left","Right"};
-    private static final String TURTLE_INFO_LABEL = "turtleInfo";
     private static final String SPACING = "defaultSpacing";
     private static final Color PEN_COLOR = Color.RED;
     private static final Color BACKGROUND_COLOR = Color.WHITE;
+    private static final int NUM_DEFAULT_TABS = 5;
 
     private Scene myScene;
     private Group root;
@@ -59,7 +56,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private TurtleDisplay currentD;
     private ArrayList<TurtleDisplay> myDisplays;
     private LanguageMenu myLanguageMenu;
-    private StatusDisplay turtleInfo;
     private TurtleSelector mySelector;
 
     public GUISetup() {
@@ -70,7 +66,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        currentD = new TurtleDisplay(width,height);
         root.getChildren().add(makeTabs());
         return scene;
     }
@@ -94,11 +89,8 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         userOptions.setLayoutX(OPTIONS_LAYOUT_X);
         userOptions.setLayoutY(OPTIONS_LAYOUT_Y);
 
-        turtleInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, getDefault(TURTLE_INFO_LABEL), currentDisplay);
-        turtleInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
-        turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
         Pane pane = new Pane();
-        pane.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
+        pane.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, currentDisplay.getTurtleInfoDisplay().getDisplay());
         myDisplays.add(currentDisplay);
 
         return pane;
@@ -107,23 +99,18 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
     public TabPane makeTabs(){
         TabPane tabPane = new TabPane();
-        Tab t1 = new Tab("first");
-        Tab t2 = new Tab("second");
 
-        Pane p1 = makePane();
-        Pane p2 = makePane();
-        //currentD = myDisplays.get(0);
-        t1.setContent(p1);
-        t1.setOnSelectionChanged(event -> currentD = myDisplays.get(0));
-        t2.setContent(p2);
-        t2.setOnSelectionChanged(event -> currentD = myDisplays.get(1));
-        tabPane.getTabs().addAll(t1,t2);
+        for(int i = 0; i < NUM_DEFAULT_TABS; i++){
+            Tab t = new Tab(Integer.toString(i));
+            Pane p = makePane();
+            t.setContent(p);
+            final int index = i;
+            t.setOnSelectionChanged(event -> currentD = myDisplays.get(index));
+            tabPane.getTabs().add(t);
+        }
         return tabPane;
     }
 
-    public void switchDisplays(){
-
-    }
 
     public HBox createDirectionButtons(){
         HBox directions = new HBox();;
@@ -153,7 +140,4 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         return currentD;
     }
 
-    public StatusDisplay getTurtleInfoDisplay() {
-        return turtleInfo;
-    }
 }
