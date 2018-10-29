@@ -17,6 +17,8 @@ public class ErrorAlert {
         myAlert.setTitle(ERROR_STRING);
         myAlert.setHeaderText(ERROR_HEADER);
         myAlert.setContentText(ex.getMessage());
+        myAlert.showAndWait();
+
     }
     public void displayAlert(){
         myAlert.showAndWait();

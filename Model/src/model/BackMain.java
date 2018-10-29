@@ -48,7 +48,18 @@ public class BackMain {
     }
 
     public void performCommands(String rawText) {
-        String[] text = rawText.split("\\s+");
+        String[] lineText = rawText.split("\\n+");
+        String newText = new String("");
+        for(int i = 0 ; i < lineText.length; i ++) {
+            String firstChar = lineText[i].substring(0,1);
+            if(!(firstChar.equals(".") || firstChar.equals("^") || firstChar.equals("#") || firstChar.equals("*"))) {
+                newText = newText + lineText[i] + " ";
+            }
+        }
+        if(newText.length() == 0) {
+            return;
+        }
+        String[] text = newText.split("\\s+");
         for (int i = 0; i < text.length; i++) {
             text[i] = myProgParser.getSymbol(text[i]);
         }
@@ -189,12 +200,12 @@ public class BackMain {
         if(newCommands.isEmpty()) {
             return;
         }
-        /*
+
         for(String temp : newCommands) {
             System.out.print(temp + " ");
         }
         System.out.println();
-        */
+
 
         CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
         result.execute(variables);

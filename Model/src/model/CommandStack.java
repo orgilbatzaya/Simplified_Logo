@@ -37,94 +37,102 @@ public class CommandStack {
     }
 
     public String execute(HashMap<String, String> variables){
-        toDo = new Stack<>();
-        args = new Stack<>();
-        done = new Stack<>();
-        all = new LinkedList<>();
-        times = new HashMap<>();
-        originalTimes = new HashMap<>();
-        for (String temp : myText) {
-            //toDo.push(temp);
-            all.add(temp);
-        }
+        try {
+            toDo = new Stack<>();
+            args = new Stack<>();
+            done = new Stack<>();
+            all = new LinkedList<>();
+            times = new HashMap<>();
+            originalTimes = new HashMap<>();
+            for (String temp : myText) {
+                //toDo.push(temp);
+                all.add(temp);
+            }
 
-        while (!all.isEmpty()) {
+            while (!all.isEmpty()) {
 //            for(int i = 0; i<all.size(); i++){
 //                System.out.println(all.get(i));
 //            }
-            while (!commandFinished) {
-                try{
-                    String temp = all.removeFirst();
-                    if(myCommandTypeMap.get("OtherCommands").contains(temp)){
-                        toDo.push(temp);
-                        fillStack(toDo,all);
+                while (!commandFinished) {
+                    try {
+                        String temp = all.removeFirst();
+                        if (myCommandTypeMap.get("OtherCommands").contains(temp)) {
+                            toDo.push(temp);
+                            fillStack(toDo, all);
+                            commandFinished = Boolean.TRUE;
+                        } else {
+                            toDo.push(temp);
+                            commandFinished = isCommandFinished(toDo);
+                        }
+
+
+                    } catch (Exception e) {
                         commandFinished = Boolean.TRUE;
                     }
-                    else{
-                        toDo.push(temp);
-                        commandFinished = isCommandFinished(toDo);
-                    }
-
-
-                } catch(Exception e){
-                    commandFinished = Boolean.TRUE;
                 }
-            }
-            commandFinished = Boolean.FALSE;
-            ArrayList toDoList = new ArrayList(toDo);
+                commandFinished = Boolean.FALSE;
+                ArrayList toDoList = new ArrayList(toDo);
 /*
             for(int i = 0; i<toDoList.size(); i++){
                 System.out.println(toDoList.get(i));
             }
 */
-            while (!toDo.isEmpty()) {
-                String s = toDo.pop();
-                System.out.println(s);
-                myCommandType = getCommandType(s);
-                if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) || myCommandTypeMap.get("TurtleQueries").contains(s) ||
-                        myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
-                    int numArgs = myNumArgsMap.get(s);
-                    LinkedList<String> tempArgs = new LinkedList<>();
-                    for (int i = 0; i < numArgs; i++) {
-                        tempArgs.add(args.pop());
-                    }
-                    Command temp = myFactory.makeCommand(s, tempArgs, myCommandType);
-                    args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
-                    //System.out.println(s + " " + args.peek());
-                    done.push(s);
-                } else if (s.matches("DoTimes\\d*")) {
-                    doTimes(s, variables);
-                } else if (s.matches("For")) {
-                    forLoop(variables);
-                } else if (isDouble(s)) {
-                    args.push(s);
-                    done.push(s);
-                } else if (s.equals("[") || s.equals("]")) {
-                    done.push(s);
-                } else if (s.equals("MakeVariable")) {
-                    //System.out.println(done.peek() + " " + args.peek());
-                    variables.put(done.peek().substring(1), args.peek());
-                    done.push(s);
+                while (!toDo.isEmpty()) {
+                    String s = toDo.pop();
+                    System.out.println(s);
+                    myCommandType = getCommandType(s);
+                    if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) || myCommandTypeMap.get("TurtleQueries").contains(s) ||
+                            myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
+                        int numArgs = myNumArgsMap.get(s);
+                        LinkedList<String> tempArgs = new LinkedList<>();
+                        for (int i = 0; i < numArgs; i++) {
+                            if(args.isEmpty()) {
+                                throw new Exception("Incorrect Syntax");
+                            }
+                            tempArgs.add(args.pop());
+                        }
+                        Command temp = myFactory.makeCommand(s, tempArgs, myCommandType);
+                        args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
+                        //System.out.println(s + " " + args.peek());
+                        done.push(s);
+                    } else if (s.matches("DoTimes\\d*")) {
+                        doTimes(s, variables);
+                    } else if (s.matches("For")) {
+                        forLoop(variables);
+                    } else if (isDouble(s)) {
+                        args.push(s);
+                        done.push(s);
+                    } else if (s.equals("[") || s.equals("]")) {
+                        done.push(s);
+                    } else if (s.equals("MakeVariable")) {
+                        //System.out.println(done.peek() + " " + args.peek());
+                        variables.put(done.peek().substring(1), args.peek());
+                        done.push(s);
                     /*
                     while(!args.isEmpty()) {
                         System.out.println(args.pop());
                     }
                     */
-                } else if (s.matches(":[a-zA-Z]+")) {
-                    String temp = s.substring(1);
-                    if (!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
-                        variables.put(temp, args.peek());
-                    } else if (!toDo.isEmpty()) {
-                        if (variables.containsKey(temp) && !toDo.peek().equals("MakeVariable") && !isFor) {
-                            args.push(variables.get(temp));
+                    } else if (s.matches(":[a-zA-Z]+")) {
+                        String temp = s.substring(1);
+                        if (!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
+                            variables.put(temp, args.peek());
+                        } else if (!toDo.isEmpty()) {
+                            if (variables.containsKey(temp) && !toDo.peek().equals("MakeVariable") && !isFor) {
+                                args.push(variables.get(temp));
+                            }
                         }
+                        done.push(s);
+                    } else {
+                        throw new Exception("Unrecognized Input");
                     }
-                    done.push(s);
                 }
             }
+            return args.pop();
+        } catch (Exception e) {
+            new ErrorAlert(e);
+            return null;
         }
-
-        return args.pop();
     }
 
     private void doTimes(String s, HashMap<String, String> variables) {
