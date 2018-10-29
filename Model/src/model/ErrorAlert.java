@@ -18,5 +18,12 @@ public class ErrorAlert {
         myAlert.setHeaderText(ERROR_HEADER);
         myAlert.setContentText(ex.getMessage());
         myAlert.showAndWait();
+
     }
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> master
 }

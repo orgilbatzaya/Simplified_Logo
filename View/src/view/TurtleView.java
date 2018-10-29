@@ -12,6 +12,7 @@ public class TurtleView {
     private static final int DEFAULT_STARTING_POS = 0;
     private static final int DEFAULT_TURTLE_WIDTH = 30;
     private static final int DEFAULT_TURTLE_HEIGHT = 30;
+    private static final int TWO = 2;
 
     private boolean active;
     private boolean visible;
@@ -104,7 +105,7 @@ public class TurtleView {
     public double setNewCoordinates(double x, double y) {
         xPos = x;
         yPos = y;
-        myDistanceTraveled = Math.sqrt(Math.pow(xPos, 2) + Math.pow(yPos, 2));
+        myDistanceTraveled = Math.sqrt(Math.pow(xPos, TWO) + Math.pow(yPos, TWO));
         return myDistanceTraveled;
     }
 

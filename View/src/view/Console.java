@@ -10,9 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.BackMain;
-import view.button.LoadButton;
-import view.button.SLogoButton;
-import view.button.SaveButton;
+import view.button.*;
 import view.environmentdisplays.FunctionDisplay;
 import view.environmentdisplays.PastCommandDisplay;
 import view.environmentdisplays.VariableDisplay;
@@ -42,6 +40,10 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private static final String RUN_LABEL = "run";
     private static final String CANCEL_LABEL = "cancel";
     private static final String SPACING = "defaultMediumSpacing";
+    private static final String SAVE_FUNCTION_NAME = "Functions1.properties";
+    private static final String SAVE_VARIABLE_NAME = "Variables1.properties";
+    private static final String LOAD_FUNCTION_NAME = "Functions1.properties";
+    private static final String LOAD_VARIABLE_NAME = "Variables1.properties";
 
     private CommandLine myCommandLine;
     private String currentCommand;
@@ -65,9 +67,15 @@ public class Console implements FrontExternal, ViewResourceBundles {
         pastCommands.getPastCommandList().setOnMouseClicked(e -> createRunInterface(pastCommands.getPastCommandList().getSelectionModel().getSelectedItem()));
         currentVariables = new VariableDisplay(DISPLAY_HEIGHT, getDefault(VARIABLE_LABEL));
         currentFunctions = new FunctionDisplay(DISPLAY_HEIGHT, getDefault(FUNCTION_LABEL));
-        SLogoButton saveButton = new SaveButton("Save", this);
-        SLogoButton loadButton = new LoadButton("Load", this);
-        HBox buttonBox = new HBox(saveButton.getDisplay(), loadButton.getDisplay());
+        SLogoButton saveFunctionsButton = new SaveFunctions("Save Functions", myFunctionsCommands,SAVE_FUNCTION_NAME,this);
+        SLogoButton loadFunctionsButton = new LoadFunctions("Load Functions",currentFunctions ,this);
+        SLogoButton saveVariablesButton = new SaveVariables("Save Variables", myVariables, SAVE_VARIABLE_NAME,this);
+        SLogoButton loadVariablesButton = new LoadVariables("Load Variables",currentVariables ,this);
+        HBox buttonBox = new HBox(saveFunctionsButton.getDisplay(), loadFunctionsButton.getDisplay(), saveVariablesButton.getDisplay(),loadVariablesButton.getDisplay());
+
+
+
+
         VBox rightColumn = new VBox(currentVariables.getDisplay(), currentFunctions.getDisplay(), buttonBox);
         rightColumn.setSpacing(getDefaultDouble(SPACING));
         submitButton.setOnAction(event -> processCommand());
@@ -130,7 +138,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
-        parentGUI.getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
+        parentGUI.getCurrentDisplay().getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
         myVariables = back.getVariables();
         myFunctionsCommands = back.getFunctions();
         myFunctionsParams = back.getFunctionsParms();

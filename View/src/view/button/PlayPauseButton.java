@@ -7,6 +7,8 @@ import view.TurtleDisplay;
  * @author Austin Kao
  */
 public class PlayPauseButton extends SLogoButton{
+    private static final String PLAY = "Play";
+    private static final String PAUSE = "Pause";
     private TurtleDisplay myDisplay;
 
     public PlayPauseButton(String label, TurtleDisplay display) {
@@ -16,12 +18,12 @@ public class PlayPauseButton extends SLogoButton{
 
     @Override
     public void processCommand() {
-        if(getDisplay().getText().equals("Play")) {
+        if(getDisplay().getText().equals(PLAY)) {
             myDisplay.getCurrentAnimation().play();
-            getDisplay().setText("Pause");
+            getDisplay().setText(PAUSE);
         } else {
             myDisplay.getCurrentAnimation().pause();
-            getDisplay().setText("Play");
+            getDisplay().setText(PLAY);
         }
     }
 }
