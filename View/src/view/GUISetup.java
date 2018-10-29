@@ -33,7 +33,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final double CANVAS_WIDTH = 400;
     private static final double CANVAS_HEIGHT = 400;
     private static final double CONSOLE_LAYOUT_X = 50;
-    private static final double CONSOLE_LAYOUT_Y = 400;
+    private static final double CONSOLE_LAYOUT_Y = 450;
     private static final double OPTIONS_LAYOUT_X = 500;
     private static final double OPTIONS_LAYOUT_Y = 50;
     private static final double INFO_LAYOUT_X = 800;
@@ -72,7 +72,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        currentD = new TurtleDisplay(width,height);
+        //currentD = new TurtleDisplay(width,height);
         root.getChildren().add(makeTabs());
         return scene;
     }
@@ -114,7 +114,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
         Pane p1 = makePane();
         Pane p2 = makePane();
-        //currentD = myDisplays.get(0);
+        currentD = myDisplays.get(0);
         t1.setContent(p1);
         t1.setOnSelectionChanged(event -> currentD = myDisplays.get(0));
         t2.setContent(p2);

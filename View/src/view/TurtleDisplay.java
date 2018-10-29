@@ -78,7 +78,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
     public VBox getDurationDisplay() {
         return myDuration.getDisplay();
     }
-    
+
 
     private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
