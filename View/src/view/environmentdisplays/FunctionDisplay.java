@@ -20,7 +20,7 @@ public class FunctionDisplay implements EnvironmentDisplay {
     private static final String NAME_TITLE = "Functions";
     private static final String DEFINITION_TITLE = "Function Definitions";
     private static final String NAME_PROPERTY = "functionName";
-    private static final String DEFINITION_PROPERTY = "variableValue";
+    private static final String DEFINITION_PROPERTY = "functionDefinition";
 
     private TableView<Function> currentDisplay;
     private ObservableList<Function> currentItems;
