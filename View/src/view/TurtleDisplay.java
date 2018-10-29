@@ -13,14 +13,16 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.fields.DurationField;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Orgil Batzaya, Austin Kao
  */
 
-public class TurtleDisplay extends StackPane implements ViewResourceBundles{
+public class TurtleDisplay extends StackPane implements FrontExternal,ViewResourceBundles{
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
@@ -38,6 +40,10 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
     private TurtleView myTurtle;
+
+    private static final double DEFAULT_PEN = 1;
+    private static final double DEFAULT_VISIBLE = 1;
+    private static final double INITIAL_DISTANCE_MOVED = 0;
 
 
     public TurtleDisplay(double width, double height) {
@@ -72,19 +78,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     public VBox getDurationDisplay() {
         return myDuration.getDisplay();
     }
-
-
-//    EventHandler<MouseEvent> handler = new EventHandler<>() {
-//        public void handle(MouseEvent e) {
-//            double size = MOUSE_SIZE;
-//            double x = e.getX() - midPoint(0, size);
-//            double y = e.getY() - midPoint(0, size);
-//            myGC.setFill(myPen.getPenColor());
-//            myGC.setEffect(new DropShadow());
-//            myGC.fillOval(x, y, size, size);
-//        }
-//    };
-
+    
 
     private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
@@ -202,5 +196,21 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         for(int i = 0; i<myTurtles.size();i++){
             myTurtles.get(i).deactivate();
         }
+    }
+    public List<Map<String,Double>> getTurtleParams(){
+        List<Map<String,Double>> outList = new ArrayList<>();
+        for(int i = 0; i<this.getTurtles().size(); i++) {
+            outList.add(new HashMap<String,Double>());
+            Double[] valueElements = {this.getTurtles().get(i).getHeading(),
+                    this.getTurtles().get(i).getX(),
+                    this.getTurtles().get(i).getY(),
+                    DEFAULT_PEN, DEFAULT_VISIBLE, INITIAL_DISTANCE_MOVED,
+                    (double) this.getTurtles().get(i).getMyID(),
+                    (double) (this.getTurtles().get(i).isActive()?1:0)};
+            for (int j = 0; j < keyElements.length; j++) {
+                outList.get(i).put(keyElements[j], valueElements[j]);
+            }
+        }
+        return outList;
     }
 }
