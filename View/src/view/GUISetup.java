@@ -2,7 +2,11 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -42,10 +46,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final String PAUSE_LABEL = "pause";
     private static final String HELP_LABEL = "help";
     private static final String CHANGE_TURTLE_LABEL = "turtleChange";
-    private static final String UP_LABEL = "up";
-    private static final String DOWN_LABEL = "down";
-    private static final String LEFT_LABEL = "left";
-    private static final String RIGHT_LABEL = "right";
+    private static final String[] DIRECTIONS = {"Up","Down","Left","Right"};
     private static final String TURTLE_INFO_LABEL = "turtleInfo";
     private static final String SPACING = "defaultSpacing";
 
@@ -71,6 +72,11 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         root = new Group();
         var scene = new Scene(root, width, height, background);
 
+        root.getChildren().add(makeTabs());
+        return scene;
+    }
+
+    public Pane makePane(){
         myConsole = new Console(CONSOLE_LAYOUT_X, CONSOLE_LAYOUT_Y, this);
         myDisplays = new ArrayList<>();
         currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -84,15 +90,9 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         ImageChooseButton changeTurtle = new ImageChooseButton(myDefaults.getString(CHANGE_TURTLE_LABEL), currentDisplay);
         HelpButton help = new HelpButton(myDefaults.getString(HELP_LABEL));
 
-        DirectionButton up = new DirectionButton(myDefaults.getString(UP_LABEL),myConsole);
-        DirectionButton down = new DirectionButton(myDefaults.getString(DOWN_LABEL),myConsole);
-        DirectionButton left = new DirectionButton(myDefaults.getString(LEFT_LABEL),myConsole);
-        DirectionButton right = new DirectionButton(myDefaults.getString(RIGHT_LABEL),myConsole);
-        HBox directions = new HBox(up.getDisplay(), down.getDisplay(), left.getDisplay(), right.getDisplay());
-        directions.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
 
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
-                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), directions);
+                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), createDirectionButtons());
         userOptions.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
         userOptions.setLayoutX(OPTIONS_LAYOUT_X);
         userOptions.setLayoutY(OPTIONS_LAYOUT_Y);
@@ -100,15 +100,41 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         turtleInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, myDefaults.getString(TURTLE_INFO_LABEL), currentDisplay);
         turtleInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
         turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
+        Pane pane = new Pane();
+        pane.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
+        return pane;
 
-        root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
-        return scene;
     }
+
+    public TabPane makeTabs(){
+        TabPane tabPane = new TabPane();
+        Tab tab = new Tab("first");
+        Pane p1 = makePane();
+        Pane p2 = makePane();
+        tab.setContent(p1);
+        Tab t = new Tab("second");
+        t.setContent(p2);
+        tabPane.getTabs().addAll(tab,t);
+        return tabPane;
+    }
+
+    public HBox createDirectionButtons(){
+        HBox directions = new HBox();;
+        for(int i = 0; i < DIRECTIONS.length; i++){
+            directions.getChildren().add(new DirectionButton(DIRECTIONS[i],myConsole).getDisplay());
+        }
+        directions.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+        return directions;
+    }
+
+
+
 
     //External API maybe
     public Scene getScene() {
         return myScene;
     }
+
 
     public VBox getDisplay() {
         return null;
