@@ -48,7 +48,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private FunctionDisplay currentFunctions;
     private GUISetup parentGUI;
     private HashMap<String,String> myVariables;
-    private HashMap<String,String[]> myFunctions;
+    private HashMap<String,List<String>> myFunctions;
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;

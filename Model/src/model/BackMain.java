@@ -17,7 +17,7 @@ public class BackMain {
     private ProgramParser myProgParser;
     private ProgramParser mySyntaxParser;
     private HashMap<String, String> variables;
-    private HashMap<String,String[]> functions;
+    private HashMap<String,List<String>> functions;
     private Map<String, Double> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
@@ -163,6 +163,6 @@ public class BackMain {
 
     public HashMap<String,String> getVariables(){ return variables;}
 
-    public HashMap<String,String[]> getFunctions(){ return functions;};
+    public HashMap<String,List<String>> getFunctions(){ return functions;};
 
 }
