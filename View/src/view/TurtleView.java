@@ -1,6 +1,5 @@
 package view;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -120,6 +119,8 @@ public class TurtleView {
     public boolean isActive(){
         return active;
     }
+
+
 
     public int getMyID() {
         return myID.get();

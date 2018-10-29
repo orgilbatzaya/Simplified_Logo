@@ -11,7 +11,7 @@ public class HideTurtle extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         visible(ZERO_DOUBLE,turtleAction,turtleActionArgs,turtleParams);
         return 0;
     }

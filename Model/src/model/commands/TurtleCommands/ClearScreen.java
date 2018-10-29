@@ -11,10 +11,8 @@ public class ClearScreen extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
-        clear(turtleAction, turtleActionArgs,turtleParams);
-        double distanceMoved = turtleParams.get(DISTANCE_MOVED_KEY);
-        turtleParams.put(DISTANCE_MOVED_KEY,ZERO_DOUBLE);
-        return distanceMoved;
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
+        return clear(turtleAction, turtleActionArgs,turtleParams);
+
     }
 }

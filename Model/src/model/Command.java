@@ -18,8 +18,9 @@ public abstract class Command {
 
     public void setArgs(List<String> args) { myArgs = args; }
 
-    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams);
+    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams);
 
+    public List<String> getMyArgs() {return myArgs; }
 
 
 }

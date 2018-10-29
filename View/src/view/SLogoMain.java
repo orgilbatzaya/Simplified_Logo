@@ -1,6 +1,7 @@
 package view;
 
 import javafx.application.Application;
+import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 
 /**

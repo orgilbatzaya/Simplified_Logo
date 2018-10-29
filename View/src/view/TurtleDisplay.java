@@ -2,12 +2,9 @@ package view;
 
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -104,9 +101,8 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         return myTurtles;
     }
 
-    private void addTurtle(){
-
-
+    private void addTurtle(int index){
+        myTurtles.put(index,new TurtleView(index));
     }
 
     public TurtleView getMyTurtle() {
@@ -200,5 +196,11 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
 
     private double midPoint(double a, double b) {
         return (a + b)/2;
+    }
+
+    public void deactivateAllTurtles(){
+        for(int i = 0; i<myTurtles.size();i++){
+            myTurtles.get(i).deactivate();
+        }
     }
 }

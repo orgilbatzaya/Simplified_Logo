@@ -19,7 +19,7 @@ public class BackMain {
     private HashMap<String, String> variables;
     private HashMap<String, List<String>> functionMap;
     private HashMap<String, List<String>> functionParams;
-    private Map<String, Double> myTurtleParameters;
+    private List<Map<String, Double>> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
 

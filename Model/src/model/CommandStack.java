@@ -9,7 +9,7 @@ public class CommandStack {
     private List<String> myText;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
-    private Map<String, Double> myTurtleParameters;
+    private List<Map<String, Double>> myTurtleParameters;
     private Map<String, Set<String>> myCommandTypeMap;
     private Stack<String> toDo;
     private Stack<String> args;
@@ -22,7 +22,7 @@ public class CommandStack {
     private boolean commandFinished;
 
 
-    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, Map<String, Double> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
+    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, List<Map<String, Double>> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
         this.myTurtleActions = myTurtleActions;
         this.myTurtleActionsArgs = myTurtleActionArgs;
         this.myTurtleParameters = myTurtleParameters;
@@ -114,6 +114,8 @@ public class CommandStack {
                         }
                     }
                     done.push(s);
+                } else if (s.matches("tell")){
+
                 }
             }
         }
@@ -263,5 +265,4 @@ public class CommandStack {
             stack.push(s);
         }
     }
-
 }
