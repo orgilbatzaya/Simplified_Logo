@@ -51,10 +51,16 @@ public class CommandStack {
 //                System.out.println(all.get(i));
 //            }
             while (!commandFinished) {
-                String temp = all.removeFirst();
-                toDo.push(temp);
-                commandFinished = isCommandFinished(toDo);
+                try{
+                    String temp = all.removeFirst();
+                    toDo.push(temp);
+                    commandFinished = isCommandFinished(toDo);
+                } catch(Exception e){
+                    commandFinished = Boolean.TRUE;
+                }
             }
+
+
 
             commandFinished = Boolean.FALSE;
 
@@ -208,10 +214,7 @@ public class CommandStack {
         while(i<list.size()){
             String s = list.get(i);
             System.out.println(s);
-            if(myCommandTypeMap.get("OtherCommands").contains(getCommandType(s))){
-                return Boolean.TRUE;
-            }
-            if(getCommandType((s))!=null){
+            if(getCommandType((s))!=null && !getCommandType(s).equals("OtherCommands")){
                 int numArgs = myNumArgsMap.get(s);
                 int num = 0;
                 for(int j = i+1; j<=(i+numArgs);j++){

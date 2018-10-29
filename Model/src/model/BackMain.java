@@ -163,6 +163,6 @@ public class BackMain {
 
     public HashMap<String,String> getVariables(){ return variables;}
 
-    public Set<String> getFunctionNames(){ return functions.keySet();};
+    public HashMap<String,String[]> getFunctions(){ return functions;};
 
 }
