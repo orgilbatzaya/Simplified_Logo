@@ -55,7 +55,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private Scene myScene;
     private Group root;
     private Console myConsole;
-    private TurtleDisplay currentDisplay;
+    private TurtleDisplay currentD;
     private ArrayList<TurtleDisplay> myDisplays;
     private LanguageMenu myLanguageMenu;
     private StatusDisplay turtleInfo;
@@ -67,22 +67,21 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
 
     public GUISetup() {
+        myDisplays = new ArrayList<>();
         myScene = createGUI(GUI_WIDTH,GUI_HEIGHT, Color.AZURE);
     }
 
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-
+        currentD = new TurtleDisplay(width,height);
         root.getChildren().add(makeTabs());
         return scene;
     }
 
     public Pane makePane(){
         myConsole = new Console(CONSOLE_LAYOUT_X, CONSOLE_LAYOUT_Y, this);
-        myDisplays = new ArrayList<>();
-        currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
-        myDisplays.add(currentDisplay);
+        TurtleDisplay currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
 
         PenColor penColor = new PenColor(PEN_COLOR, getDefault(PEN_LABEL), currentDisplay);
         BackgroundColor backgroundColor = new BackgroundColor(BACKGROUND_COLOR, getDefault(BACKGROUND_LABEL), currentDisplay);
@@ -104,20 +103,30 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
         Pane pane = new Pane();
         pane.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
+        myDisplays.add(currentDisplay);
+
         return pane;
 
     }
 
     public TabPane makeTabs(){
         TabPane tabPane = new TabPane();
-        Tab tab = new Tab("first");
+        Tab t1 = new Tab("first");
+        Tab t2 = new Tab("second");
+
         Pane p1 = makePane();
         Pane p2 = makePane();
-        tab.setContent(p1);
-        Tab t = new Tab("second");
-        t.setContent(p2);
-        tabPane.getTabs().addAll(tab,t);
+        //currentD = myDisplays.get(0);
+        t1.setContent(p1);
+        t1.setOnSelectionChanged(event -> currentD = myDisplays.get(0));
+        t2.setContent(p2);
+        t2.setOnSelectionChanged(event -> currentD = myDisplays.get(1));
+        tabPane.getTabs().addAll(t1,t2);
         return tabPane;
+    }
+
+    public void switchDisplays(){
+
     }
 
     public HBox createDirectionButtons(){
@@ -144,29 +153,14 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
     public Console getConsole(){return myConsole; }
 
-    public List<Map<String,Double>> getTurtleParams(){
-        List<Map<String,Double>> outList = new ArrayList<>();
-        for(int i = 0; i<currentDisplay.getTurtles().size(); i++) {
-            outList.add(new HashMap<String,Double>());
-            Double[] valueElements = {currentDisplay.getTurtles().get(i).getHeading(),
-                    currentDisplay.getTurtles().get(i).getX(),
-                    currentDisplay.getTurtles().get(i).getY(),
-                    DEFAULT_PEN, DEFAULT_VISIBLE, INITIAL_DISTANCE_MOVED,
-                    (double) currentDisplay.getTurtles().get(i).getMyID(),
-                    (double) (currentDisplay.getTurtles().get(i).isActive()?1:0)};
-            for (int j = 0; j < keyElements.length; j++) {
-                outList.get(i).put(keyElements[j], valueElements[j]);
-            }
-        }
-        return outList;
-    }
+
 
     public ResourceBundle getLanguage() {
         return myLanguageMenu.getLanguage();
     }
 
     public TurtleDisplay getCurrentDisplay() {
-        return currentDisplay;
+        return currentD;
     }
 
     public StatusDisplay getTurtleInfoDisplay() {
