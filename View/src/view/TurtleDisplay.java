@@ -44,24 +44,28 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
 
 
     public TurtleDisplay(double width, double height) {
+        initializeCanvas(width,height);
         myDuration = new DurationField(myDefaults.getString(DURATION_LABEL));
+        zeroPos = new Point2D(midPoint(0, myCanvas.getWidth()), midPoint(0, myCanvas.getHeight()));
+        myPen = new SLogoPen(PEN_COLOR);
+        myTurtles = new HashMap<>();
+        myTurtle = new TurtleView(0);
+        displayPane = new Pane();
+        this.getChildren().add(displayPane);
+        makeTurtles();
+        colorMap = new HashMap<>();
+        myCurrentAnimation = new SequentialTransition();
+
+    }
+
+    private void initializeCanvas(double width, double height) {
         myBackground = new Rectangle(width, height);
         myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(width, height);
-        zeroPos = new Point2D(midPoint(0, myCanvas.getWidth()), midPoint(0, myCanvas.getHeight()));
-        myPen = new SLogoPen(PEN_COLOR);
         myGC = myCanvas.getGraphicsContext2D();
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
-        //myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
-        myTurtles = new HashMap<>();
-        myTurtle = new TurtleView(0);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane();
-        myCurrentAnimation = new SequentialTransition();
-        this.getChildren().add(displayPane);
-        makeTurtles(displayPane);
-        colorMap = new HashMap<>();
     }
 
     public Canvas getCanvas() {
@@ -85,7 +89,7 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
 //    };
 
 
-    private void makeTurtles(Pane displayPane){
+    private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
             TurtleView t = new TurtleView(i);
             t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
@@ -103,6 +107,10 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private void addTurtle(){
 
 
+    }
+
+    public TurtleView getMyTurtle() {
+        return myTurtle;
     }
 
 
@@ -124,9 +132,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         return myCurrentAnimation;
     }
 
-    public TurtleView getMyTurtle() {
-        return myTurtle;
-    }
 
     public void clearScreen(TurtleView t) {
         myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
