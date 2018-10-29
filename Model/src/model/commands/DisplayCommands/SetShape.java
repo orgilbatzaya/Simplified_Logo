@@ -9,9 +9,9 @@ public class SetShape extends DisplayCommand {
     public SetShape(List<String> args){super(args);}
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         double newIndex = getArgsDouble(0);
-        setDoubleForKey(newIndex,SET_SHAPE,SHAPE_INDEX_KEY,turtleAction,turtleActionArgs,turtleParams);
+        setDoubleForKey(newIndex,SET_SHAPE, turtleAction,turtleActionArgs,turtleParams);
         return newIndex;
     }
 }

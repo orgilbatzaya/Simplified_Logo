@@ -11,7 +11,7 @@ public class LessThan extends Command {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         return (getArgsDouble(0).compareTo(getArgsDouble(1)))<0 ? 1:0;
     }
 }

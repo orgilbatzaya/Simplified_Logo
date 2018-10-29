@@ -11,7 +11,7 @@ public class Random extends Command {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         double maxVal = getArgsDouble(0);
         return Math.random()*maxVal;
     }
