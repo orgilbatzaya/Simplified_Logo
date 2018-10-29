@@ -37,29 +37,14 @@ public class FunctionDisplay implements EnvironmentDisplay {
         currentDisplay.setMaxHeight(height);
         currentDisplay.getColumns().addAll(currentFunctionNames, currentFunctions);
         myBox = new VBox(displayLabel, currentDisplay);
-        //currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getSelectionModel().getSelectedItem()));
-    }
-
-    @Override
-    public void addItem(String item) {
-
-    }
-
-    @Override
-    public void removeItem(String item) {
-
-    }
-
-    @Override
-    public void editItem(String item) {
-
     }
 
     public VBox getDisplay() {
         return myBox;
     }
 
-    private TableColumn createTableColumn(String title, String property) {
+    @Override
+    public TableColumn createTableColumn(String title, String property) {
         TableColumn column = new TableColumn(title);
         column.setCellValueFactory(new PropertyValueFactory<Function, String>(property));
         return column;
