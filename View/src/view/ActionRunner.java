@@ -25,8 +25,6 @@ public class ActionRunner implements ViewResourceBundles {
 
                 }
             }
-
-
         }
     }
 
