@@ -166,8 +166,6 @@ public class CommandStack {
         String variable = done.pop();
         int end = Integer.parseInt(args.pop());
         int increment = Integer.parseInt(args.pop());
-        System.out.println("Start" + start + " " + "end " + end + " " + increment);
-
         if(!variables.containsKey(variable.substring(1))) {
             variables.put(variable.substring(1), "" + (Integer.parseInt(start) + increment));
         }
@@ -250,7 +248,6 @@ public class CommandStack {
     public void fillStack(Stack<String> stack,LinkedList<String> list ){
         for(String s: list){
             stack.push(s);
-            System.out.println(s);
         }
     }
 
