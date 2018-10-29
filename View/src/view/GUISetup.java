@@ -17,13 +17,10 @@ import view.button.PlayPauseButton;
 import view.colorpicker.BackgroundColor;
 import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
-import view.environmentdisplays.StatusDisplay;
 import view.dropdown.TurtleSelector;
+import view.environmentdisplays.StatusDisplay;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
@@ -145,9 +142,10 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
     public Console getConsole(){return myConsole; }
 
-    public Map<String,Double> getTurtleParams(){
-        HashMap<String,Double> mapOut = new HashMap<>();
+    public List<Map<String,Double>> getTurtleParams(){
+        List<Map<String,Double>> outList = new ArrayList<>();
         for(int i = 0; i<currentDisplay.getTurtles().size(); i++) {
+            outList.add(new HashMap<String,Double>());
             Double[] valueElements = {currentDisplay.getTurtles().get(i).getHeading(),
                     currentDisplay.getTurtles().get(i).getX(),
                     currentDisplay.getTurtles().get(i).getY(),
@@ -155,10 +153,10 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
                     (double) currentDisplay.getTurtles().get(i).getMyID(),
                     (double) (currentDisplay.getTurtles().get(i).isActive()?1:0)};
             for (int j = 0; j < keyElements.length; j++) {
-                mapOut.put(keyElements[i], valueElements[i]);
+                outList.get(i).put(keyElements[j], valueElements[j]);
             }
         }
-        return mapOut;
+        return outList;
     }
 
     public ResourceBundle getLanguage() {

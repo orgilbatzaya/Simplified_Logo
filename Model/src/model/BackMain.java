@@ -19,12 +19,12 @@ public class BackMain {
     private HashMap<String, String> variables;
     private HashMap<String, List<String>> functionMap;
     private HashMap<String, List<String>> functionParams;
-    private Map<String, Double> myTurtleParameters;
+    private List<Map<String, Double>> myTurtleParameters;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
 
 
-    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams, HashMap<String,String> vars) {
+    public BackMain(ResourceBundle lang, List<Map<String, Double>> turtleParams, HashMap<String,String> vars) {
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
         mySyntaxParser = createProgramParser(ResourceBundle.getBundle("model/Syntax"));

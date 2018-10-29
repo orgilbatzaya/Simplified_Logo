@@ -11,7 +11,7 @@ public class Minus extends Command {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         double firstVal = getArgsDouble(0);
         return firstVal*(-1);
     }

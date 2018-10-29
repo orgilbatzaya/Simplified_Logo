@@ -2,6 +2,7 @@ package model.commands;
 
 import model.Command;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,8 @@ public abstract class TurtleCommand extends Command {
     public static final String DISTANCE_MOVED_KEY = "distanceMoved";
     public static final String PEN_KEY = "pen";
     public static final String VISIBLE_KEY= "visible";
+    public static final String ID_KEY = "id";
+    public static final String ACTIVE_KEY = "active";
 
 
 
@@ -32,68 +35,102 @@ public abstract class TurtleCommand extends Command {
     public static final Double ZERO_DOUBLE = (double) 0;
     public static final Double ONE_DOUBLE = (double) 1;
 
-
+    private List<Integer> activeIndexes;
     public TurtleCommand(List<String> args) {
         super(args);
+        activeIndexes = new ArrayList<Integer>();
 
     }
-    public void move(double distance,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams) {
+    public void move(double distance,List<String> turtleActions, List<Double> turtleArgs, List<Map<String,Double>> turtleParams) {
         turtleActions.add(MOVE_ACTION);
         turtleArgs.add(distance);
 
+        getActiveIndexes(turtleParams);
+        for(int i = 0; i<activeIndexes.size();i++){
+            double newX = turtleParams.get(activeIndexes.get(i)).get(X_KEY)+distance*Math.cos(Math.toRadians(turtleParams.get(activeIndexes.get(i)).get(HEADING_KEY))-90);
+            double newY = turtleParams.get(activeIndexes.get(i)).get(Y_KEY)+distance*Math.sin(Math.toRadians(turtleParams.get(activeIndexes.get(i)).get(HEADING_KEY))-90);
+            turtleParams.get(activeIndexes.get(i)).put(X_KEY,newX);
+            turtleParams.get(activeIndexes.get(i)).put(Y_KEY,newY);
+            turtleParams.get(activeIndexes.get(i)).put(DISTANCE_MOVED_KEY,turtleParams.get(activeIndexes.get(i)).get(DISTANCE_MOVED_KEY)+distance);
+        }
 
 
-        double newX = turtleParams.get(X_KEY)+distance*Math.cos(Math.toRadians(turtleParams.get(HEADING_KEY))-90);
-        double newY = turtleParams.get(Y_KEY)+distance*Math.sin(Math.toRadians(turtleParams.get(HEADING_KEY))-90);
-        turtleParams.put(X_KEY,newX);
-        turtleParams.put(Y_KEY,newY);
-        turtleParams.put(DISTANCE_MOVED_KEY,turtleParams.get(DISTANCE_MOVED_KEY)+distance);
 
     }
 
-    public  void rotate(double angle,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public  void rotate(double angle,List<String> turtleActions, List<Double> turtleArgs, List<Map<String,Double>> turtleParams){
         turtleActions.add(ROTATE_ACTION);
         turtleArgs.add(angle);
-        double finalAngle = angle+turtleParams.get(HEADING_KEY);
-        turtleParams.put(HEADING_KEY,finalAngle);
+        getActiveIndexes(turtleParams);
+        for(int i = 0; i<activeIndexes.size();i++){
+            double finalAngle = angle+turtleParams.get(activeIndexes.get(i)).get(HEADING_KEY);
+            turtleParams.get(activeIndexes.get(i)).put(HEADING_KEY,finalAngle);
+        }
+
+
 
     }
 
-    public void clear(List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public double clear(List<String> turtleActions, List<Double> turtleArgs, List<Map<String,Double>> turtleParams){
         turtleActions.add(CLEAR_ACTION);
+
+        double distance = turtleParams.get(activeIndexes.get(0)).get(DISTANCE_MOVED_KEY);
+        turtleParams.get(activeIndexes.get(0)).put(DISTANCE_MOVED_KEY,ZERO_DOUBLE);
+
+        return distance; //can't return multiple distances
     }
 
-    public double home(List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public double home(List<String> turtleActions, List<Double> turtleArgs, List<Map<String,Double>> turtleParams){
         turtleActions.add(HOME_ACTION);
-        return turtleParams.get(DISTANCE_MOVED_KEY);
+        getActiveIndexes(turtleParams);
+        double distance = turtleParams.get(activeIndexes.get(0)).get(DISTANCE_MOVED_KEY);
+        turtleParams.get(activeIndexes.get(0)).put(DISTANCE_MOVED_KEY,ZERO_DOUBLE);
+
+        return distance; //can't return multiple distances
     }
 
-    public void visible(double isVisible, List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public void visible(double isVisible, List<String> turtleActions, List<Double> turtleArgs,  List<Map<String,Double>> turtleParams){
         turtleActions.add(SET_VISIBLE);
         turtleArgs.add(isVisible);
     }
 
-    public void pen(double isPenDown,List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public void pen(double isPenDown,List<String> turtleActions, List<Double> turtleArgs,  List<Map<String,Double>> turtleParams){
         turtleActions.add(SET_PEN);
         turtleArgs.add(isPenDown);
     }
-    public double position(double x, double y, List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public double position(double x, double y, List<String> turtleActions, List<Double> turtleArgs, List<Map<String,Double>> turtleParams){
         turtleActions.add(SET_POSITION);
         turtleArgs.add(x);
         turtleArgs.add(y);
-        double distanceMoved = Math.sqrt(Math.pow(x-turtleParams.get(X_KEY),2)+Math.pow(y-turtleParams.get(Y_KEY),2));
-        turtleParams.put(DISTANCE_MOVED_KEY, turtleParams.get(DISTANCE_MOVED_KEY)+distanceMoved);
-        turtleParams.put(Y_KEY,y);
-        turtleParams.put(X_KEY,x);
-        return distanceMoved;
 
+        getActiveIndexes(turtleParams);
+        for(int i = 0; i<activeIndexes.size();i++){
+            double distanceMoved = Math.sqrt(Math.pow(x-turtleParams.get(activeIndexes.get(i)).get(X_KEY),2)+Math.pow(y-turtleParams.get(activeIndexes.get(i)).get(Y_KEY),2));
+            turtleParams.get(activeIndexes.get(i)).put(DISTANCE_MOVED_KEY, turtleParams.get(activeIndexes.get(i)).get(DISTANCE_MOVED_KEY)+distanceMoved);
+            turtleParams.get(activeIndexes.get(i)).put(Y_KEY,y);
+            turtleParams.get(activeIndexes.get(i)).put(X_KEY,x);
+        }
+        return turtleParams.get(activeIndexes.get(0)).get(DISTANCE_MOVED_KEY);
     }
-    public void heading(double angle, List<String> turtleActions, List<Double> turtleArgs, Map<String,Double> turtleParams){
+    public double heading(double angle, List<String> turtleActions, List<Double> turtleArgs, List<Map<String,Double>> turtleParams){
         turtleActions.add(SET_HEADING);
         turtleArgs.add(angle);
-        turtleParams.put(HEADING_KEY,angle);
+        getActiveIndexes(turtleParams);
+        for(int i = 0; i<activeIndexes.size();i++) {
+            turtleParams.get(activeIndexes.get(0)).put(HEADING_KEY, angle);
+        }
+        return turtleParams.get(activeIndexes.get(0)).get(HEADING_KEY);
+
     }
 
+    public void getActiveIndexes(List<Map<String,Double>> params){
+        for(int i = 0; i<params.size(); i++){
+            if(params.get(i).get(ACTIVE_KEY)==1){
+                activeIndexes.add((int) Math.round(params.get(i).get(ID_KEY)));
+            };
+        }
 
-    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams);
+    }
+
+    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams);
 }

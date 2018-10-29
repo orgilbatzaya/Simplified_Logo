@@ -11,8 +11,8 @@ public class IsShowing extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
-        return turtleParams.get(VISIBLE_KEY);
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
+        return turtleParams.get(0).get(VISIBLE_KEY);
 
     }
 }
