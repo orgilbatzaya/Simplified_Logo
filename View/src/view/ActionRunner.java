@@ -13,9 +13,12 @@ public class ActionRunner implements ViewResourceBundles {
     }
 
     public void performActions(List<String> actions, List<Double> totalArgs, TurtleDisplay display) {
-        int argIndex = 0;
-        for (String a : actions) {
-            for (int i = 0; i < display.getTurtles().size(); i++) {
+        for (int i = 0; i < display.getTurtles().size(); i++) {
+            int argIndex = 0;
+
+            for (String a : actions) {
+
+
                 if (display.getTurtles().get(i).isActive()) {
                     int numArgs = numArgsActions.get(a);
                     List<Double> args = getArgs(totalArgs, numArgs, argIndex);
