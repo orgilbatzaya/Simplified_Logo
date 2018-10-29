@@ -179,6 +179,9 @@ public class CommandStack {
             toDo.push(variable);
             while (!brackets.isEmpty()) {
                 String tempBracket = done.pop();
+                if(tempBracket.equals("[")) {
+                    brackets.push(tempBracket);
+                }
                 if (tempBracket.equals("]")) {
                     brackets.pop();
                 }
@@ -188,6 +191,9 @@ public class CommandStack {
             toDo.push("[");
             while (!brackets.isEmpty()) {
                 String tempBracket = done.pop();
+                if(tempBracket.equals("[")) {
+                    brackets.push(tempBracket);
+                }
                 if (tempBracket.equals("]")) {
                     brackets.pop();
                 }
