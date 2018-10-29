@@ -29,7 +29,6 @@ public class TurtleView {
         myID = new SimpleIntegerProperty(turtleID);
         xPos = DEFAULT_STARTING_POS;
         yPos = DEFAULT_STARTING_POS;
-        System.out.println(myID.get());
         myView.setFitHeight(DEFAULT_TURTLE_HEIGHT);
         myView.setFitWidth(DEFAULT_TURTLE_WIDTH);
         active = false;

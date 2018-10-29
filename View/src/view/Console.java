@@ -48,8 +48,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private PastCommandDisplay currentFunctions;
     private GUISetup parentGUI;
     private HashMap<String,String> myVariables;
-    private StringProperty variableNames;
-    private StringProperty variableValues;
+    private HashMap<String,String[]> myFunctions;
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;
@@ -71,6 +70,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
         consoleBox.setLayoutX(x);
         consoleBox.setLayoutY(y);
         myVariables = new HashMap<>();
+        myFunctions = new HashMap<>();
     }
 
     public HBox getConsoleBox() {
@@ -121,8 +121,9 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
-
-        parentGUI.setMyVariables(back.getVariables());
-        parentGUI.setMyFunctions(back.getFunctions());
+        parentGUI.getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
+        myVariables = back.getVariables();
+        myFunctions = back.getFunctions();
+        currentVariables.update(myVariables);
     }
 }
