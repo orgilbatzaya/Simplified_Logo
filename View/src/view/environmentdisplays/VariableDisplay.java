@@ -5,13 +5,22 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import view.Variable;
+
+import java.util.HashMap;
 
 public class VariableDisplay implements EnvironmentDisplay{
-    private TableView<String> currentDisplay;
+    private static final String NAME_TITLE = "Variables";
+    private static final String VALUE_TITLE = "Values";
+    private static final String NAME_PROPERTY = "variableName";
+    private static final String VALUE_PROPERTY = "variableValue";
+
+    private TableView<Variable> currentDisplay;
     private TableColumn currentVariables;
     private TableColumn currentValues;
-    private ObservableList<String> currentItems;
+    private ObservableList<Variable> currentItems;
     private VBox myBox;
 
     public VariableDisplay(double height, String label) {
@@ -19,11 +28,11 @@ public class VariableDisplay implements EnvironmentDisplay{
         Label displayLabel = new Label(label);
         currentItems = FXCollections.observableArrayList();
         currentDisplay.setMaxHeight(height);
-        currentVariables = new TableColumn("Variables");
-        currentValues = new TableColumn("Values");
+        currentVariables = createTableColumn(NAME_TITLE, NAME_PROPERTY);
+        currentValues = createTableColumn(VALUE_TITLE, VALUE_PROPERTY);
         currentDisplay.getColumns().addAll(currentVariables, currentValues);
         myBox = new VBox(displayLabel, currentDisplay);
-        currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getSelectionModel().getSelectedItem()));
+        //currentDisplay.setOnMouseClicked(e -> editItem(currentDisplay.getSelectionModel().getSelectedItem()));
     }
 
     @Override
@@ -43,5 +52,20 @@ public class VariableDisplay implements EnvironmentDisplay{
 
     public VBox getDisplay() {
         return myBox;
+    }
+
+    private TableColumn createTableColumn(String title, String property) {
+        TableColumn column = new TableColumn(title);
+        column.setCellValueFactory(new PropertyValueFactory<Variable, String>(property));
+        return column;
+    }
+
+    public void update(HashMap<String, String> variableMap) {
+        currentItems.clear();
+        for(String s : variableMap.keySet()) {
+            Variable v = new Variable(s, variableMap.get(s));
+            currentItems.add(v);
+        }
+        currentDisplay.setItems(currentItems);
     }
 }

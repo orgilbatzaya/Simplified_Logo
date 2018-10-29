@@ -1,9 +1,13 @@
 package view;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author Orgil Batzaya
+ */
 public class TurtleView {
     private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
     private static final int DEFAULT_STARTING_POS = 0;
@@ -17,20 +21,14 @@ public class TurtleView {
     private double yPos;
     private double myHeading;
     private double myDistanceTraveled;
-    private SimpleDoubleProperty id;
-    private SimpleDoubleProperty xPosition;
-    private SimpleDoubleProperty yPosition;
-    private SimpleDoubleProperty heading;
+    public SimpleIntegerProperty myID;
 
     public TurtleView(int turtleID){
         myView = new ImageView();
         setView(DEFAULT_STARTING_TURTLE);
-        id = new SimpleDoubleProperty(turtleID);
-        xPosition = new SimpleDoubleProperty(DEFAULT_STARTING_POS);
-        yPosition = new SimpleDoubleProperty(DEFAULT_STARTING_POS);
+        myID = new SimpleIntegerProperty(turtleID);
         xPos = DEFAULT_STARTING_POS;
         yPos = DEFAULT_STARTING_POS;
-        heading = new SimpleDoubleProperty(0);
         myView.setFitHeight(DEFAULT_TURTLE_HEIGHT);
         myView.setFitWidth(DEFAULT_TURTLE_WIDTH);
         active = false;
@@ -121,5 +119,15 @@ public class TurtleView {
 
     public boolean isActive(){
         return active;
+    }
+
+    public int getMyID() {
+        return myID.get();
+    }
+    public double getXPos() {
+        return xPos;
+    }
+    public double getYPos() {
+        return yPos;
     }
 }

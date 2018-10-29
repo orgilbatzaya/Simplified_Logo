@@ -32,7 +32,6 @@ public class SLogoPen {
 
     public void changePenVisibilty(){
         penVisible = !penVisible;
-        System.out.println(penVisible);
     }
 
     public boolean isVisible() {

@@ -43,7 +43,6 @@ public class CommandStack {
         originalTimes = new HashMap<>();
         for (String temp : myText) {
             all.add(temp);
-
         }
 
         while (!all.isEmpty()) {
@@ -53,8 +52,17 @@ public class CommandStack {
             while (!commandFinished) {
                 try{
                     String temp = all.removeFirst();
-                    toDo.push(temp);
-                    commandFinished = isCommandFinished(toDo);
+                    if(myCommandTypeMap.get("OtherCommands").contains(temp)){
+                        toDo.push(temp);
+                        fillStack(toDo,all);
+                        commandFinished = Boolean.TRUE;
+                    }
+                    else{
+                        toDo.push(temp);
+                        commandFinished = isCommandFinished(toDo);
+                    }
+
+
                 } catch(Exception e){
                     commandFinished = Boolean.TRUE;
                 }
@@ -67,7 +75,6 @@ public class CommandStack {
 
             while (!toDo.isEmpty()) {
                 String s = toDo.pop();
-
                 myCommandType = getCommandType(s);
                 if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) || myCommandTypeMap.get("TurtleQueries").contains(s) ||
                         myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
@@ -216,11 +223,16 @@ public class CommandStack {
     private Boolean isCommandFinished(Stack<String> sta){
 
         List<String> list = new ArrayList(sta);
+//        for(int i = 0; i<list.size(); i++){
+//            System.out.print(list.get(i));
+//        }
+//        System.out.println();
+
         int i = 0;
         while(i<list.size()){
             String s = list.get(i);
-            System.out.println(s);
-            if(getCommandType((s))!=null && !getCommandType(s).equals("OtherCommands")){
+//            System.out.println(s);
+            if(getCommandType((s))!=null){
                 int numArgs = myNumArgsMap.get(s);
                 int num = 0;
                 for(int j = i+1; j<=(i+numArgs);j++){
@@ -237,6 +249,12 @@ public class CommandStack {
             i++;
         }
         return Boolean.FALSE;
+    }
+
+    public void fillStack(Stack<String> stack,LinkedList<String> list ){
+        for(String s: list){
+            stack.push(s);
+        }
     }
 
 }

@@ -10,9 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.BackMain;
+import view.environmentdisplays.FunctionDisplay;
 import view.environmentdisplays.PastCommandDisplay;
 import view.environmentdisplays.VariableDisplay;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +45,10 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private HBox consoleBox;
     private PastCommandDisplay pastCommands;
     private VariableDisplay currentVariables;
-    private PastCommandDisplay currentFunctions;
+    private FunctionDisplay currentFunctions;
     private GUISetup parentGUI;
+    private HashMap<String,String> myVariables;
+    private HashMap<String,List<String>> myFunctions;
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;
@@ -56,7 +60,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
         pastCommands = new PastCommandDisplay(PAST_COMMAND_DISPLAY_HEIGHT, myDefaults.getString(PAST_COMMAND_LABEL));
         pastCommands.getPastCommandList().setOnMouseClicked(e -> createRunInterface(pastCommands.getPastCommandList().getSelectionModel().getSelectedItem()));
         currentVariables = new VariableDisplay(DISPLAY_HEIGHT, myDefaults.getString(VARIABLE_LABEL));
-        currentFunctions = new PastCommandDisplay(DISPLAY_HEIGHT, myDefaults.getString(FUNCTION_LABEL));
+        currentFunctions = new FunctionDisplay(DISPLAY_HEIGHT, myDefaults.getString(FUNCTION_LABEL));
         VBox rightColumn = new VBox(currentVariables.getDisplay(), currentFunctions.getDisplay());
         rightColumn.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
         submitButton.setOnAction(event -> processCommand());
@@ -65,6 +69,8 @@ public class Console implements FrontExternal, ViewResourceBundles {
         consoleBox.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
         consoleBox.setLayoutX(x);
         consoleBox.setLayoutY(y);
+        myVariables = new HashMap<>();
+        myFunctions = new HashMap<>();
     }
 
     public HBox getConsoleBox() {
@@ -99,7 +105,8 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
     public void runCommand(String command) {
         Map<String, Double> commandParams = parentGUI.getTurtleParams();
-        BackMain back = new BackMain(parentGUI.getLanguage(), commandParams);
+        HashMap<String, String> vars = myVariables;
+        BackMain back = new BackMain(parentGUI.getLanguage(), commandParams,vars);
         back.performCommands(command);
         List<String> actionList = back.getMyTurtleActions();
         for(int i=0; i<actionList.size(); i++){
@@ -114,5 +121,9 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
         ActionRunner actRun = new ActionRunner();
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
+        parentGUI.getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
+        myVariables = back.getVariables();
+        myFunctions = back.getFunctions();
+        currentVariables.update(myVariables);
     }
 }

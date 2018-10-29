@@ -18,6 +18,9 @@ import javafx.util.Duration;
 
 /**
  * @author Orgil Batzaya
+ * Enables an animated path to be drawn each time a turtle moves.
+ * Credit to "Roland" for the implementation behind pathAnimate
+ * https://stackoverflow.com/questions/35585035/what-the-easiest-way-to-animate-a-path-as-an-object-traverses-it
  */
 
 public class Animate {
@@ -59,9 +62,7 @@ public class Animate {
         myPos = new Point2D(myTurtle.getX(),myTurtle.getY());
         Point2D next = myPos.add(translate);
         pathAnimate(myPos,next,duration);
-//        TranslateTransition translateTurt = new TranslateTransition(duration, myTurtle.getView());
-//        translateTurt.setByX(translate.getX());
-//        translateTurt.setByY(translate.getY());
+
         myAnimation = new ParallelTransition(myPathTans);
         myTurtle.moveBy((int) translate.getX(), (int) translate.getY());
 

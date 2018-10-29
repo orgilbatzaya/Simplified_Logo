@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * This class sets up the GUI for SLogo. The method that creates most of the GUI is createGUI().
  * The default constructor calls createGUI() automatically, so myScene is automatically initialized to some scene.
- * @author Austin Kao
+ * @author Austin Kao, Orgil Batzaya
  */
 public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final int GUI_WIDTH = 1200;
@@ -73,10 +73,12 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
+
         myConsole = new Console(CONSOLE_LAYOUT_X, CONSOLE_LAYOUT_Y, this);
         myDisplays = new ArrayList<>();
         currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
         myDisplays.add(currentDisplay);
+
         PenColor penColor = new PenColor(Color.RED, myDefaults.getString(PEN_LABEL), currentDisplay);
         BackgroundColor backgroundColor = new BackgroundColor(Color.PURPLE, myDefaults.getString(BACKGROUND_LABEL), currentDisplay);
         myLanguageMenu = new LanguageMenu(myDefaults.getString(LANGUAGE_LABEL));
@@ -84,20 +86,24 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         PlayPauseButton playPause = new PlayPauseButton(myDefaults.getString(PAUSE_LABEL), currentDisplay);
         ImageChooseButton changeTurtle = new ImageChooseButton(myDefaults.getString(CHANGE_TURTLE_LABEL), currentDisplay);
         HelpButton help = new HelpButton(myDefaults.getString(HELP_LABEL));
+
         DirectionButton up = new DirectionButton(myDefaults.getString(UP_LABEL),myConsole);
         DirectionButton down = new DirectionButton(myDefaults.getString(DOWN_LABEL),myConsole);
         DirectionButton left = new DirectionButton(myDefaults.getString(LEFT_LABEL),myConsole);
         DirectionButton right = new DirectionButton(myDefaults.getString(RIGHT_LABEL),myConsole);
         HBox directions = new HBox(up.getDisplay(), down.getDisplay(), left.getDisplay(), right.getDisplay());
         directions.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), directions);
         userOptions.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
         userOptions.setLayoutX(OPTIONS_LAYOUT_X);
         userOptions.setLayoutY(OPTIONS_LAYOUT_Y);
+
         turtleInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, myDefaults.getString(TURTLE_INFO_LABEL), currentDisplay);
         turtleInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
         turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
+
         root.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
         return scene;
     }
@@ -122,8 +128,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         for(int i = 0; i<keyElements.length;i++){
             mapOut.put(keyElements[i],valueElements[i]);
         }
-
-
         return mapOut;
     }
 
@@ -133,5 +137,9 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
     public TurtleDisplay getCurrentDisplay() {
         return currentDisplay;
+    }
+
+    public StatusDisplay getTurtleInfoDisplay() {
+        return turtleInfo;
     }
 }

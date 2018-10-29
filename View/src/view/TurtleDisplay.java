@@ -2,9 +2,12 @@ package view;
 
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,7 +24,6 @@ import java.util.Map;
  */
 
 public class TurtleDisplay extends StackPane implements ViewResourceBundles{
-    private static final int FRAMES_PER_SECOND = 60;
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
@@ -32,37 +34,38 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private GraphicsContext myGC;
     private SLogoPen myPen;
     private Map<Integer,TurtleView> myTurtles;
-    private TurtleView myCurrentTurtle;
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
     private DurationField myDuration;
-    private VBox myBox; //May or may not use
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
     private TurtleView myTurtle;
 
-    //private StatusView statusView;
 
     public TurtleDisplay(double width, double height) {
+        initializeCanvas(width,height);
         myDuration = new DurationField(myDefaults.getString(DURATION_LABEL));
+        zeroPos = new Point2D(midPoint(0, myCanvas.getWidth()), midPoint(0, myCanvas.getHeight()));
+        myPen = new SLogoPen(PEN_COLOR);
+        myTurtles = new HashMap<>();
+        myTurtle = new TurtleView(0);
+        displayPane = new Pane();
+        this.getChildren().add(displayPane);
+        makeTurtles();
+        colorMap = new HashMap<>();
+        myCurrentAnimation = new SequentialTransition();
+
+    }
+
+    private void initializeCanvas(double width, double height) {
         myBackground = new Rectangle(width, height);
         myBackground.setFill(Color.WHITE);
         myCanvas = new Canvas(width, height);
-        zeroPos = new Point2D(midPoint(0, myCanvas.getWidth()), midPoint(0, myCanvas.getHeight()));
-        myPen = new SLogoPen(PEN_COLOR);
         myGC = myCanvas.getGraphicsContext2D();
         myGC.setLineWidth(GRAPHICS_CONTENT_WIDTH);
-        //myCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
-        myTurtles = new HashMap<>();
-        myTurtle = new TurtleView(0);
         this.getChildren().add(myBackground);
         this.getChildren().add(myCanvas);
-        displayPane = new Pane();
-        myCurrentAnimation = new SequentialTransition();
-        this.getChildren().add(displayPane);
-        makeTurtles(displayPane);
-        colorMap = new HashMap<>();
     }
 
     public Canvas getCanvas() {
@@ -73,20 +76,20 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         return myDuration.getDisplay();
     }
 
-/*
-    EventHandler<MouseEvent> handler = new EventHandler<>() {
-        public void handle(MouseEvent e) {
-            double size = MOUSE_SIZE;
-            double x = e.getX() - midPoint(0, size);
-            double y = e.getY() - midPoint(0, size);
-            myGC.setFill(myPen.getPenColor());
-            myGC.setEffect(new DropShadow());
-            myGC.fillOval(x, y, size, size);
-        }
-    };
-    */
 
-    private void makeTurtles(Pane displayPane){
+//    EventHandler<MouseEvent> handler = new EventHandler<>() {
+//        public void handle(MouseEvent e) {
+//            double size = MOUSE_SIZE;
+//            double x = e.getX() - midPoint(0, size);
+//            double y = e.getY() - midPoint(0, size);
+//            myGC.setFill(myPen.getPenColor());
+//            myGC.setEffect(new DropShadow());
+//            myGC.fillOval(x, y, size, size);
+//        }
+//    };
+
+
+    private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
             TurtleView t = new TurtleView(i);
             t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
@@ -104,6 +107,10 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
     private void addTurtle(){
 
 
+    }
+
+    public TurtleView getMyTurtle() {
+        return myTurtle;
     }
 
 
@@ -125,9 +132,6 @@ public class TurtleDisplay extends StackPane implements ViewResourceBundles{
         return myCurrentAnimation;
     }
 
-    public TurtleView getMyTurtle() {
-        return myTurtle;
-    }
 
     public void clearScreen(TurtleView t) {
         myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
