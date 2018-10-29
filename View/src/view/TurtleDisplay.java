@@ -26,9 +26,11 @@ import java.util.Map;
 public class TurtleDisplay extends StackPane implements FrontExternal, ViewResourceBundles{
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
-    private static final double MOUSE_SIZE = 10;
     private static final int NUM_STARTING_TURTLES = 3;
     private static final String DURATION_LABEL = "duration";
+    private static final int OFFSET = 30;
+    private static final int ZERO = 0;
+    private static final int TWO = 2;
 
     private Canvas myCanvas;
     private GraphicsContext myGC;
@@ -90,9 +92,9 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
     private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
             TurtleView t = new TurtleView(i);
-            t.getView().setX(zeroPos.getX() + i*30 - midPoint(0, t.getView().getFitWidth()));
+            t.getView().setX(zeroPos.getX() + i*OFFSET - midPoint(0, t.getView().getFitWidth()));
             t.getView().setY(zeroPos.getY() - midPoint(0, t.getView().getFitHeight()));
-            t.setNewCoordinates(0 + i*30,0);
+            t.setNewCoordinates(0 + i*OFFSET,0);
             displayPane.getChildren().add(t.getView());
             myTurtles.put(i,t);
         }
@@ -197,7 +199,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
     }
 
     private double midPoint(double a, double b) {
-        return (a + b)/2;
+        return (a + b)/TWO;
     }
 
     public void deactivateAllTurtles(){

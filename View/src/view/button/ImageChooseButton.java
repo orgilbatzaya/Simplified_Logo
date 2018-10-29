@@ -16,6 +16,7 @@ import java.util.Map;
 public class ImageChooseButton extends SLogoButton{
     private static final String RESOURCE_PATH = "data/images/";
     private static final String IMAGE_PATH = "/images/";
+    private static final String TITLE = "Open File";
 
     private Map<Integer, TurtleView> myTurtles;
 
@@ -27,7 +28,7 @@ public class ImageChooseButton extends SLogoButton{
     @Override
     public void processCommand() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open File");
+        fileChooser.setTitle(TITLE);
         File defaultFile = new File(RESOURCE_PATH);
         fileChooser.setInitialDirectory(defaultFile);
         File file = fileChooser.showOpenDialog(new Stage());

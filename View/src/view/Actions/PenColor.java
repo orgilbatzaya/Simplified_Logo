@@ -17,7 +17,7 @@ public class PenColor extends Action {
 
     @Override
     public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
-        Integer index = (int) getArgsDouble(0);
+        Integer index = (int) getArgsDouble(FIRST_INDEX);
         turtleDisplay.changePenColor(index);
     }
 }
