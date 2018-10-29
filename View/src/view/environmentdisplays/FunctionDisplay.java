@@ -7,8 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import view.TurtleDisplay;
-import view.TurtleView;
+import view.Function;
 
 import java.util.HashMap;
 
