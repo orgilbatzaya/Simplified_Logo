@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.BackMain;
+import view.environmentdisplays.FunctionDisplay;
 import view.environmentdisplays.PastCommandDisplay;
 import view.environmentdisplays.VariableDisplay;
 
@@ -45,7 +46,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private HBox consoleBox;
     private PastCommandDisplay pastCommands;
     private VariableDisplay currentVariables;
-    private PastCommandDisplay currentFunctions;
+    private FunctionDisplay currentFunctions;
     private GUISetup parentGUI;
     private HashMap<String,String> myVariables;
     private HashMap<String,String[]> myFunctions;
@@ -60,7 +61,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
         pastCommands = new PastCommandDisplay(PAST_COMMAND_DISPLAY_HEIGHT, myDefaults.getString(PAST_COMMAND_LABEL));
         pastCommands.getPastCommandList().setOnMouseClicked(e -> createRunInterface(pastCommands.getPastCommandList().getSelectionModel().getSelectedItem()));
         currentVariables = new VariableDisplay(DISPLAY_HEIGHT, myDefaults.getString(VARIABLE_LABEL));
-        currentFunctions = new PastCommandDisplay(DISPLAY_HEIGHT, myDefaults.getString(FUNCTION_LABEL));
+        currentFunctions = new FunctionDisplay(DISPLAY_HEIGHT, myDefaults.getString(FUNCTION_LABEL));
         VBox rightColumn = new VBox(currentVariables.getDisplay(), currentFunctions.getDisplay());
         rightColumn.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
         submitButton.setOnAction(event -> processCommand());
