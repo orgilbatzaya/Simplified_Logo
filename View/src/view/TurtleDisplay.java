@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import view.environmentdisplays.StatusDisplay;
 import view.fields.DurationField;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.Map;
  * @author Orgil Batzaya, Austin Kao
  */
 
-public class TurtleDisplay extends StackPane implements FrontExternal,ViewResourceBundles{
+public class TurtleDisplay extends StackPane implements FrontExternal, ViewResourceBundles{
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
     private static final double MOUSE_SIZE = 10;
@@ -40,10 +41,16 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
     private TurtleView myTurtle;
+    private StatusDisplay currentInfo;
 
     private static final double DEFAULT_PEN = 1;
     private static final double DEFAULT_VISIBLE = 1;
     private static final double INITIAL_DISTANCE_MOVED = 0;
+
+    private static final double INFO_LAYOUT_X = 800;
+    private static final double INFO_LAYOUT_Y = 50;
+    private static final double TURTLE_INFO_HEIGHT = 100;
+    private static final String TURTLE_INFO_LABEL = "turtleInfo";
 
 
     public TurtleDisplay(double width, double height) {
@@ -58,6 +65,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
         makeTurtles();
         colorMap = new HashMap<>();
         myCurrentAnimation = new SequentialTransition();
+        createTurtleInfo();
     }
 
     private void initializeCanvas(double width, double height) {
@@ -77,6 +85,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
     public VBox getDurationDisplay() {
         return myDuration.getDisplay();
     }
+
 
     private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){
@@ -211,5 +220,14 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
             }
         }
         return outList;
+    }
+
+    public void createTurtleInfo(){
+        currentInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, getDefault(TURTLE_INFO_LABEL), this);
+        currentInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
+        currentInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
+    }
+    public StatusDisplay getTurtleInfoDisplay() {
+        return currentInfo;
     }
 }

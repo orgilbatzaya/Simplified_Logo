@@ -34,7 +34,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final double CANVAS_WIDTH = 400;
     private static final double CANVAS_HEIGHT = 400;
     private static final double CONSOLE_LAYOUT_X = 50;
-    private static final double CONSOLE_LAYOUT_Y = 400;
+    private static final double CONSOLE_LAYOUT_Y = 450;
     private static final double OPTIONS_LAYOUT_X = 500;
     private static final double OPTIONS_LAYOUT_Y = 50;
     private static final double INFO_LAYOUT_X = 800;
@@ -70,7 +70,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public Scene createGUI(int width, int height, Paint background) {
         root = new Group();
         var scene = new Scene(root, width, height, background);
-        currentD = new TurtleDisplay(width,height);
         root.getChildren().add(makeTabs());
         return scene;
     }
@@ -94,11 +93,8 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         userOptions.setLayoutX(OPTIONS_LAYOUT_X);
         userOptions.setLayoutY(OPTIONS_LAYOUT_Y);
 
-        turtleInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, getDefault(TURTLE_INFO_LABEL), currentDisplay);
-        turtleInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
-        turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
         Pane pane = new Pane();
-        pane.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, turtleInfo.getDisplay());
+        pane.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, currentDisplay.getTurtleInfoDisplay().getDisplay());
         myDisplays.add(currentDisplay);
 
         return pane;
@@ -112,7 +108,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
         Pane p1 = makePane();
         Pane p2 = makePane();
-        //currentD = myDisplays.get(0);
+        currentD = myDisplays.get(0);
         t1.setContent(p1);
         t1.setOnSelectionChanged(event -> currentD = myDisplays.get(0));
         t2.setContent(p2);
@@ -121,9 +117,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         return tabPane;
     }
 
-    public void switchDisplays(){
-
-    }
 
     public HBox createDirectionButtons(){
         HBox directions = new HBox();;
@@ -153,7 +146,4 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         return currentD;
     }
 
-    public StatusDisplay getTurtleInfoDisplay() {
-        return turtleInfo;
-    }
 }
