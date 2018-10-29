@@ -48,7 +48,8 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private FunctionDisplay currentFunctions;
     private GUISetup parentGUI;
     private HashMap<String,String> myVariables;
-    private HashMap<String,List<String>> myFunctions;
+    private HashMap<String, List<String>> myFunctionsCommands;
+    private HashMap<String, List<String>> myFunctionsParams;
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;
@@ -70,7 +71,8 @@ public class Console implements FrontExternal, ViewResourceBundles {
         consoleBox.setLayoutX(x);
         consoleBox.setLayoutY(y);
         myVariables = new HashMap<>();
-        myFunctions = new HashMap<>();
+        myFunctionsCommands = new HashMap<>();
+        myFunctionsParams = new HashMap<>();
     }
 
     public HBox getConsoleBox() {
@@ -106,7 +108,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
     public void runCommand(String command) {
         Map<String, Double> commandParams = parentGUI.getTurtleParams();
         HashMap<String, String> vars = myVariables;
-        BackMain back = new BackMain(parentGUI.getLanguage(), commandParams,vars);
+        BackMain back = new BackMain(parentGUI.getLanguage(), commandParams,vars, myFunctionsCommands, myFunctionsParams);
         back.performCommands(command);
         List<String> actionList = back.getMyTurtleActions();
         for(int i=0; i<actionList.size(); i++){
@@ -123,7 +125,9 @@ public class Console implements FrontExternal, ViewResourceBundles {
         actRun.performActions(actionList, actionArgs, parentGUI.getCurrentDisplay());
         parentGUI.getTurtleInfoDisplay().update(parentGUI.getCurrentDisplay());
         myVariables = back.getVariables();
-        myFunctions = back.getFunctions();
+        myFunctionsCommands = back.getFunctions();
+        myFunctionsParams = back.getFunctionsParms();
         currentVariables.update(myVariables);
+        currentFunctions.update(myFunctionsCommands);
     }
 }

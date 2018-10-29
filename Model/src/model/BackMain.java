@@ -24,7 +24,7 @@ public class BackMain {
     private List<Double> myTurtleActionsArgs;
 
 
-    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams, HashMap<String,String> vars) {
+    public BackMain(ResourceBundle lang, Map<String, Double> turtleParams, HashMap<String,String> vars, HashMap<String, List<String>> functionMap, HashMap<String, List<String>> functionParams) {
         isCommand = Boolean.TRUE;
         myProgParser = createProgramParser(lang);
         mySyntaxParser = createProgramParser(ResourceBundle.getBundle("model/Syntax"));
@@ -34,8 +34,8 @@ public class BackMain {
         myTurtleActions = new ArrayList<>();
         myTurtleActionsArgs = new ArrayList<>();
         variables = vars;
-        functionMap = new HashMap<>();
-        functionParams = new HashMap<>();
+        this.functionMap = functionMap;
+        this.functionParams = functionParams;
     }
 
 
@@ -128,7 +128,7 @@ public class BackMain {
                     }
                 }
             }
-            else if (s.equals("To")) {
+            else if (s.equals("MakeUserInstruction")) {
                 index++;
                 String functionName = commandList.get(index);
                 List<String> params = new ArrayList<>();
@@ -152,6 +152,7 @@ public class BackMain {
                 functionParams.put(functionName, params);
                 List<String> functionCommands = new ArrayList<>();
                 brackets.push(commandList.get(index));
+                index++;
                 while(!brackets.isEmpty()) {
                     String tempBracket = commandList.get(index);
                     if(commandList.get(index).equals("[")) {
@@ -183,8 +184,6 @@ public class BackMain {
                 newCommands.add(commandList.get(index));
                 index++;
             }
-
-
         }
         if(newCommands.isEmpty()) {
             return;
@@ -226,6 +225,8 @@ public class BackMain {
 
     public HashMap<String,String> getVariables(){ return variables;}
 
-    public HashMap<String, List<String>> getFunctions(){ return functionMap;};
+    public HashMap<String, List<String>> getFunctions(){ return functionMap;}
+
+    public HashMap<String, List<String>> getFunctionsParms() { return functionParams; }
 
 }
