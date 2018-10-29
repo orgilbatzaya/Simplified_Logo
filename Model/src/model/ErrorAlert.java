@@ -20,10 +20,4 @@ public class ErrorAlert {
         myAlert.showAndWait();
 
     }
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> master
 }

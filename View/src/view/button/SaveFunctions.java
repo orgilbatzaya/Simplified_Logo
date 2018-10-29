@@ -1,12 +1,21 @@
 package view.button;
 
+import javafx.scene.control.ListView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.ErrorAlert;
 import view.Console;
+import view.Function;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.*;
 
 public class SaveFunctions extends SLogoButton{
+    private static final String RESOURCE_PATH = "data/images/";
+    private static final String IMAGE_PATH = "/images/";
+    private static final String TITLE = "Title";
+
     private Map<String, List<String>> myFunctionMap;
     private String fileName;
     private Console myConsole;
@@ -21,33 +30,20 @@ public class SaveFunctions extends SLogoButton{
     @Override
     public void processCommand() {
         Properties properties = new Properties();
-        Set set = myFunctionMap.keySet();
-        Iterator itr = set.iterator();
-        while (itr.hasNext()) {
-            String key = (String) itr.next();
-            List<String> valueList = myFunctionMap.get(key);
-            String value = createStringValueList(valueList);
-            properties.setProperty(key, value);
-        }
-        try {
-            properties.store(new FileOutputStream(fileName), "\"save functions\"");
-        } catch (Exception e) {
-            new ErrorAlert(e);
-        }
-    }
-
-    private String createStringValueList(List<String> l) {
-        String outputString = "";
-        for (int i = 0; i < l.size(); i++) {
-            outputString = outputString + l.get(i);
-            if (i != l.size() - 1) {
-                outputString = outputString + ",";
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(TITLE);
+        File defaultFile = new File(RESOURCE_PATH);
+        fileChooser.setInitialDirectory(defaultFile);
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            try {
+                List<Function> functionList = myConsole.getFunctions();
+                for(int i = 0; i < functionList.size(); i++) {
+                    properties.put(functionList.get(i).getFunctionName(), functionList.get(i).getFunctionDefinition());
+                }
+            } catch (Exception ex) {
+                new ErrorAlert(ex);
             }
         }
-        return outputString;
-
-
     }
-        
-
 }

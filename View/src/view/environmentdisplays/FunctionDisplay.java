@@ -58,4 +58,8 @@ public class FunctionDisplay implements EnvironmentDisplay {
         }
         currentDisplay.setItems(currentItems);
     }
+
+    public List<Function> getFunctions() {
+        return currentItems;
+    }
 }

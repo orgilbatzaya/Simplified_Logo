@@ -145,4 +145,8 @@ public class Console implements FrontExternal, ViewResourceBundles {
         currentVariables.update(myVariables);
         currentFunctions.update(myFunctionsCommands);
     }
+
+    public List<Function> getFunctions() {
+        return currentFunctions.getFunctions();
+    }
 }
