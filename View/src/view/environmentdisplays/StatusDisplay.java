@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * @author Orgil Batzaya, Austin Kao
  */
-public class StatusDisplay {
+public class StatusDisplay implements EnvironmentDisplay{
     private static final String NAME_TITLE = "Turtles";
     private static final String X_POSITION_TITLE = "X Position";
     private static final String Y_POSITION_TITLE = "Y Position";
@@ -60,7 +60,8 @@ public class StatusDisplay {
         return myBox;
     }
 
-    private TableColumn createTableColumn(String title, String property) {
+    @Override
+    public TableColumn createTableColumn(String title, String property) {
         TableColumn column = new TableColumn(title);
         column.setCellValueFactory(new PropertyValueFactory<TurtleView, Double>(property));
         return column;
