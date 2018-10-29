@@ -53,21 +53,21 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;
-        Text consoleTitle = new Text(myDefaults.getString(COMMAND_LINE_LABEL));
+        Text consoleTitle = new Text(getDefault(COMMAND_LINE_LABEL));
         myCommandLine = new CommandLine();
-        Button submitButton = new Button(myDefaults.getString(SUBMIT_LABEL));
+        Button submitButton = new Button(getDefault(SUBMIT_LABEL));
         HBox commandBox = new HBox(myCommandLine.getDisplay(), submitButton);
-        commandBox.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
-        pastCommands = new PastCommandDisplay(PAST_COMMAND_DISPLAY_HEIGHT, myDefaults.getString(PAST_COMMAND_LABEL));
+        commandBox.setSpacing(getDefaultDouble(SPACING));
+        pastCommands = new PastCommandDisplay(PAST_COMMAND_DISPLAY_HEIGHT, getDefault(PAST_COMMAND_LABEL));
         pastCommands.getPastCommandList().setOnMouseClicked(e -> createRunInterface(pastCommands.getPastCommandList().getSelectionModel().getSelectedItem()));
-        currentVariables = new VariableDisplay(DISPLAY_HEIGHT, myDefaults.getString(VARIABLE_LABEL));
-        currentFunctions = new FunctionDisplay(DISPLAY_HEIGHT, myDefaults.getString(FUNCTION_LABEL));
+        currentVariables = new VariableDisplay(DISPLAY_HEIGHT, getDefault(VARIABLE_LABEL));
+        currentFunctions = new FunctionDisplay(DISPLAY_HEIGHT, getDefault(FUNCTION_LABEL));
         VBox rightColumn = new VBox(currentVariables.getDisplay(), currentFunctions.getDisplay());
-        rightColumn.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+        rightColumn.setSpacing(getDefaultDouble(SPACING));
         submitButton.setOnAction(event -> processCommand());
         VBox leftColumn = new VBox(consoleTitle, commandBox, pastCommands.getDisplay());
         consoleBox = new HBox(leftColumn, rightColumn);
-        consoleBox.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+        consoleBox.setSpacing(getDefaultDouble(SPACING));
         consoleBox.setLayoutX(x);
         consoleBox.setLayoutY(y);
         myVariables = new HashMap<>();
@@ -87,18 +87,18 @@ public class Console implements FrontExternal, ViewResourceBundles {
 
     public void createRunInterface(String value) {
         Stage commandEdit = new Stage();
-        commandEdit.setTitle(myDefaults.getString(COMMAND_WINDOW_TITLE));
-        Label editLabel = new Label(myDefaults.getString(COMMAND_WINDOW_LABEL));
+        commandEdit.setTitle(getDefault(COMMAND_WINDOW_TITLE));
+        Label editLabel = new Label(getDefault(COMMAND_WINDOW_LABEL));
         TextField editor = new TextField();
         editor.setText(value);
-        Button run = new Button(myDefaults.getString(RUN_LABEL));
-        Button cancel = new Button(myDefaults.getString(CANCEL_LABEL));
+        Button run = new Button(getDefault(RUN_LABEL));
+        Button cancel = new Button(getDefault(CANCEL_LABEL));
         run.setOnAction(e -> runCommand(editor.getText()));
         cancel.setOnAction(e -> commandEdit.close());
         HBox buttonBox = new HBox(run, cancel);
-        buttonBox.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+        buttonBox.setSpacing(Double.parseDouble(getDefault(SPACING)));
         VBox parentBox = new VBox(editLabel, editor, buttonBox);
-        parentBox.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+        parentBox.setSpacing(Double.parseDouble(getDefault(SPACING)));
         var root = new Group();
         root.getChildren().addAll(parentBox);
         commandEdit.setScene(new Scene(root, COMMAND_WINDOW_WIDTH, COMMAND_WINDOW_HEIGHT));
