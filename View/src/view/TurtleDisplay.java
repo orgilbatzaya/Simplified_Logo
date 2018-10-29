@@ -78,19 +78,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal,ViewResour
     public VBox getDurationDisplay() {
         return myDuration.getDisplay();
     }
-
-
-//    EventHandler<MouseEvent> handler = new EventHandler<>() {
-//        public void handle(MouseEvent e) {
-//            double size = MOUSE_SIZE;
-//            double x = e.getX() - midPoint(0, size);
-//            double y = e.getY() - midPoint(0, size);
-//            myGC.setFill(myPen.getPenColor());
-//            myGC.setEffect(new DropShadow());
-//            myGC.fillOval(x, y, size, size);
-//        }
-//    };
-
+    
 
     private void makeTurtles(){
         for(int i = 0; i < NUM_STARTING_TURTLES; i++){

@@ -152,22 +152,6 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public Console getConsole(){return myConsole; }
 
 
-//    public List<Map<String,Double>> getTurtleParams(){
-//        List<Map<String,Double>> outList = new ArrayList<>();
-//        for(int i = 0; i<currentDisplay.getTurtles().size(); i++) {
-//            outList.add(new HashMap<String,Double>());
-//            Double[] valueElements = {currentDisplay.getTurtles().get(i).getHeading(),
-//                    currentDisplay.getTurtles().get(i).getX(),
-//                    currentDisplay.getTurtles().get(i).getY(),
-//                    DEFAULT_PEN, DEFAULT_VISIBLE, INITIAL_DISTANCE_MOVED,
-//                    (double) currentDisplay.getTurtles().get(i).getMyID(),
-//                    (double) (currentDisplay.getTurtles().get(i).isActive()?1:0)};
-//            for (int j = 0; j < keyElements.length; j++) {
-//                outList.get(i).put(keyElements[j], valueElements[j]);
-//            }
-//        }
-//        return outList;
-//    }
 
     public ResourceBundle getLanguage() {
         return myLanguageMenu.getLanguage();
