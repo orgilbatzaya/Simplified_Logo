@@ -107,6 +107,8 @@ public class CommandStack {
                         args.push(variables.get(temp));
                     }
                     done.push(s);
+                } else if (s.matches("tell")){
+
                 }
             }
         }
@@ -256,5 +258,4 @@ public class CommandStack {
             stack.push(s);
         }
     }
-
 }

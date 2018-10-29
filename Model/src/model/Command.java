@@ -20,6 +20,7 @@ public abstract class Command {
 
     public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams);
 
+    public List<String> getMyArgs() {return myArgs; }
 
 
 }
