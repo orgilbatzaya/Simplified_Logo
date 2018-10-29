@@ -11,9 +11,9 @@ public class SetHeading extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         double newHeading = getArgsDouble(0);
-        heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
-        return newHeading-turtleParams.get(HEADING_KEY);
+        double angleChange = heading(newHeading,turtleAction,turtleActionArgs,turtleParams);
+        return angleChange;
     }
 }

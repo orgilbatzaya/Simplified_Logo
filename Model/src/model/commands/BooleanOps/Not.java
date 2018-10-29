@@ -11,7 +11,7 @@ public class Not extends Command {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
         return (!getArgsDouble(0).equals(1)) ? 1:0;
     }
 }

@@ -20,12 +20,11 @@ public abstract class DisplayCommand extends Command {
 
     public DisplayCommand(List<String> args){super(args);}
 
-    public void setDoubleForKey(double value, String actionName,String key, List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams){
+    public void setDoubleForKey(double value, String actionName, List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams){
         turtleAction.add(actionName);
         turtleActionArgs.add(value);
-        turtleParams.put(key,value);
     }
 
 
-    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams);
+    public abstract double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams);
 }

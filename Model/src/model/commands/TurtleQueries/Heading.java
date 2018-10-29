@@ -11,8 +11,8 @@ public class Heading extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
-        return turtleParams.get(HEADING_KEY);
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
+        return turtleParams.get(0).get(HEADING_KEY);
 
     }
 }

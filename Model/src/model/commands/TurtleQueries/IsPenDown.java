@@ -11,8 +11,8 @@ public class IsPenDown extends TurtleCommand {
     }
 
     @Override
-    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, Map<String, Double> turtleParams) {
-        return turtleParams.get(PEN_KEY);
+    public double execute(List<String> turtleAction, List<Double> turtleActionArgs, List<Map<String, Double>> turtleParams) {
+        return turtleParams.get(0).get(PEN_KEY);
 
     }
 }
