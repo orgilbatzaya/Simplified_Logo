@@ -52,6 +52,8 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final String[] DIRECTIONS = {"Up","Down","Left","Right"};
     private static final String TURTLE_INFO_LABEL = "turtleInfo";
     private static final String SPACING = "defaultSpacing";
+    private static final Color PEN_COLOR = Color.RED;
+    private static final Color BACKGROUND_COLOR = Color.WHITE;
 
     private Scene myScene;
     private Group root;
@@ -85,22 +87,22 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
         myDisplays.add(currentDisplay);
 
-        PenColor penColor = new PenColor(Color.RED, myDefaults.getString(PEN_LABEL), currentDisplay);
-        BackgroundColor backgroundColor = new BackgroundColor(Color.PURPLE, myDefaults.getString(BACKGROUND_LABEL), currentDisplay);
-        myLanguageMenu = new LanguageMenu(myDefaults.getString(LANGUAGE_LABEL));
-        mySelector = new TurtleSelector(myDefaults.getString(TURTLE_CHOOSER_LABEL),currentDisplay);
-        PlayPauseButton playPause = new PlayPauseButton(myDefaults.getString(PAUSE_LABEL), currentDisplay);
-        ImageChooseButton changeTurtle = new ImageChooseButton(myDefaults.getString(CHANGE_TURTLE_LABEL), currentDisplay);
-        HelpButton help = new HelpButton(myDefaults.getString(HELP_LABEL));
+        PenColor penColor = new PenColor(PEN_COLOR, getDefault(PEN_LABEL), currentDisplay);
+        BackgroundColor backgroundColor = new BackgroundColor(BACKGROUND_COLOR, getDefault(BACKGROUND_LABEL), currentDisplay);
+        myLanguageMenu = new LanguageMenu(getDefault(LANGUAGE_LABEL));
+        mySelector = new TurtleSelector(getDefault(TURTLE_CHOOSER_LABEL),currentDisplay);
+        PlayPauseButton playPause = new PlayPauseButton(getDefault(PAUSE_LABEL), currentDisplay);
+        ImageChooseButton changeTurtle = new ImageChooseButton(getDefault(CHANGE_TURTLE_LABEL), currentDisplay);
+        HelpButton help = new HelpButton(getDefault(HELP_LABEL));
 
 
         VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), createDirectionButtons());
-        userOptions.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+        userOptions.setSpacing(getDefaultDouble(SPACING));
         userOptions.setLayoutX(OPTIONS_LAYOUT_X);
         userOptions.setLayoutY(OPTIONS_LAYOUT_Y);
 
-        turtleInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, myDefaults.getString(TURTLE_INFO_LABEL), currentDisplay);
+        turtleInfo = new StatusDisplay(TURTLE_INFO_HEIGHT, getDefault(TURTLE_INFO_LABEL), currentDisplay);
         turtleInfo.getDisplay().setLayoutX(INFO_LAYOUT_X);
         turtleInfo.getDisplay().setLayoutY(INFO_LAYOUT_Y);
         Pane pane = new Pane();
@@ -126,7 +128,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         for(int i = 0; i < DIRECTIONS.length; i++){
             directions.getChildren().add(new DirectionButton(DIRECTIONS[i],myConsole).getDisplay());
         }
-        directions.setSpacing(Double.parseDouble(myDefaults.getString(SPACING)));
+        directions.setSpacing(getDefaultDouble(SPACING));
         return directions;
     }
 
