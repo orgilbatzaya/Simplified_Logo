@@ -49,6 +49,7 @@ public class Console implements FrontExternal, ViewResourceBundles {
     private GUISetup parentGUI;
     private HashMap<String,String> myVariables;
     private HashMap<String,List<String>> myFunctions;
+    private BackMain back;
 
     public Console(double x, double y, GUISetup gui) {
         parentGUI = gui;
@@ -71,6 +72,9 @@ public class Console implements FrontExternal, ViewResourceBundles {
         consoleBox.setLayoutY(y);
         myVariables = new HashMap<>();
         myFunctions = new HashMap<>();
+//        Map<String, Double> commandParams = parentGUI.getTurtleParams();
+//        HashMap<String, String> vars = myVariables;
+//        back = new BackMain(parentGUI.getLanguage(), commandParams,vars);
     }
 
     public HBox getConsoleBox() {
