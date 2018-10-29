@@ -13,8 +13,7 @@ public class Factory {
             return (Command) newCommand;
         }
         catch(Exception e){
-           ErrorAlert a =  new ErrorAlert(e);
-           a.displayAlert();
+           new ErrorAlert(e);
         }
         return null;
     }

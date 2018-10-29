@@ -22,7 +22,9 @@ public class ErrorAlert {
     }
     public void displayAlert(){
         myAlert.showAndWait();
+
     }
+
 
 
 }

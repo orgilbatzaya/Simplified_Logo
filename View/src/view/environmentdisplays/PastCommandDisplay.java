@@ -17,13 +17,15 @@ import javafx.stage.Stage;
  * @author Austin Kao
  */
 public class PastCommandDisplay implements EnvironmentDisplay {
+    private static final int DECREMENT = 1;
+    private static final int ZERO = 0;
     private VBox parentBox;
     private ListView<String> currentDisplay;
     private ObservableList<String> currentItems;
     private int maxSize;
 
     public PastCommandDisplay(double height, String label) {
-        this(height, -1, label);
+        this(height, -DECREMENT, label);
     }
 
     public PastCommandDisplay(double height, int max, String label) {
@@ -38,9 +40,9 @@ public class PastCommandDisplay implements EnvironmentDisplay {
 
     @Override
     public void addItem(String newItem) {
-        currentItems.add(0, newItem);
-        if(maxSize >= 0 && currentItems.size() > maxSize) {
-            currentItems.remove(maxSize - 1);
+        currentItems.add(ZERO, newItem);
+        if(maxSize >= ZERO && currentItems.size() > maxSize) {
+            currentItems.remove(maxSize - DECREMENT);
         }
         currentDisplay.setItems(currentItems);
     }

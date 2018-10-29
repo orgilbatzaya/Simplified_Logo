@@ -15,7 +15,7 @@ public class PenSize extends Action {
 
     @Override
     public void execute(TurtleView turtle, TurtleDisplay turtleDisplay) {
-        turtleDisplay.getPen().setPenWidth(getArgsDouble(0));
+        turtleDisplay.getPen().setPenWidth(getArgsDouble(FIRST_INDEX));
     }
 }
 
