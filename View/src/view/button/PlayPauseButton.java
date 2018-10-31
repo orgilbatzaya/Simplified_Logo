@@ -1,5 +1,6 @@
 package view.button;
 
+import view.GUISetup;
 import view.TurtleDisplay;
 
 /**
@@ -9,20 +10,20 @@ import view.TurtleDisplay;
 public class PlayPauseButton extends SLogoButton{
     private static final String PLAY = "Play";
     private static final String PAUSE = "Pause";
-    private TurtleDisplay myDisplay;
+    private GUISetup parentGUI;
 
-    public PlayPauseButton(String label, TurtleDisplay display) {
+    public PlayPauseButton(String label, GUISetup gui) {
         super(label);
-        myDisplay = display;
+        parentGUI = gui;
     }
 
     @Override
     public void processCommand() {
         if(getDisplay().getText().equals(PLAY)) {
-            myDisplay.getCurrentAnimation().play();
+            parentGUI.getCurrentDisplay().getCurrentAnimation().play();
             getDisplay().setText(PAUSE);
         } else {
-            myDisplay.getCurrentAnimation().pause();
+            parentGUI.getCurrentDisplay().getCurrentAnimation().pause();
             getDisplay().setText(PLAY);
         }
     }

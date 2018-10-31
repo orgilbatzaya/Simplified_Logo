@@ -20,6 +20,7 @@ import view.colorpicker.PenColor;
 import view.dropdown.LanguageMenu;
 import view.dropdown.TurtleSelector;
 import view.environmentdisplays.StatusDisplay;
+import view.fields.DurationField;
 
 import java.util.*;
 
@@ -37,6 +38,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private static final double CONSOLE_LAYOUT_Y = 450;
     private static final double OPTIONS_LAYOUT_X = 500;
     private static final double OPTIONS_LAYOUT_Y = 50;
+    private static final String DURATION_LABEL = "duration";
     private static final String PEN_LABEL = "pen";
     private static final String LANGUAGE_LABEL = "language";
     private static final String BACKGROUND_LABEL = "background";
@@ -67,32 +69,34 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         root = new Group();
         var scene = new Scene(root, width, height, background);
         root.getChildren().add(makeTabs());
+        myConsole = new Console(CONSOLE_LAYOUT_X, CONSOLE_LAYOUT_Y, this);
+        var userOptionsMenu = makeUserOptions();
+        root.getChildren().addAll(myConsole.getConsoleBox(), userOptionsMenu);
         return scene;
     }
 
-    public Pane makePane(){
-        myConsole = new Console(CONSOLE_LAYOUT_X, CONSOLE_LAYOUT_Y, this);
-        TurtleDisplay currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
-
-        PenColor penColor = new PenColor(PEN_COLOR, getDefault(PEN_LABEL), currentDisplay);
-        BackgroundColor backgroundColor = new BackgroundColor(BACKGROUND_COLOR, getDefault(BACKGROUND_LABEL), currentDisplay);
+    public VBox makeUserOptions() {
+        PenColor penColor = new PenColor(PEN_COLOR, getDefault(PEN_LABEL), this);
+        BackgroundColor backgroundColor = new BackgroundColor(BACKGROUND_COLOR, getDefault(BACKGROUND_LABEL), this);
         myLanguageMenu = new LanguageMenu(getDefault(LANGUAGE_LABEL));
-        mySelector = new TurtleSelector(getDefault(TURTLE_CHOOSER_LABEL),currentDisplay);
-        PlayPauseButton playPause = new PlayPauseButton(getDefault(PAUSE_LABEL), currentDisplay);
-        ImageChooseButton changeTurtle = new ImageChooseButton(getDefault(CHANGE_TURTLE_LABEL), currentDisplay);
+        DurationField animationDuration = new DurationField(myDefaults.getString(DURATION_LABEL), this);
+        PlayPauseButton playPause = new PlayPauseButton(getDefault(PAUSE_LABEL), this);
+        ImageChooseButton changeTurtle = new ImageChooseButton(getDefault(CHANGE_TURTLE_LABEL), this);
         HelpButton help = new HelpButton(getDefault(HELP_LABEL));
-
-
-        VBox userOptions = new VBox(currentDisplay.getDurationDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
+        VBox userOptions = new VBox(animationDuration.getDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), createDirectionButtons());
         userOptions.setSpacing(getDefaultDouble(SPACING));
         userOptions.setLayoutX(OPTIONS_LAYOUT_X);
         userOptions.setLayoutY(OPTIONS_LAYOUT_Y);
+        return userOptions;
+    }
 
+    public Pane makePane(){
+        TurtleDisplay currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
+        mySelector = new TurtleSelector(getDefault(TURTLE_CHOOSER_LABEL),currentDisplay);
         Pane pane = new Pane();
-        pane.getChildren().addAll(currentDisplay, myConsole.getConsoleBox(), userOptions, currentDisplay.getTurtleInfoDisplay().getDisplay());
+        pane.getChildren().addAll(currentDisplay, currentDisplay.getTurtleInfoDisplay().getDisplay());
         myDisplays.add(currentDisplay);
-
         return pane;
 
     }

@@ -1,6 +1,7 @@
 package view.colorpicker;
 
 import javafx.scene.paint.Color;
+import view.GUISetup;
 import view.TurtleDisplay;
 
 /**
@@ -8,16 +9,16 @@ import view.TurtleDisplay;
  * @author Austin Kao
  */
 public class BackgroundColor extends SLogoColor {
-    private TurtleDisplay myDisplay;
+    private GUISetup parentGUI;
 
-    public BackgroundColor(Color defaultColor, String label, TurtleDisplay display) {
+    public BackgroundColor(Color defaultColor, String label, GUISetup gui) {
         super(defaultColor, label);
-        myDisplay = display;
+        parentGUI = gui;
     }
 
     @Override
     public void processChoice(Color c) {
-        myDisplay.setBgColor(c);
+        parentGUI.getCurrentDisplay().setBgColor(c);
     }
 
 }

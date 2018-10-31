@@ -1,6 +1,7 @@
 package view.colorpicker;
 
 import javafx.scene.paint.Color;
+import view.GUISetup;
 import view.TurtleDisplay;
 
 /**
@@ -8,15 +9,15 @@ import view.TurtleDisplay;
  * @author Austin Kao
  */
 public class PenColor extends SLogoColor {
-    private TurtleDisplay myDisplay;
+    private GUISetup parentGUI;
 
-    public PenColor(Color defaultColor, String label, TurtleDisplay display) {
+    public PenColor(Color defaultColor, String label, GUISetup gui) {
         super(defaultColor, label);
-        myDisplay = display;
+        parentGUI = gui;
     }
 
     @Override
     public void processChoice(Color c) {
-        myDisplay.getPen().setPenColor(c);
+        parentGUI.getCurrentDisplay().getPen().setPenColor(c);
     }
 }

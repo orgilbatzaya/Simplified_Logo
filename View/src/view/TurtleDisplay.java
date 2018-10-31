@@ -27,7 +27,8 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
     private static final double GRAPHICS_CONTENT_WIDTH = 10;
     private static final Color PEN_COLOR = Color.RED;
     private static final int NUM_STARTING_TURTLES = 3;
-    private static final String DURATION_LABEL = "duration";
+    private static final double DEFAULT_DURATION = 1;
+
     private static final int OFFSET = 30;
     private static final int ZERO = 0;
     private static final int TWO = 2;
@@ -39,11 +40,11 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
     private SequentialTransition myCurrentAnimation;
     private Rectangle myBackground;
     private Point2D zeroPos;
-    private DurationField myDuration;
     private Pane displayPane;
     private Map<Integer, Color> colorMap;
     private TurtleView myTurtle;
     private StatusDisplay currentInfo;
+    private double myDuration;
 
     private static final double DEFAULT_PEN = 1;
     private static final double DEFAULT_VISIBLE = 1;
@@ -57,7 +58,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
 
     public TurtleDisplay(double width, double height) {
         initializeCanvas(width,height);
-        myDuration = new DurationField(myDefaults.getString(DURATION_LABEL));
+        myDuration = DEFAULT_DURATION;
         zeroPos = new Point2D(midPoint(0, myCanvas.getWidth()), midPoint(0, myCanvas.getHeight()));
         myPen = new SLogoPen(PEN_COLOR);
         myTurtles = new HashMap<>();
@@ -82,10 +83,6 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
 
     public Canvas getCanvas() {
         return myCanvas;
-    }
-
-    public VBox getDurationDisplay() {
-        return myDuration.getDisplay();
     }
 
 
@@ -148,7 +145,7 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
     }
 
     public void createNewAnimation(Point2D next, TurtleView t) {
-        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration.getDuration()), t);
+        Animate animation = new Animate(myCanvas, myGC, myPen, Duration.seconds(myDuration), t);
         myCurrentAnimation.getChildren().add(animation.move(next));
         myCurrentAnimation.playFromStart();
         myCurrentAnimation.setOnFinished(e -> resetAnimation());
@@ -231,5 +228,9 @@ public class TurtleDisplay extends StackPane implements FrontExternal, ViewResou
     }
     public StatusDisplay getTurtleInfoDisplay() {
         return currentInfo;
+    }
+
+    public void setDuration(double time) {
+        myDuration = time;
     }
 }
