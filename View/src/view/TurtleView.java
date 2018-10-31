@@ -21,7 +21,7 @@ public class TurtleView {
     private double yPos;
     private double myHeading;
     private double myDistanceTraveled;
-    public SimpleIntegerProperty myID;
+    private SimpleIntegerProperty myID;
 
     public TurtleView(int turtleID){
         myView = new ImageView();
