@@ -1,14 +1,22 @@
 package view;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
 
 /**
  * @author Orgil Batzaya
  */
 public class TurtleView {
     private static final String DEFAULT_STARTING_TURTLE = "/images/turtle-basic.png";
+    private static final String RESOURCE_PATH = "data/images/";
+    private static final String TITLE = "Open File";
     private static final int DEFAULT_STARTING_POS = 0;
     private static final int DEFAULT_TURTLE_WIDTH = 30;
     private static final int DEFAULT_TURTLE_HEIGHT = 30;
@@ -32,6 +40,7 @@ public class TurtleView {
         myView.setFitHeight(DEFAULT_TURTLE_HEIGHT);
         myView.setFitWidth(DEFAULT_TURTLE_WIDTH);
         active = false;
+        myView.setOnMouseClicked(e -> handle(e));
     }
 
     public void setView(String value){
@@ -121,7 +130,21 @@ public class TurtleView {
         return active;
     }
 
+    public File handle(MouseEvent t) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(TITLE);
+        File defaultFile = new File(RESOURCE_PATH);
+        fileChooser.setInitialDirectory(defaultFile);
+        File file = fileChooser.showOpenDialog(new Stage());
+        changeView(file);
+        return file;
+    }
 
+    public void changeView(File file) {
+        if (file != null) {
+            myView.setImage(new Image(file.toURI().toString()));
+        }
+    }
 
     public int getMyID() {
         return myID.get();

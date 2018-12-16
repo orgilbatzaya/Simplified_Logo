@@ -2,25 +2,23 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import view.button.DirectionButton;
-import view.button.HelpButton;
-import view.button.ImageChooseButton;
-import view.button.PlayPauseButton;
+import view.button.*;
 import view.colorpicker.BackgroundColor;
 import view.colorpicker.PenColor;
+import view.colorpicker.SLogoColor;
 import view.dropdown.LanguageMenu;
 import view.dropdown.TurtleSelector;
-import view.environmentdisplays.StatusDisplay;
 import view.fields.DurationField;
+import view.fields.Field;
+import view.flowpane.TurtleImageChooser;
 
 import java.util.*;
 
@@ -59,6 +57,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     private ArrayList<TurtleDisplay> myDisplays;
     private LanguageMenu myLanguageMenu;
     private TurtleSelector mySelector;
+    private TurtleImageChooser myImageChooser;
 
     public GUISetup() {
         myDisplays = new ArrayList<>();
@@ -71,18 +70,22 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         root.getChildren().add(makeTabs());
         myConsole = new Console(CONSOLE_LAYOUT_X, CONSOLE_LAYOUT_Y, this);
         var userOptionsMenu = makeUserOptions();
-        root.getChildren().addAll(myConsole.getConsoleBox(), userOptionsMenu);
+        Label imageChooseLabel = new Label(getDefault(CHANGE_TURTLE_LABEL));
+        imageChooseLabel.setLayoutX(900);
+        imageChooseLabel.setLayoutY(200);
+        myImageChooser = new TurtleImageChooser(5, 5, 900, 220,this);
+        root.getChildren().addAll(myConsole.getConsoleBox(), userOptionsMenu, imageChooseLabel, myImageChooser);
         return scene;
     }
 
     public VBox makeUserOptions() {
-        PenColor penColor = new PenColor(PEN_COLOR, getDefault(PEN_LABEL), this);
-        BackgroundColor backgroundColor = new BackgroundColor(BACKGROUND_COLOR, getDefault(BACKGROUND_LABEL), this);
+        SLogoColor penColor = new PenColor(PEN_COLOR, getDefault(PEN_LABEL), this);
+        SLogoColor backgroundColor = new BackgroundColor(BACKGROUND_COLOR, getDefault(BACKGROUND_LABEL), this);
         myLanguageMenu = new LanguageMenu(getDefault(LANGUAGE_LABEL));
-        DurationField animationDuration = new DurationField(myDefaults.getString(DURATION_LABEL), this);
-        PlayPauseButton playPause = new PlayPauseButton(getDefault(PAUSE_LABEL), this);
-        ImageChooseButton changeTurtle = new ImageChooseButton(getDefault(CHANGE_TURTLE_LABEL), this);
-        HelpButton help = new HelpButton(getDefault(HELP_LABEL));
+        Field animationDuration = new DurationField(myDefaults.getString(DURATION_LABEL), this);
+        SLogoButton playPause = new PlayPauseButton(getDefault(PAUSE_LABEL), this);
+        SLogoButton changeTurtle = new ImageChooseButton(getDefault(CHANGE_TURTLE_LABEL), this);
+        SLogoButton help = new HelpButton(getDefault(HELP_LABEL));
         VBox userOptions = new VBox(animationDuration.getDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
                 help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), createDirectionButtons());
         userOptions.setSpacing(getDefaultDouble(SPACING));
@@ -91,13 +94,13 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         return userOptions;
     }
 
-    public Pane makePane(){
+    public TurtleDisplay makePane(){
         TurtleDisplay currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
         mySelector = new TurtleSelector(getDefault(TURTLE_CHOOSER_LABEL),currentDisplay);
         Pane pane = new Pane();
         pane.getChildren().addAll(currentDisplay, currentDisplay.getTurtleInfoDisplay().getDisplay());
         myDisplays.add(currentDisplay);
-        return pane;
+        return currentDisplay;
 
     }
 
@@ -106,18 +109,24 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
 
         for(int i = 0; i < NUM_DEFAULT_TABS; i++){
             Tab t = new Tab(Integer.toString(i));
-            Pane p = makePane();
-            t.setContent(p);
-            final int index = i;
-            t.setOnSelectionChanged(event -> currentD = myDisplays.get(index));
+            TurtleDisplay td = makePane();
+            t.setContent(td);
+            t.setOnSelectionChanged(event -> updateTab(td));
             tabPane.getTabs().add(t);
         }
         return tabPane;
     }
 
+    private void updateTab(TurtleDisplay display) {
+        currentD = display;
+        if(myImageChooser != null) {
+            myImageChooser.update();
+        }
+    }
+
 
     public HBox createDirectionButtons(){
-        HBox directions = new HBox();;
+        HBox directions = new HBox();
         for(int i = 0; i < DIRECTIONS.length; i++){
             directions.getChildren().add(new DirectionButton(DIRECTIONS[i],myConsole).getDisplay());
         }
