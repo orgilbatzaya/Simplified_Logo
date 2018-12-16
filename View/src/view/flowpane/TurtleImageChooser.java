@@ -8,6 +8,11 @@ import view.TurtleView;
 import java.io.File;
 import java.util.Map;
 
+/**
+ * This class is a view that contains all of the current turtles in a certain pane.
+ * Clicking on a turtle will change the image for that turtle in the pane and on the display.
+ * @author ak457
+ */
 public class TurtleImageChooser extends SLogoFlowPane {
 
 
