@@ -84,7 +84,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         ImageChooseButton changeTurtle = new ImageChooseButton(getDefault(CHANGE_TURTLE_LABEL), this);
         HelpButton help = new HelpButton(getDefault(HELP_LABEL));
         VBox userOptions = new VBox(animationDuration.getDisplay(), myLanguageMenu.getDisplay(), playPause.getDisplay(), changeTurtle.getDisplay() ,
-                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(),mySelector.getDisplay(), createDirectionButtons());
+                help.getDisplay(), penColor.getDisplay(), backgroundColor.getDisplay(), createDirectionButtons());
         userOptions.setSpacing(getDefaultDouble(SPACING));
         userOptions.setLayoutX(OPTIONS_LAYOUT_X);
         userOptions.setLayoutY(OPTIONS_LAYOUT_Y);
@@ -97,7 +97,7 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
         TurtleImageSelector imageSelector = new TurtleImageSelector(currentDisplay);
 
         Pane pane = new Pane();
-        pane.getChildren().addAll(currentDisplay, currentDisplay.getTurtleInfoDisplay().getDisplay(),imageSelector.getHBox());
+        pane.getChildren().addAll(currentDisplay, mySelector.getDisplay(),currentDisplay.getTurtleInfoDisplay().getDisplay(),imageSelector.getHBox());
         myDisplays.add(currentDisplay);
         return pane;
 

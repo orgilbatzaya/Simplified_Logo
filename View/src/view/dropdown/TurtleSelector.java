@@ -19,21 +19,23 @@ import java.util.ResourceBundle;
  */
 
 public class TurtleSelector extends DropdownMenu {
-    Map<Integer, TurtleView> turtles;
-
+    //Map<Integer, TurtleView> turtles;
+    TurtleDisplay td;
     public TurtleSelector(String label, TurtleDisplay td){
         super(new ArrayList<>(),label);
-        turtles = td.getTurtles();
+        this.td = td;
         ArrayList<String> ids = new ArrayList<>();
         for(Integer key : td.getTurtles().keySet()) {
             ids.add(key.toString());
         }
         getChoiceBox().setItems(FXCollections.observableArrayList(ids));
         getChoiceBox().setValue(ids.get(0));
+        getDisplay().setLayoutX(800);
+        getDisplay().setLayoutY(200);
     }
 
     public void processChoice(String choice){
-        TurtleView t = turtles.get(Integer.parseInt(choice));
+        TurtleView t = td.getTurtles().get(Integer.parseInt(choice));
         //turnOthersOff(choice);
 
         if(!t.isActive()){
@@ -46,12 +48,12 @@ public class TurtleSelector extends DropdownMenu {
         }
     }
 
-    private void turnOthersOff(String choice){
-        for(int i = 0; i < turtles.size(); i++){
-            if(i != (int) Integer.parseInt(choice)){
-                turtles.get(i).deactivate();
-                turtles.get(i).getView().setEffect(null);
-            }
-        }
-    }
+//    private void turnOthersOff(String choice){
+//        for(int i = 0; i < turtles.size(); i++){
+//            if(i != (int) Integer.parseInt(choice)){
+//                turtles.get(i).deactivate();
+//                turtles.get(i).getView().setEffect(null);
+//            }
+//        }
+//    }
 }
