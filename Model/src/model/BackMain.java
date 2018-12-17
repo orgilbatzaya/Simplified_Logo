@@ -1,240 +1,276 @@
 package model;
 
-//Receives an input block of text and performs the corresponding commands
-
 import java.util.*;
 
+public class CommandStack {
 
-public class BackMain {
-
-    public static final String NUM_ARGS_PATH = "model/commands/NumArgsCommands";
-    public static final String COMMAND_TYPE_PATH = "model/CommandType";
-
-
-    private Boolean isCommand;
-    private Map<String, Integer> myNumArgsMap;
-    private Map<String, Set<String>> myCommandTypeMap;
-    private ProgramParser myProgParser;
-    private ProgramParser mySyntaxParser;
-    private HashMap<String, String> variables;
-    private HashMap<String, List<String>> functionMap;
-    private HashMap<String, List<String>> functionParams;
-    private List<Map<String, Double>> myTurtleParameters;
+    private Factory myFactory;
+    private Map<String,Integer> myNumArgsMap;
+    private List<String> myText;
     private List<String> myTurtleActions;
     private List<Double> myTurtleActionsArgs;
+    private List<Map<String, Double>> myTurtleParameters;
+    private Map<String, Set<String>> myCommandTypeMap;
+    private Stack<String> toDo;
+    private Stack<String> args;
+    private Stack<String> done;
+    private HashMap<Integer, Integer> times;
+    private HashMap<Integer, Integer> originalTimes;
+    private int doCounter;
+    private String myCommandType;
+    private LinkedList<String> all;
+    private boolean commandFinished;
+    private boolean isFor;
 
 
-    public BackMain(ResourceBundle lang, List<Map<String, Double>> turtleParams, HashMap<String,String> vars, HashMap<String, List<String>> functionMap, HashMap<String, List<String>> functionParams) {
-        isCommand = Boolean.TRUE;
-        myProgParser = createProgramParser(lang);
-        mySyntaxParser = createProgramParser(ResourceBundle.getBundle("model/Syntax"));
-        myNumArgsMap = getNumArgsMap(NUM_ARGS_PATH);
-        myCommandTypeMap = getMyCommandTypeMap(COMMAND_TYPE_PATH);
-        myTurtleParameters = turtleParams;
-        myTurtleActions = new ArrayList<>();
-        myTurtleActionsArgs = new ArrayList<>();
-        variables = vars;
-        this.functionMap = functionMap;
-        this.functionParams = functionParams;
+    public CommandStack(List<String> text, List<String> myTurtleActions, List<Double> myTurtleActionArgs, List<Map<String, Double>> myTurtleParameters, Map<String,Integer> numArgs, Map<String,Set<String>> commandTypeMap) {
+        this.myTurtleActions = myTurtleActions;
+        this.myTurtleActionsArgs = myTurtleActionArgs;
+        this.myTurtleParameters = myTurtleParameters;
+        myCommandTypeMap = commandTypeMap;
+        myNumArgsMap = numArgs;
+        myFactory = new Factory();
+        myText = text;
+        doCounter = 1;
+        commandFinished = Boolean.FALSE;
+        isFor = false;
     }
 
-
-
-
-    public ProgramParser createProgramParser(ResourceBundle lang) {
-        var language = new ProgramParser();
-        language.addPatterns(lang);
-        return language;
-    }
-
-    public void performCommands(String rawText) {
-        String[] text = rawText.split("\\s+");
-        for (int i = 0; i < text.length; i++) {
-            text[i] = myProgParser.getSymbol(text[i]);
+    public String execute(HashMap<String, String> variables){
+        toDo = new Stack<>();
+        args = new Stack<>();
+        done = new Stack<>();
+        all = new LinkedList<>();
+        times = new HashMap<>();
+        originalTimes = new HashMap<>();
+        for (String temp : myText) {
+            //toDo.push(temp);
+            all.add(temp);
         }
-        ArrayList<String> commandList = new ArrayList<>(Arrays.asList(text));
-        ArrayList<String> newCommands = new ArrayList<>();
 
-        int index = 0;
-        while (index < commandList.size()) {
-            String s = commandList.get(index);
-            if(s.equals("If")) {
-                index++;
-                ArrayList<String> ifExp = new ArrayList<>();
-                while(!commandList.get(index).equals("[")) {
-                    ifExp.add(commandList.get(index));
-                    index++;
-                }
-                CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-                if(Double.parseDouble(ifExpEval.execute(variables)) != 1) {
-                    Stack<String> brackets = new Stack<>();
-                    brackets.push(commandList.get(index));
-                    index++;
-                    while(!brackets.isEmpty()) {
-                        if(commandList.get(index).equals("]")) {
-                            brackets.pop();
-                        }
-                        index++;
+        while (!all.isEmpty()) {
+//            for(int i = 0; i<all.size(); i++){
+//                System.out.println(all.get(i));
+//            }
+            while (!commandFinished) {
+                try{
+                    String temp = all.removeFirst();
+                    if(myCommandTypeMap.get("OtherCommands").contains(temp)){
+                        toDo.push(temp);
+                        fillStack(toDo,all);
+                        commandFinished = Boolean.TRUE;
                     }
+                    else{
+                        toDo.push(temp);
+                        commandFinished = isCommandFinished(toDo);
+                    }
+
+
+                } catch(Exception e){
+                    commandFinished = Boolean.TRUE;
                 }
             }
-            else if(s.equals("IfElse")) {
-                index++;
-                ArrayList<String> ifExp = new ArrayList<>();
-                while(!commandList.get(index).equals("[")) {
-                    ifExp.add(commandList.get(index));
-                    index++;
-                }
-                CommandStack ifExpEval = new CommandStack(ifExp, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-                if(Double.parseDouble(ifExpEval.execute(variables)) == 1) {
-                    newCommands.add(commandList.get(index));
-                    Stack<String> brackets = new Stack<>();
-                    brackets.push(commandList.get(index));
-                    index++;
-                    while(!brackets.isEmpty()) {
-                        if(commandList.get(index).equals("[")) {
-                            brackets.push(commandList.get(index));
-                        }
-                        if(commandList.get(index).equals("]")) {
-                            brackets.pop();
-                        }
-                        newCommands.add(commandList.get(index));
-                        index++;
+            commandFinished = Boolean.FALSE;
+            ArrayList toDoList = new ArrayList(toDo);
+/*
+            for(int i = 0; i<toDoList.size(); i++){
+                System.out.println(toDoList.get(i));
+            }
+*/
+            while (!toDo.isEmpty()) {
+                String s = toDo.pop();
+                System.out.println(s);
+                myCommandType = getCommandType(s);
+                if (myCommandTypeMap.get("BooleanOps").contains(s) || myCommandTypeMap.get("TurtleCommands").contains(s) || myCommandTypeMap.get("TurtleQueries").contains(s) ||
+                        myCommandTypeMap.get("DisplayCommands").contains(s) || myCommandTypeMap.get("MathOps").contains(s)) {
+                    int numArgs = myNumArgsMap.get(s);
+                    LinkedList<String> tempArgs = new LinkedList<>();
+                    for (int i = 0; i < numArgs; i++) {
+                        tempArgs.add(args.pop());
                     }
-                    brackets.push(commandList.get(index));
-                    index++;
-                    while(!brackets.isEmpty()) {
-                        if(commandList.get(index).equals("[")) {
-                            brackets.push(commandList.get(index));
-                        }
-                        if(commandList.get(index).equals("]")) {
-                            brackets.pop();
-                        }
-                        index++;
+                    Command temp = myFactory.makeCommand(s, tempArgs, myCommandType);
+                    args.push("" + temp.execute(myTurtleActions, myTurtleActionsArgs, myTurtleParameters));
+                    //System.out.println(s + " " + args.peek());
+                    done.push(s);
+                } else if (s.matches("DoTimes\\d*")) {
+                    doTimes(s, variables);
+                } else if (s.matches("For")) {
+                    forLoop(variables);
+                } else if (isDouble(s)) {
+                    args.push(s);
+                    done.push(s);
+                } else if (s.equals("[") || s.equals("]")) {
+                    done.push(s);
+                } else if (s.equals("MakeVariable")) {
+                    //System.out.println(done.peek() + " " + args.peek());
+                    variables.put(done.peek().substring(1), args.peek());
+                    done.push(s);
+                    /*
+                    while(!args.isEmpty()) {
+                        System.out.println(args.pop());
                     }
-                }
-                else {
-                    Stack<String> brackets = new Stack<>();
-                    brackets.push(commandList.get(index));
-                    index++;
-                    while(!brackets.isEmpty()) {
-                        if(commandList.get(index).equals("[")) {
-                            brackets.push(commandList.get(index));
+                    */
+                } else if (s.matches(":[a-zA-Z]+")) {
+                    String temp = s.substring(1);
+                    if (!variables.containsKey(temp) && toDo.peek().equals("DoTimes")) {
+                        variables.put(temp, args.peek());
+                    } else if (!toDo.isEmpty()) {
+                        if (variables.containsKey(temp) && !toDo.peek().equals("MakeVariable") && !isFor) {
+                            args.push(variables.get(temp));
                         }
-                        if(commandList.get(index).equals("]")) {
-                            brackets.pop();
-                        }
-                        index++;
                     }
+                    done.push(s);
                 }
             }
-            else if (s.equals("MakeUserInstruction")) {
-                index++;
-                String functionName = commandList.get(index);
-                List<String> params = new ArrayList<>();
-                index++;
-                Stack<String> brackets = new Stack<>();
-                brackets.push(commandList.get(index));
-                index++;
-                while(!brackets.isEmpty()) {
-                    String tempBracket = commandList.get(index);
-                    if(commandList.get(index).equals("[")) {
-                        brackets.push(commandList.get(index));
-                    }
-                    else if(tempBracket.equals("]")) {
-                        brackets.pop();
-                    }
-                    else {
-                        params.add(tempBracket);
-                    }
-                    index++;
-                }
-                functionParams.put(functionName, params);
-                List<String> functionCommands = new ArrayList<>();
-                brackets.push(commandList.get(index));
-                index++;
-                while(!brackets.isEmpty()) {
-                    String tempBracket = commandList.get(index);
-                    if(commandList.get(index).equals("[")) {
-                        brackets.push(commandList.get(index));
-                    }
-                    else if(tempBracket.equals("]")) {
-                        brackets.pop();
-                    }
-                    else {
-                        functionCommands.add(tempBracket);
-                    }
-                    index++;
-                }
-                functionMap.put(functionName, functionCommands);
+        }
+
+        return args.pop();
+    }
+
+    private void doTimes(String s, HashMap<String, String> variables) {
+        if (s.equals("DoTimes")) {
+            int time = Integer.parseInt(args.pop());
+            variables.put(done.peek().substring(1), "" + time);
+            if (time == 1) {
+                done.push(s);
+                return;
             }
-            else if (functionMap.containsKey(s)) {
-                index+=2;
-                for(String tempCommand : functionMap.get(s)) {
-                    newCommands.add(tempCommand);
-                }
-                for(String tempParam : functionParams.get(s)) {
-                    newCommands.add("Set");
-                    newCommands.add(tempParam);
-                    newCommands.add(commandList.get(index));
-                    index++;
-                }
-                index++;
+            toDo.push("DoTimes" + doCounter);
+            times.put(doCounter, time - 1);
+            originalTimes.put(doCounter, time);
+            doCounter++;
+        } else {
+            int loopId = Integer.parseInt(s.substring(7));
+            if (times.get(loopId) == 1) {
+                done.push(s);
+                times.put(loopId, originalTimes.get(loopId));
+                return;
             }
-            else {
-                newCommands.add(commandList.get(index));
-                index++;
+            toDo.push(s);
+            times.put(loopId, times.get(loopId) - 1);
+        }
+        Stack<String> brackets = new Stack<String>();
+        String tempBracket;
+        while (true) {
+            tempBracket = done.pop();
+            if (tempBracket.equals("[")) {
+                brackets.push("[");
+                toDo.push("[");
+                break;
             }
         }
-        if(newCommands.isEmpty()) {
-            return;
+        while (!brackets.isEmpty()) {
+            tempBracket = done.pop();
+            if (tempBracket.equals("[")) {
+                brackets.push(tempBracket);
+            }
+            if (tempBracket.equals("]")) {
+                brackets.pop();
+            }
+            toDo.push(tempBracket);
         }
-        /*
-        for(String temp : newCommands) {
-            System.out.print(temp + " ");
+    }
+
+    private void forLoop(HashMap<String, String> variables) {
+        isFor = true;
+        Stack<String> brackets = new Stack<String>();
+        brackets.push("[");
+        done.pop();
+        String start = args.pop();
+        String variable = done.pop();
+        int end = Integer.parseInt(args.pop());
+        int increment = Integer.parseInt(args.pop());
+        if(!variables.containsKey(variable.substring(1))) {
+            variables.put(variable.substring(1), "" + (Integer.parseInt(start) + increment));
         }
-        System.out.println();
-        */
-
-        CommandStack result = new CommandStack(newCommands, myTurtleActions, myTurtleActionsArgs, myTurtleParameters, myNumArgsMap, myCommandTypeMap);
-        result.execute(variables);
-
-    }
-
-    public Map<String, Set<String>> getMyCommandTypeMap(String path) {
-        ResourceBundle properties = ResourceBundle.getBundle(path);
-        var outMap = new HashMap<String, Set<String>>();
-        for (String key : properties.keySet()) {
-            Set<String> mySet = new HashSet<String>(Arrays.asList(properties.getString(key).split(",")));
-            outMap.put(key, mySet);
+        else {
+            variables.put(variable.substring(1), "" + (Integer.parseInt(variables.get(variable.substring(1))) + increment));
         }
-        return outMap;
-    }
-
-    public Map<String, Integer> getNumArgsMap(String path) {
-        ResourceBundle properties = ResourceBundle.getBundle(path);
-        var outMap = new HashMap<String, Integer>();
-        for (String key : properties.keySet()) {
-            String value = properties.getString(key);
-            outMap.put(key, Integer.parseInt(value));
+        int curNum = Integer.parseInt(variables.get(variable.substring(1)));
+        if(curNum >= end) {
+            variables.put(variable.substring(1), start);
+            isFor = false;
+        } else {
+            //variables.put(variable.substring(1), "" + (curNum + increment));
+            toDo.push("For");
+            toDo.push("[");
+            toDo.push(variable);
+            while (!brackets.isEmpty()) {
+                String tempBracket = done.pop();
+                if(tempBracket.equals("[")) {
+                    brackets.push(tempBracket);
+                }
+                if (tempBracket.equals("]")) {
+                    brackets.pop();
+                }
+                toDo.push(tempBracket);
+            }
+            brackets.push(done.pop());
+            toDo.push("[");
+            while (!brackets.isEmpty()) {
+                String tempBracket = done.pop();
+                if(tempBracket.equals("[")) {
+                    brackets.push(tempBracket);
+                }
+                if (tempBracket.equals("]")) {
+                    brackets.pop();
+                }
+                toDo.push(tempBracket);
+            }
         }
-        return outMap;
     }
 
-
-
-    public List<String> getMyTurtleActions() {
-        return myTurtleActions;
+    private boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
-    public List<Double> getMyTurtleActionsArgs() {
-        return myTurtleActionsArgs;
+    private String getCommandType(String commandName){
+        for (String key : myCommandTypeMap.keySet()) {
+            if(myCommandTypeMap.get(key).contains(commandName)){
+                return key;
+            }
+        }
+        return null;
     }
 
-    public HashMap<String,String> getVariables(){ return variables;}
+    private Boolean isCommandFinished(Stack<String> sta){
 
-    public HashMap<String, List<String>> getFunctions(){ return functionMap;}
+        List<String> list = new ArrayList(sta);
+//        for(int i = 0; i<list.size(); i++){
+//            System.out.print(list.get(i));
+//        }
+//        System.out.println();
 
-    public HashMap<String, List<String>> getFunctionsParms() { return functionParams; }
+        int i = 0;
+        while(i<list.size()){
+            String s = list.get(i);
+            if(getCommandType((s))!=null){
+                int numArgs = myNumArgsMap.get(s);
+                int num = 0;
+                for(int j = i+1; j<=(i+numArgs);j++){
+                    try{
+                        Double.parseDouble(list.get(j));
+                        num++;
+                    }catch (Exception e){
+                    }
+                }
+                if(num==numArgs){
+                    return Boolean.TRUE;
+                }
+            }
+            i++;
+        }
+        return Boolean.FALSE;
+    }
 
+    public void fillStack(Stack<String> stack,LinkedList<String> list ){
+        for(String s: list){
+            stack.push(s);
+        }
+    }
 }
