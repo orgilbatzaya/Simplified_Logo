@@ -94,8 +94,10 @@ public class GUISetup implements FrontExternal, ViewResourceBundles {
     public Pane makePane(){
         TurtleDisplay currentDisplay = new TurtleDisplay(CANVAS_WIDTH, CANVAS_HEIGHT);
         mySelector = new TurtleSelector(getDefault(TURTLE_CHOOSER_LABEL),currentDisplay);
+        TurtleImageSelector imageSelector = new TurtleImageSelector(currentDisplay);
+
         Pane pane = new Pane();
-        pane.getChildren().addAll(currentDisplay, currentDisplay.getTurtleInfoDisplay().getDisplay());
+        pane.getChildren().addAll(currentDisplay, currentDisplay.getTurtleInfoDisplay().getDisplay(),imageSelector.getHBox());
         myDisplays.add(currentDisplay);
         return pane;
 
