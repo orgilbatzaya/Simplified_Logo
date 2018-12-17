@@ -1,8 +1,8 @@
 ### Addition
-* Improve parsing of raw text entered as command
+* Improve parsing of raw text entered as command to allow for the stamps commands
 * Estimation
     * less than a few hours
-    * update BackMain file
+    * update BackMain file for parsing new commands
 * Review
     * less than a few hours
     * updated one file, that was the one that contained the feature
