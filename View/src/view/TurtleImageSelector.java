@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TurtleImageSelector implements ViewResourceBundles {
+public class TurtleImageSelector  {
     private static final String RESOURCE_PATH = "data/images/";
     private static final String TITLE = "Open File";
     private static final String IMAGE_PATH = "/images/";
